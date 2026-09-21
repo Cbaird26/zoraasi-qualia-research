@@ -1,0 +1,49 @@
+{
+  "arms": {
+    "persistent": {
+      "brier": 0.131856,
+      "log_loss": 0.427343
+    },
+    "reset_each_trial": {
+      "brier": 0.224087,
+      "log_loss": 0.67236
+    },
+    "shuffled_memory": {
+      "brier": 0.295251,
+      "log_loss": 0.840328
+    },
+    "stateless": {
+      "brier": 0.196196,
+      "log_loss": 0.581419
+    }
+  },
+  "claims_not_supported": [
+    "AI emotion",
+    "AI qualia",
+    "human emotion recognition",
+    "Phi_c",
+    "E"
+  ],
+  "dataset": "fully_synthetic_markov_packet_arrival",
+  "evaluation_transitions": 348,
+  "experiment": "B1_B2_synthetic_connection_control_v1",
+  "fit_from_training_only": {
+    "marginal": 0.7134670487106017,
+    "p_arrive_given_prev": {
+      "0": 0.2669902912621359,
+      "1": 0.8987854251012146
+    }
+  },
+  "no_raw_human_data": true,
+  "predeclared_generation": {
+    "p_arrive_after_arrival": 0.92,
+    "p_arrive_after_missing": 0.28
+  },
+  "seed": 20260921,
+  "shuffled_index_derangement": true,
+  "shuffled_same_value_fraction": 0.591954,
+  "status": "software_connectivity_only_no_qualia_inference",
+  "steps_per_trial": 30,
+  "test_trials": 12,
+  "train_trials": 24
+}
