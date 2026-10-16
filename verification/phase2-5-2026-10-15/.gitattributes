@@ -1,0 +1,4 @@
+results/** linguist-generated=true
+reference/** linguist-vendored=true
+review/*.diff linguist-generated=true
+VERIFICATION_REPORT.* linguist-generated=true

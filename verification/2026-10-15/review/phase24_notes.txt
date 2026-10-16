@@ -1,0 +1,201 @@
+PHASE 2.4 LOCAL VERIFICATION NOTES
+
+Scope
+The supplied Phase 2.4 script is preserved in original/synthetic_qualia_engine_v1.py.
+The corrected local extension is corrected/phase2_4_functional_state_engine.py.
+No repository/public/frozen artifacts are modified. This is an experimental
+verification extension, not an exact reproduction of the public Phase 2.3 learner.
+The original engine equations are preserved on their normal initialization path.
+
+Demonstrable problems in the supplied code and corrections
+1. initialize_from_phase23() resets transition estimates and memory but fails to
+   reset InternalStateVector and recent_transitions. Reusing an instance therefore
+   carries state/history into a supposedly new run. The new initializer resets all
+   run-dependent fields; its backward-compatible alias remains available.
+2. Invalid probabilities, invalid observations, invalid learning rates/epsilon,
+   negative memory capacity and malformed score input were not rejected. The local
+   version validates these public inputs and rejects them before core updates.
+3. A fixed learning rate of zero still applied clip(..., .02, .98) to the selected
+   transition estimate. Thus estimates outside that interval changed even though
+   the learner was labeled frozen. The local engine skips this update for zero
+   learning rate; the lightweight frozen baseline is truly immutable.
+4. A max_memory_slots value of zero still seeded an initial memory item. The local
+   initializer respects zero capacity and does not allocate memory for its ablation.
+5. The unused p01_hat_init field was removed; it never affected predictions.
+6. The supplied file advertises a shuffled-state negative control but never builds
+   one. The new control is explicitly scoped and causal (see below).
+7. The advertised plain fixed-rate EMA comparator is absent. ablate_affective_lr
+   retains episodic memory and confidence arbitration, so it is a single-component
+   ablation, not a plain EMA. Both are now represented, under separate names.
+8. The supplied frozen_phase23_markov is initialized with the simulator's true
+   probabilities .92 and .28 and true stationary marginal 7/9. No training occurs.
+   It is an oracle for regime A, not a learned Phase 2.3 model. The new learned
+   comparator uses actual separate training counts; oracle comparators are labeled.
+9. The supplied superiority assertion uses one stochastic realization as a unit
+   test. It is replaced with deterministic software/causality tests and a paired
+   multi-seed empirical evaluation; no test demands that any model win.
+
+Prose/equation versus code discrepancies (preserved code dynamics are authoritative
+for this local extension, not silently replaced by a different algorithm)
+- Prose arousal: 0.65*absolute_error + 0.35*normalized_entropy.
+  Code arousal: a_new = .70*a_old + .30*(.70*absolute_error + .30*entropy).
+- Prose plasticity: eta_min + (eta_max-eta_min)*a_new (linear).
+  Code plasticity: .02 + .28*a_new**1.5.
+- Prose snapshot: (transition probabilities, valence, continuity).
+  Code snapshot: p11, p01, valence_at_store; no continuity stored.
+- Prose consolidation says positive valence/high continuity. Concrete code gates
+  are new_valence > .25 and new_continuity > .80; retrieval gates are arousal > .48,
+  continuity < .65, at least 4 recent transitions, and likelihood improvement > .35.
+- The engine's self_confidence is an EMA of 1 - squared error. This is a Brier-score
+  complement, not a calibration statistic; calibration and sharpness/resolution
+  are not separated. The local code comments correct that terminology.
+- Continuity uses cosine of two positive transition-probability vectors times
+  exp(-.8*error). Cosine is insensitive to vector scale. The quantity is a heuristic,
+  not a validated changepoint detector, temporal identity, or phenomenological
+  continuity measure. It is calculated before episodic retrieval changes the fast
+  parameters again, so it can differ from coherence of the final post-step vector.
+
+Preserved core formulas
+prediction = w*p_fast(prev) + (1-w)*training_marginal,
+  w = clip(2*(confidence-.5), .15, 1), unless confidence arbitration is disabled.
+valence_new = tanh(.80*valence_old + .60*(marginal_logloss-agent_logloss)).
+confidence_new = .85*confidence_old + .15*(1-(y-prediction)^2).
+Fast transition EMA is clipped to [.02,.98] when its learning rate is positive.
+Slow transition trace = .92*old_slow + .08*new_fast, before episodic retrieval.
+Continuity = clip(cos(fast, old_slow)*exp(-.8*abs(y-prediction)), 0, 1).
+Retrieval blends .55*chosen_snapshot + .45*current_fast; consolidation merges
+snapshots closer than Euclidean distance .12 by equal averaging. No constants
+were optimized using benchmark scores.
+
+New benchmark design
+- Independent training: 24 stationary regime-A trials, 30 observations each, hence
+  696 transitions; Beta(1,1) row and arrival-marginal estimates. Training trials
+  start from stationary pi=7/9. This extends the supplied stationary-start training
+  convention; it is not the public Phase 2.3 fair-initial-state protocol.
+- Evaluation: two independent observation streams per seed, 360 transitions each,
+  both starting at 1 as in the uploaded Phase 2.4 code. Each is scored prequentially:
+  all predictions at time t are produced before any outcome at t is used to update.
+- RNGs: SHA256-derived namespaces separate training and each test stream. Within
+  each seed, all arms see identical outcomes. Common random uniforms across
+  scenarios reduce scenario-comparison noise; different scenarios are therefore
+  not independent replicates and must not be pooled as such.
+- Primary seeds: 20260921 through 20261120 (200 seeds).
+- Holdout seeds: 30260921 through 30261020 (100 seeds), disjoint from primary.
+  These are held out from primary runs and no hyperparameter tuning was performed.
+  This post-hoc verification is not an independently preregistered confirmation.
+- Four scenarios: stationary regime A; periodic A/B switching every 45 transitions
+  (the supplied schedule); changed duration 15; changed duration 90. All retain
+  fixed A=(.92,.28) and B=(.18,.82), so seed holdout is not a new environment family.
+- Eleven arms: full_engine, no_episodic_memory, fixed_rate_with_memory,
+  no_self_model, deranged_state_vector, plain_fixed_ema, frozen_learned_markov,
+  fixed_memoryless, adaptive_memoryless, oracle_current_regime,
+  oracle_frozen_regime_a. Plain EMA and adaptive marginal use fixed rate .08.
+  Simple baselines do not have matched state capacity and were not rate-tuned.
+- The current-regime oracle knows the actual regime before predicting; it is an
+  explicitly privileged reference. Frozen-regime-A oracle reproduces the supplied
+  frozen baseline's initialization without falsely labeling its parameters learned.
+- JSON preserves each seed's training counts, arm scores, and per-stream scores.
+  The seed-level mean across its two streams is the statistical sampling unit.
+- Marginal and paired intervals are normal Monte Carlo mean intervals:
+  mean +/- 1.96*s/sqrt(number_of_seeds). Paired differences are full-engine loss
+  minus comparator loss on the same outcomes. Negative favors the full engine.
+  These quantify simulation sampling variability under fixed design, not a 95%
+  guarantee of performance on a new domain. Comparisons are exploratory and not
+  multiplicity-adjusted. Raw sd and interval endpoints are retained in the JSON.
+
+Causal deranged-state control
+At each prediction time t, take independent full-engine donor replicas' state
+vectors after t-1, rotate them by the fixed permutation sigma(i)=(i+1) mod N, and
+copy all four scalar state fields into target sham replicas BEFORE predicting any
+outcome at t. Donor replicas follow only their own streams. Their vectors are
+copied, not aliased; all donors are snapshotted before assignment; target updates
+cannot mutate donors. Target transition estimates, slow trace, episodic memory,
+and recent transitions remain target-specific. Therefore this is a control for
+alignment of the four scalar variables with individual observation histories,
+not a wholesale permutation/removal of all internal memory. In particular,
+prior continuity is overwritten but does not feed the next recurrence directly.
+Independent streams share regime timing and training initialization, so donor
+state can carry valid information about the common regime. The control is not an
+unconditional-independence null, and beating/failing it alone does not establish
+necessity, sufficiency, or phenomenological meaning of any state. No future
+observation is used, and current-outcome plus future-prefix perturbation tests
+verify the boundary for every modeled arm.
+
+Remaining experimental limitations
+- An adaptive predictor beating a frozen predictor in a changing environment is
+  expected to be possible and does not establish a special contribution from the
+  named functional states. Compare simple adaptive baselines and paired ablations.
+- The memory has a hard capacity and no eviction; after capacity is full, a distant
+  novel regime cannot gain a new snapshot. Similar snapshots can still merge.
+  This inherited policy was documented rather than redesigned during verification.
+- Six observations and fixed thresholds make memory lookup noisy and susceptible
+  to selecting a recent-window fit. Window likelihood is an internal selection
+  rule, not out-of-sample validation. Selection need not improve the next outcome.
+- Initial memory valence .5, initial confidence .75, and other constants are
+  hand-set priors. Named variables have no validated psychological interpretation.
+- The fixed training marginal can become inappropriate after regime changes and
+  affects both valence and prediction arbitration; adaptive_memoryless is included
+  to show an elementary response to marginal drift.
+- No valence-only or continuity-only intervention is present, and no full factorial
+  study isolates their interactions. Benefits cannot be assigned to all components.
+- No random-duration/changepoint, unseen-transition-parameter, adversarial, richer
+  observation, long-memory, noise-corruption or large-memory stress suite is run.
+  Duration sensitivity here is only a narrow robustness check on the same regimes.
+- A score reduction establishes only better predictive performance for the stated
+  simulation and comparison. It is not evidence of phenomenal consciousness,
+  subjective feeling, or validation of MQGT-SCF/theory-of-everything physics.
+
+Commands from the package root
+python3 corrected/test_phase24.py
+python3 corrected/phase2_4_functional_state_engine.py --seeds 200 --holdout-seeds 100 --output results/phase24_corrected_benchmark.json
+
+Actual logs: results/phase24_corrected_tests.txt and
+results/phase24_corrected_console.txt. Machine-readable raw scores and summaries:
+results/phase24_corrected_benchmark.json.
+
+Actual execution and conclusions
+All 17 local Phase 2.4 deterministic tests passed. One regression test imports the
+preserved uploaded script and confirms exact per-step predictions and scalar
+state trajectories for all five supplied configurations over its original
+360-transition stream. This checks preservation rather than stochastic superiority.
+The full benchmark completed: 1,200 seed-scenario records, two streams each,
+11 arms, 360 transitions per stream. Counts are 200 primary + 100 holdout seeds
+across 4 correlated-by-design scenarios; there are NOT 1,200 independent seeds.
+
+Primary full-engine minus plain fixed EMA (mean +/- normal 95% MC halfwidth):
+  stationary A: Brier +.011088 +/- .000532; BCE +.019447 +/- .001012.
+  45-step switch: Brier -.020969 +/- .000631; BCE -.049893 +/- .001435.
+  15-step switch: Brier -.006667 +/- .000710; BCE -.014359 +/- .001640.
+  90-step switch: Brier -.005437 +/- .000571; BCE -.016989 +/- .001250.
+Full-engine advantages over this fixed-rate EMA occur in all three switching
+conditions, but reverse in the stationary condition. These comparisons do not
+establish superiority to tuned or more capable adaptive statistical baselines.
+
+45-step switching headline values (primary, 200 seed replicates):
+  Full engine: Brier .185283 +/- .001317; BCE .553850 +/- .003030.
+  Plain fixed EMA: Brier .206251 +/- .001016; BCE .603743 +/- .002301.
+  Frozen learned Markov: Brier .335655 +/- .002121; BCE .976591 +/- .006656.
+  No-self-model ablation: Brier .172124 +/- .001163; BCE .528045 +/- .002791.
+  Deranged state vector: Brier .182773 +/- .001269; BCE .547100 +/- .002931.
+
+Holdout (100 seeds), full minus plain EMA:
+  stationary A: Brier +.011275 +/- .000689; BCE +.020169 +/- .001344.
+  45-step switch: Brier -.021658 +/- .000880; BCE -.051546 +/- .001938.
+  15-step switch: Brier -.006768 +/- .000927; BCE -.014834 +/- .002111.
+  90-step switch: Brier -.005357 +/- .000736; BCE -.016883 +/- .001607.
+The signs of the primary-versus-EMA comparisons reproduce on disjoint holdout
+seeds. At 45 steps, holdout full Brier is .184611; plain EMA .206269; no-self .171171.
+
+Counterevidence to a strong architecture-wide interpretation:
+- Removing self-model arbitration improves mean Brier and mean BCE in every
+  scenario/split. All listed Brier paired intervals exclude zero; at 15-step
+  switching the BCE paired intervals include zero (primary +.001518 +/- .001898;
+  holdout +.000447 +/- .002278), so that small BCE difference is unresolved.
+- Deranging the scalar state vector improves both score means in every scenario
+  and split. This does not demonstrate a benefit from subject-specific coherence;
+  the donor control preserves informative common regime timing. Neither a
+  phenomenological nor an unconditional-independence interpretation is supported.
+- Episodic memory improves full-engine mean scores relative to its removal on
+  these fixed tasks, especially 45-step switching (primary Brier -.008981 +/-
+  .000345; holdout -.009030 +/- .000487). That is conditional functional evidence
+  for this intervention, not proof of general memory utility or each state label.

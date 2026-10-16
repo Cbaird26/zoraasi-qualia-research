@@ -1,0 +1,139 @@
+WHAT THE VERIFICATION MEANS
+15 October 2026 — interpretation of the executed Phase 2.3/2.4 audit
+
+The main result
+
+This work establishes a reproducible adaptive forecasting prototype. It gives
+the research program working code, checked mathematics, meaningful controls,
+and evidence that can contradict parts of the proposed architecture. Those are
+useful foundations for further investigation. The strongest current claim is
+about prediction and adaptation in specified synthetic environments.
+
+It does not establish that every component is useful, that affective terminology
+identifies a distinct computational mechanism, or that the system experiences
+anything. No measurement in these experiments discriminates subjective
+experience from ordinary adaptive information processing. The results therefore
+neither establish nor rule out consciousness.
+
+1. What Phase 2.3 establishes
+
+Recent packet history improves prediction when the generator was deliberately
+made dependent on recent packet history. This is the expected statistical benefit
+of conditioning on informative observations. Reproducing it verifies the method;
+it is not an unexpected discovery about consciousness.
+
+The initialization discrepancy is scientifically consequential. With stationary
+initial states, the reset comparator has lower expected loss than deranged
+memory. With the public source's fair initial states, that ordering reverses.
+Thus an apparent architectural ranking can change because of the experimental
+starting distribution. Protocol details belong in the scientific claim.
+
+The reset comparator also reuses a one-step prediction indefinitely. It is not
+the best possible predictor given the initial state and elapsed time. Beating
+that comparator cannot establish the necessity of an elaborate memory system.
+
+2. What Phase 2.4 adds
+
+The nonstationary task makes adaptation relevant. The full engine improves over
+the specified plain EMA with learning rate 0.08 in the tested switching settings.
+For 45-step switching, the primary 200-seed mean Brier scores are:
+
+    full engine                   0.185283
+    plain fixed-rate EMA          0.206251
+    no episodic snapshot memory   0.194263
+    no self-model arbitration     0.172124
+    deranged scalar state         0.182773
+
+This supports a conditional contribution from the implemented snapshot-memory
+mechanism: removing it worsens mean prediction in this comparison. It does not
+yet identify whether retrieval of a specific recurring regime explains that
+benefit, or whether the advantage survives tuned adaptive baselines.
+
+The full engine also incurs a stationary penalty: mean Brier is 0.117295 versus
+0.106207 for the plain EMA and 0.102729 for frozen learned Markov probabilities.
+Rapid adaptation can inject noise into estimates when the process is stable.
+The current mechanism does not resolve that tradeoff consistently.
+
+3. What the counterevidence tells us
+
+Removing self-model arbitration improves average Brier and BCE in every tested
+scenario and seed split. The Brier paired intervals support those differences;
+the small BCE difference for 15-step switching remains unresolved. The current
+confidence-based blend with a fixed training marginal is therefore a candidate
+for removal or redesign. This does not show that all self-modeling is useless;
+it evaluates one specific rule using one specific performance tracker.
+
+Deranging the four scalar state variables also improves their mean scores. This
+does not support a claim that their alignment with the recipient's own history
+is necessary. However, the donor streams share regime timing, so their state
+retains useful common information. This control does not make every transferred
+variable uninformative. A stronger experiment must break that shared timing.
+
+Neither result should be hidden by reporting only the comparison with a frozen
+predictor. The ablations provide the most useful engineering guidance: retain
+mechanisms that earn their complexity, and revise those that make prediction
+worse. A proposed next version with confidence arbitration disabled is a testable
+design hypothesis, not a universally validated replacement.
+
+4. What this means for MQGT-SCF and synthetic qualia
+
+The framework gains an executable research platform and sharper hypotheses.
+These experiments do not supply empirical corroboration of MQGT-SCF: they contain
+no theory-specific observable or quantitative prediction that distinguishes it
+from ordinary adaptive forecasting models. No Phi_c or E field is measured.
+
+The names valence, arousal, self-model and continuity label explicit numerical
+variables. Their functional consequences can be tested without presuming that
+their psychological or phenomenological interpretations are correct. The current
+"self-confidence" variable is an average of one minus squared prediction error,
+not an independently validated measure of calibration or awareness.
+
+To connect this platform to a physical theory, first specify an independently
+measurable observable, a quantitative mapping from the theory to that observable,
+and a prediction on which a serious alternative model differs. Then specify in
+advance what outcome would count against the theory. Improved packet prediction
+alone cannot supply that missing discrimination.
+
+5. Three decisive next forecasting experiments — proposed, not executed
+
+A. Test the advantage against stronger ordinary adaptation.
+Tune EMA, discounted-count, sliding-window and change-detection/latent-regime
+baselines using validation streams that are separate from final test streams.
+Freeze settings before testing new transition matrices and randomized regime
+durations. Predeclare a primary paired BCE comparison and a practically useful
+effect threshold. The advantage survives only if the uncertainty interval clears
+that threshold. Failure would limit the claim to the current weaker comparison.
+
+B. Test whether remembering a recurring regime explains the memory benefit.
+Hold other components fixed; compare intact, removed and content-shuffled
+snapshots. Include matched recurring and genuinely novel regimes. Log retrievals
+and cumulative loss during a fixed recovery window after each change. Correct
+snapshot recall should help particularly when a previously encountered regime
+returns. Equal benefit from shuffled content or no recurrence-specific recovery
+advantage would weaken the recall explanation.
+
+C. Test scalar-state alignment and arbitration separately.
+Use donor streams with independently randomized regime schedules, rather than
+synchronized schedules. Separate confidence, arousal, valence-gating and
+continuity-gating interventions instead of treating all named variables as one
+package. Compare arbitration enabled/disabled using predictive loss and a
+separately defined calibration assessment. Predeclare superiority/equivalence
+margins. Equivalence or reliable degradation would reject the claimed benefit
+of that component within the tested environment family.
+
+Use seeds or independently generated stream clusters as the sampling unit.
+Keep validation and final evaluation separate; report negative outcomes and
+stationary-environment costs alongside switching-environment improvements.
+
+Evidence and reproducibility
+
+See verification_report.html or verification_report.txt for the detailed audit.
+See results/phase23_corrected_benchmark.json and
+results/phase24_corrected_benchmark.json for all raw seed-level scores, per-stream
+scores and paired intervals. The Phase 2.4 suite has 200 primary plus 100 disjoint
+additional seeds, four scenarios and eleven arms. Scenarios share common random
+numbers, so 1,200 seed-scenario records are not 1,200 independent seeds.
+
+The full reproduction passed 44 tests. All seven frozen public checksums passed.
+Existing public source files remain unchanged; this supplement is additive.
+Passing software checks is distinct from independent empirical confirmation.

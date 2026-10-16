@@ -1,0 +1,164 @@
+
+Phase 2.5 verification and interpretation
+=========================================
+
+Executed October 15, 2026. Lower Brier and binary cross-entropy (BCE, natural-log nats) are better. This report audits the supplied Phase 2.5 proposal and compares it with the pinned Phase 2.4 implementation from PR #1. It does not modify the frozen Phase 2.3 baseline or the previous verification package.
+
+Finding: the revised engine improves overall prediction on the tested recurring-regime task and survives the two specified validation-tuned adaptive baselines. It does not establish faster adaptation than those baselines: its first ten predictions after switches have higher Brier loss. The corresponding BCE differences are inconclusive. Episodic memory helps familiar returns but harms the specified novel regimes. These are useful, narrower findings than a generally superior adaptation mechanism.
+
+
+1. Provenance and executed checks
+=================================
+
+The original Python fence was extracted byte-for-byte from the supplied attachment and executed unchanged. Its SHA256 is 14d7bae0e82bf79b0f94073ab18c7d0539fc42961a94020cce5e90f74a5dc756. The prior engine is pinned to commit b25e8c235df5078f17431b20ceaa914764dd06e1, path verification/2026-10-15/corrected/phase2_4_functional_state_engine.py, SHA256 eafca48ee34b912bcf05cf3fdb9e23bed817bbb1a9272d7db54d9525b7b83de2. Checksums are verified before and after the reproducibility run.
+
+Executed checks: 2 supplied default-seed performance assertions; 18 corrected software-invariant tests; 11 mathematical tests; 2 additional Phase 2.5 chronology checks; and 1 Phase 2.4 stored-continuity audit (256 paths, 1,792 paired transitions). All passed. The same-data bridge additionally matched 2,400 Phase 2.5 score dictionaries exactly. The 31 unittest methods are distinct from these additional audits and from the prior package’s 44 tests.
+
+The original proposal was evaluated over 200 seeds (20260921–20261120). The corrected suite uses 30 disjoint validation seeds (41000000–41000029), 100 primary seeds (51000000–51000099), and 100 follow-up seeds (61000000–61000099), across six scenarios: 1,200 scenario/seed evaluations. Scenarios share seed identifiers deliberately; they are not 1,200 independent seed replicates. No engine constants were tuned after these corrected results.
+
+
+2. What the unchanged submission actually does
+==============================================
+
+Experiment | Arm | Default Brier | Default BCE | 200-seed Brier | 200-seed BCE
+experiment1 | full | 0.157108 | 0.495017 | 0.159812 | 0.500777
+experiment1 | test_selected_ema | 0.156976 | 0.548536 | 0.162675 | 0.548624
+experiment1 | fixed_reference_cusum | 0.171676 | 0.534812 | 0.177198 | 0.544938
+experiment2 | overall_memory | 0.164163 | 0.508045 | 0.171580 | 0.526004
+experiment2 | overall_no_memory | 0.171313 | 0.524476 | 0.177326 | 0.538636
+experiment2 | novel_memory | 0.215580 | 0.636571 | 0.217425 | 0.630531
+experiment2 | novel_no_memory | 0.215713 | 0.635864 | 0.211484 | 0.614959
+experiment2 | revisited_memory | 0.180304 | 0.544608 | 0.158521 | 0.497081
+experiment2 | revisited_no_memory | 0.188057 | 0.563500 | 0.170960 | 0.525580
+experiment3 | endogenous | 0.152596 | 0.484647 | 0.159258 | 0.499337
+experiment3 | synchronous_donor | 0.166000 | 0.520219 | 0.163765 | 0.515698
+experiment3 | offset_donor_as_supplied | 0.198499 | 0.588542 | 0.190874 | 0.576503
+
+The default engine score, 0.157108, is slightly worse than the hindsight-selected EMA, 0.156976. Averaging 200 seeds reverses that comparison. The submission explicitly calls this EMA an oracle; it chooses a separate rate using each test stream’s outcomes, so it is a hindsight diagnostic rather than a deployable validation-selected comparator. Its actual grid is 0.01–0.44, although the prose advertises 0.01–0.50. BCE was defined but never printed; the audit records it on exactly the predictions used by the original Brier calls, with no change to predictions.
+
+The assertion that memory helps revisited blocks fails on 13 of the 200 additional seeds. The endogenous-versus-offset assertion fails on none. Seed-specific model wins are not software invariants; the corrected tests check causality, reset isolation, formulas, bounds, RNG separation, controls, and score arithmetic without requiring a model to win.
+
+Other discrepancies: initialization uses the true A parameters rather than an estimated training fit; the advertised random-snapshot arm is absent; the offset schedule ends with consecutive B45 and B23 blocks, making a 68-step final dwell; and no independent stochastic donor dwell schedule was implemented. Regime B changes from Phase 2.4 (.18,.82) to (.15,.85), along with several algorithm coefficients. The old 0.185283 score and new 0.157108 score therefore cannot be interpreted as the effect of removing shrinkage alone.
+
+
+3. Mathematical corrections
+===========================
+
+For blend p = w f + (1-w)m and true conditional probability q, the extra expected Brier risk over f is 2(1-w)(f-q)(m-f) + (1-w)^2(m-f)^2. Only when f=q does this reduce to the squared bias term, and that term still includes (1-w)^2. Shrinkage toward 0.5 or a fast marginal does not guarantee improvement. For example, if f=q=.82, w=.5, replacing a .7778 prior with .5 increases the bias.
+
+The finite 29-transition calculation uses known p11=.92, p01=.28, q0=P(X0=1), stationary pi=7/9, and lambda=.64. Reset predicts using the trial’s own X0 at every step; deranged uses an independent trial’s preceding state. The exact expectations below exclude finite-training estimation noise. They are finite-horizon averages, not pointwise t-to-infinity limits.
+
+q0 | Reset Brier | Deranged Brier | Reset BCE | Deranged BCE
+0.0 | 0.399643 | 0.258132 | 1.018054 | 0.759763
+0.5 | 0.290633 | 0.255458 | 0.805454 | 0.753859
+1.0 | 0.181624 | 0.228860 | 0.592854 | 0.684656
+7/9 | 0.230072 | 0.243635 | 0.687343 | 0.723228
+
+The reset-minus-deranged crossover is q0=0.696113688295 for Brier and q0=0.656197028823 for BCE. Below each threshold reset is worse; between the thresholds the metrics disagree. At stationarity the reset BCE is 0.687342669157. The deranged pointwise long-run Brier is 0.243634567901 for every q0; 0.2504 is neither that limit nor the correct q0=.5 finite-horizon mean. The independent derivation and tests are in review/math_check.py and review/math_notes.txt.
+
+
+4. Causality, terminology, and implemented corrections
+======================================================
+
+A synchronous donor shares a regime schedule and therefore is not a timing-independent control. However, this does not establish current-target or future-target leakage. In the supplied Phase 2.5 code the recipient forecast p_t is computed before its current update, so donor scalars computed after observing the donor outcome at t change forecasts from t+1 onward, not p_t. Such an online donor requires contemporaneous donor observations to be available. The corrected suite explicitly issues all current forecasts before revealing any current outcome, and includes synchronous, circularly shifted, and independently timed donors.
+
+The proposal’s stronger donor explanation is not supported by the old code: transferred stored continuity in Phase 2.4 is overwritten before it is read, and varying only that stored value leaves prediction and updated state identical. Donor error and arousal are stochastic; they do not spike at exactly every change point. Shared timing remains a confound for interpreting donor controls, not proof of the proposed exact causal story.
+
+There is a separate real ordering bias in Phase 2.5: the marginal comparator is updated with y_t before its loss on y_t is computed. That gives the comparator an in-sample advantage in valence. The corrected engine compares two forecasts made before y_t, then updates the marginal. A legacy_marginal_order arm isolates this change; fixing the comparison does not imply better prediction on every task.
+
+The supplied named Page-Hinkley learner accumulates fixed-reference absolute error minus .38. It is reported here as an error-CUSUM comparator. For comparison, River’s published Page-Hinkley implementation tracks a running mean and centers updates on it. The corrected suite tunes the supplied fixed-reference family; it does not claim to implement or exhaust standard changepoint algorithms. Primary reference: https://github.com/online-ml/river/blob/main/river/drift/page_hinkley.py
+
+Additional corrections: complete state/RNG reset; input and probability validation; genuinely empty memory at zero capacity; no probability clipping update when learning rate is zero; learned Beta(1,1) transition fits from 24 independent 30-state training trials; BCE reporting; full .01–.50 EMA grid; selected-parameter manifest saved before evaluation; random eligible snapshot candidate with the same likelihood acceptance gate; explicit retrieval/store counters; and block-level, novel/revisited, initial-30, and early-10 scores. The original source is retained unchanged.
+
+
+5. Corrected benchmark: honest validation selection
+===================================================
+
+Only mean Brier on the 30 validation recurrent_45 streams selects baselines. EMA: 50 candidate rates, selected 0.32. Error-CUSUM: 108 rate/threshold/reference combinations, selected rate=0.2, threshold=1.0, reference=0.38. The choices and every candidate’s per-seed scores are stored in results/corrected_validation_manifest.json before the test loops. BCE is secondary; the same Brier-selected models are evaluated on all scenarios. Training, recipient observations, donor observations, schedules, and random retrieval have distinct reproducible RNG domains.
+
+Recurring 45-step regimes | Primary Brier | Primary BCE | Follow-up Brier | Follow-up BCE
+full_engine | 0.160388 | 0.502727 | 0.161350 | 0.504598
+no_memory | 0.173106 | 0.530555 | 0.173533 | 0.531703
+random_snapshot | 0.165183 | 0.512775 | 0.166628 | 0.516139
+donor_sync | 0.164567 | 0.518965 | 0.165438 | 0.520810
+donor_offset | 0.191500 | 0.579421 | 0.192827 | 0.582463
+donor_independent | 0.181860 | 0.557556 | 0.184131 | 0.562351
+legacy_marginal_order | 0.160373 | 0.502584 | 0.161406 | 0.504701
+validation_tuned_ema | 0.164211 | 0.551178 | 0.165073 | 0.552990
+validation_tuned_cusum | 0.163155 | 0.543409 | 0.164731 | 0.546522
+frozen_learned_markov | 0.343354 | 0.996154 | 0.343451 | 0.994359
+oracle_current_regime | 0.114590 | 0.385440 | 0.115932 | 0.388565
+
+The true-regime oracle has privileged transition probabilities and is a diagnostic lower-risk reference, not a deployable competitor. The frozen learned Markov arm is useful for distinguishing beneficial adaptation from unnecessary tracking noise.
+
+Scenario | Full Brier | Tuned EMA | Tuned CUSUM | Frozen learned | Follow-up full
+recurrent_45 | 0.160388 | 0.164211 | 0.163155 | 0.343354 | 0.161350
+familiar_novel | 0.173311 | 0.176905 | 0.174207 | 0.324783 | 0.173181
+unseen_random | 0.212047 | 0.221073 | 0.213972 | 0.320139 | 0.210047
+stationary_a | 0.109452 | 0.121365 | 0.122961 | 0.103225 | 0.108861
+recurrent_q0_zero | 0.161277 | 0.165188 | 0.164151 | 0.344229 | 0.161997
+recurrent_q0_half | 0.160877 | 0.164755 | 0.163692 | 0.343834 | 0.161649
+
+The engine’s mean Brier is lower than both selected adaptive baselines in all six scenarios, but this does not establish universal superiority. Both baselines were tuned on recurring A/B regimes, not separately for each scenario. On stationary A the frozen learned model is substantially better than the adaptive engine. A stationary-appropriate comparator matters.
+
+
+6. Falsifications that survive the corrections
+==============================================
+
+Comparison scope | Comparator | Primary full-minus-comparator Brier [95% MC interval] | Follow-up difference [95% MC interval]
+recurrent_45/overall | validation_tuned_ema | -0.003823 [-0.004569, -0.003076] | -0.003724 [-0.004457, -0.002990]
+recurrent_45/overall | validation_tuned_cusum | -0.002767 [-0.003530, -0.002003] | -0.003381 [-0.004101, -0.002662]
+recurrent_45/early_10_after_change | validation_tuned_ema | +0.027288 [+0.024342, +0.030234] | +0.029184 [+0.026331, +0.032037]
+recurrent_45/early_10_after_change | validation_tuned_cusum | +0.031539 [+0.029463, +0.033615] | +0.030747 [+0.028058, +0.033436]
+recurrent_45/early_10_after_change | no_memory | -0.027594 [-0.030080, -0.025107] | -0.025548 [-0.028138, -0.022958]
+familiar_novel/novel_C_D | no_memory | +0.007321 [+0.005754, +0.008887] | +0.006667 [+0.005298, +0.008036]
+familiar_novel/novel_C_D | random_snapshot | +0.004780 [+0.003431, +0.006128] | +0.004174 [+0.002996, +0.005352]
+familiar_novel/postnovel_revisited | no_memory | -0.012581 [-0.014085, -0.011077] | -0.012970 [-0.014526, -0.011414]
+familiar_novel/postnovel_revisited | random_snapshot | -0.005206 [-0.006550, -0.003862] | -0.005399 [-0.006685, -0.004112]
+
+Positive differences mean the full engine is worse. Its lower overall recurring loss coexists with higher Brier loss in the first ten steps after changes than either tuned adaptive baseline. The early-window BCE difference intervals span zero for both baselines in both cohorts, so BCE does not establish the same conclusion. Memory improves those early steps relative to the same engine without memory, but that is a narrower comparison. Thus, “memory contributes here” is supported; “faster than tuned baselines” is contradicted by this window.
+
+The conjunction “helps familiar returns without harming novelty” fails. On the fixed C/D novel blocks, full memory is worse than no memory and random-candidate retrieval in both seed cohorts. Following novelty, it helps when A/B return. This is consistent with negative transfer from old snapshots, but it is not a fully isolated causal proof of novelty detection failure: C/D differ in transition structure and difficulty, the order is fixed, and A is also present in training.
+
+Control activity was measured rather than assumed. On recurring primary streams, random-snapshot retrieval is eligible 113.89 times per seed; the random candidate happens to be the best 36.05 times; it accepts 9.03 retrievals versus 16.71 for the full engine. This random control changes candidate selection while preserving the likelihood gate; it is not unrestricted random retrieval or a matched-count intervention.
+
+Endogenous signals beat synchronous, offset, and independent donors on the recurring task. That establishes task-specific predictive value for alignment of these scalar updates under the stated interventions. It does not identify an affective mechanism, prove the scalars are necessary, or rule out a simpler error-based learning-rate schedule. On stationary A the synchronous and offset donor variants have lower Brier than the endogenous engine. Their BCE differences are small and inconclusive, further limiting any universal claim.
+
+
+7. Phase 2.4 versus Phase 2.5 on identical data
+===============================================
+
+Primary scenario | Phase 2.4 full | Phase 2.4 no self-model | Phase 2.5 legacy order | Phase 2.5 corrected
+recurrent_45 | 0.176941 | 0.163085 | 0.160373 | 0.160388
+familiar_novel | 0.183380 | 0.174644 | 0.173229 | 0.173311
+unseen_random | 0.251774 | 0.211922 | 0.211709 | 0.212047
+stationary_a | 0.118349 | 0.108730 | 0.109422 | 0.109452
+recurrent_q0_zero | 0.178252 | 0.163891 | 0.161294 | 0.161277
+recurrent_q0_half | 0.177666 | 0.163560 | 0.160908 | 0.160877
+
+This bridge imports the unmodified pinned Phase 2.4 engine and replays exactly the same learned fits and target paths as the corrected Phase 2.5 benchmark. It preserves each engine’s own update equations. Removing the Phase 2.4 self-model improves mean scores throughout this bridge. Phase 2.5 adds further improvement on recurring A/B tasks, but is worse than Phase 2.4 without the self-model on stationary A; the unseen-random task also shows no general extra benefit. Differences between Phase 2.5 and Phase 2.4 no-self bundle several update and memory-rule changes.
+
+The isolated marginal-order fix has small, mixed effects. On recurrent primary seeds it changes mean Brier from 0.160373 to 0.160388; on follow-up seeds it changes 0.161406 to 0.161350. Its purpose is a fair pre-observation comparison, not guaranteed score improvement. Original-versus-corrected file differences are supplied for review.
+
+
+8. What this means, and the next falsifiable steps
+==================================================
+
+The positive result is an inspectable adaptive predictor with measurable memory tradeoffs. Simulated arousal, valence, and continuity are numerical state variables whose update rules can be ablated and challenged. Their names do not convert predictive gains into evidence of subjective feeling. No experiment here operationalizes phenomenology or distinguishes MQGT-SCF from competing physical theories; neither is validated by this benchmark.
+
+The next intervention should target inappropriate retrieval, rather than adding more named internal states: define a novelty or out-of-distribution rejection rule on a separate development set; freeze it; then test whether it reduces novel-regime excess loss without sacrificing familiar-return gains. Include memory retrieval count and matched-count random controls, and compare a plain transition-change detector with the same information budget.
+
+A stronger adaptation test should vary switch hazards and dwell lengths, use independently sampled and counterbalanced novel/familiar transition matrices, and report recovery curves as well as overall proper scores. A general-purpose performance claim also needs independently tuned stationary and switching baseline families, a no-memory engine with validation-selected rates, and uncertainty-aware model-selection comparators. These are proposed next experiments, not results claimed by this package.
+
+Statistical limits: intervals are pointwise normal Monte Carlo mean intervals across independent seed replicates, computed on paired within-seed score differences; blocks and transitions are not treated as independent samples. They do not include model-selection uncertainty or multiplicity correction. The follow-up uses disjoint seeds but the same author-designed generators and is not external replication or preregistration. One stationary regime, a fixed novel schedule, a small set of transition matrices, and tuning on one family limit generalization. The independent donor can differ in regime exposure as well as timing, so its disadvantage is not uniquely attributable to timing.
+
+
+9. Reproduction and files
+=========================
+
+Requirements: Python 3.10+ and its standard library; no external packages, network, GPU, or API keys. Run from this directory: python3 -B run_all.py. The runner verifies original/reference hashes, executes the original default run and 200-seed audit, mathematical checks, corrected invariant tests, validation plus 100+100 seeds across six scenarios, and the common-data bridge. It regenerates this report after the run. See results/reproducibility_run.json for observed environment, exit codes, and elapsed times.
+
+Primary files: corrected/phase2_5_falsification_suite.py; corrected/test_phase25.py; review/math_check.py; review/bridge_phase24.py; review/audit_original.py. Data: results/original_benchmark.json, results/corrected_validation_manifest.json, results/corrected_benchmark.json, results/bridge_phase24.json. The large corrected JSON (stored with lossless .gz compression in the public repository) retains per-seed scores, block metrics, donor schedules, and event counters. Actual console logs are alongside it. SHA256SUMS.txt inventories the delivery. The private download may include the pasted source text; public copies omit that raw conversation and still verify the extracted script hash.
+
+Pinned prior source: https://github.com/Cbaird26/zoraasi-qualia-research/blob/b25e8c235df5078f17431b20ceaa914764dd06e1/verification/2026-10-15/corrected/phase2_4_functional_state_engine.py
+Review: https://github.com/Cbaird26/zoraasi-qualia-research/pull/1

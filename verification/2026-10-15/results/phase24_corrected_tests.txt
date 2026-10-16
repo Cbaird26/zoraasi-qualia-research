@@ -1,0 +1,22 @@
+test_current_and_future_outcomes_do_not_change_earlier_predictions (__main__.TestPhase24.test_current_and_future_outcomes_do_not_change_earlier_predictions) ... ok
+test_holdout_seeds_must_be_disjoint (__main__.TestPhase24.test_holdout_seeds_must_be_disjoint) ... ok
+test_independent_training_has_requested_count (__main__.TestPhase24.test_independent_training_has_requested_count) ... ok
+test_invalid_inputs_fail_before_mutation (__main__.TestPhase24.test_invalid_inputs_fail_before_mutation) ... ok
+test_laplace_fit_exact_counts (__main__.TestPhase24.test_laplace_fit_exact_counts) ... ok
+test_metrics_at_known_values (__main__.TestPhase24.test_metrics_at_known_values) ... ok
+test_monte_carlo_intervals_are_seed_level_and_paired (__main__.TestPhase24.test_monte_carlo_intervals_are_seed_level_and_paired) ... ok
+test_mutable_memory_is_isolated (__main__.TestPhase24.test_mutable_memory_is_isolated) ... ok
+test_original_normal_path_dynamics_preserved (__main__.TestPhase24.test_original_normal_path_dynamics_preserved) ... ok
+test_plain_baselines_use_only_declared_information (__main__.TestPhase24.test_plain_baselines_use_only_declared_information) ... ok
+test_reinitialization_matches_fresh_instance (__main__.TestPhase24.test_reinitialization_matches_fresh_instance) ... ok
+test_seed_reproducibility_and_arm_presence (__main__.TestPhase24.test_seed_reproducibility_and_arm_presence) ... ok
+test_sham_copies_only_four_fields_without_mutating_donors (__main__.TestPhase24.test_sham_copies_only_four_fields_without_mutating_donors) ... ok
+test_sham_fixed_derangement_no_self_donors (__main__.TestPhase24.test_sham_fixed_derangement_no_self_donors) ... ok
+test_state_and_memory_bounds (__main__.TestPhase24.test_state_and_memory_bounds) ... ok
+test_update_returns_pre_outcome_prediction (__main__.TestPhase24.test_update_returns_pre_outcome_prediction) ... ok
+test_zero_rate_never_clips_frozen_parameters (__main__.TestPhase24.test_zero_rate_never_clips_frozen_parameters) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.023s
+
+OK

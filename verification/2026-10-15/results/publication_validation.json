@@ -1,0 +1,11 @@
+{
+  "results_identical_to_local_verified_bundle": {
+    "phase23_corrected_benchmark.json": true,
+    "phase24_corrected_benchmark.json": true,
+    "math_verification.json": true,
+    "phase23_original_benchmark.json": true,
+    "phase24_original_benchmark.json": true
+  },
+  "raw_conversation_excluded": true,
+  "additive_only": true
+}

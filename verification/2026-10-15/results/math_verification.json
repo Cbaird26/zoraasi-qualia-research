@@ -1,0 +1,2289 @@
+{
+  "assumptions": [
+    "The transition parameters are known; no finite-training estimation noise is included.",
+    "Every step t=1,...,29 is equally weighted; logarithms are natural.",
+    "Donor and target trials are independent, with the same initial distribution and transition law.",
+    "The default memoryless forecast is the mean target marginal for the fixed horizon.",
+    "Reset uses the one-step transition prediction from X0 at every step, not P(Xt=1|X0).",
+    "Asymptotic refers to growing independent training trials at fixed horizon; the horizon is 29."
+  ],
+  "pasted_stationary_reset_bce": {
+    "absolute_error": 0.0004426691572835262,
+    "claimed": 0.6869,
+    "correct": 0.6873426691572835,
+    "correct_rounded_four_decimals": 0.6873
+  },
+  "public_source_fixed_stationary_marginal_comparison": {
+    "average": {
+      "deranged_memory": {
+        "bce_nats": 0.7538588581099713,
+        "brier": 0.2554575864012429
+      },
+      "memoryless_marginal": {
+        "bce_nats": 0.5510388507174929,
+        "brier": 0.18229977395086053
+      },
+      "reset_each_trial": {
+        "bce_nats": 0.8054537249136806,
+        "brier": 0.2906333295800275
+      },
+      "stateful_markov": {
+        "bce_nats": 0.3569475195886135,
+        "brier": 0.10545014084453198
+      }
+    },
+    "parameters": {
+      "eigenvalue": 0.64,
+      "horizon": 29,
+      "initial_one_probability": 0.5,
+      "memoryless_prediction": 0.7777777777777779,
+      "p01": 0.28,
+      "p11": 0.92,
+      "pooled_target_probability": 0.76074929577734,
+      "stationary_one_probability": 0.7777777777777779
+    },
+    "per_step": [
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.97775072768164,
+            "brier": 0.3424
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.7524196156790534,
+            "brier": 0.271604938271605
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.4358613446080309,
+            "brier": 0.13759999999999997
+          },
+          "stateful_markov": {
+            "bce_nats": 0.4358613446080309,
+            "brier": 0.13759999999999997
+          }
+        },
+        "previous_marginal": 0.5,
+        "t": 1,
+        "target_marginal": 0.6000000000000001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.9246567577908068,
+            "brier": 0.321408
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.6722427856953497,
+            "brier": 0.23604938271604942
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.5830091888656228,
+            "brier": 0.198528
+          },
+          "stateful_markov": {
+            "bce_nats": 0.40444295004014214,
+            "brier": 0.12479999999999997
+          }
+        },
+        "previous_marginal": 0.6000000000000001,
+        "t": 2,
+        "target_marginal": 0.664
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.8679259332017112,
+            "brier": 0.2993747968
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.6209296145057794,
+            "brier": 0.21329382716049386
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.6771838091904816,
+            "brier": 0.23752191999999994
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3843351775166934,
+            "brier": 0.11660799999999996
+          }
+        },
+        "previous_marginal": 0.664,
+        "t": 3,
+        "target_marginal": 0.70496
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.822299525356059,
+            "brier": 0.28175167356927994
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5880891849444544,
+            "brier": 0.19873027160493822
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7374555661983913,
+            "brier": 0.26247802880000004
+          },
+          "stateful_markov": {
+            "bce_nats": 0.37146620310168615,
+            "brier": 0.11136511999999996
+          }
+        },
+        "previous_marginal": 0.70496,
+        "t": 4,
+        "target_marginal": 0.7311744000000001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7892816929623463,
+            "brier": 0.269030315445977
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5670713100252063,
+            "brier": 0.18940959604938265
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7760294906834535,
+            "brier": 0.278449938432
+          },
+          "stateful_markov": {
+            "bce_nats": 0.36323005947608156,
+            "brier": 0.10800967679999995
+          }
+        },
+        "previous_marginal": 0.7311744000000001,
+        "t": 5,
+        "target_marginal": 0.7479516160000002
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7665868651401961,
+            "brier": 0.2602977739759521
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5536198700768876,
+            "brier": 0.1834443636938271
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8007168023538932,
+            "brier": 0.28867196059648
+          },
+          "stateful_markov": {
+            "bce_nats": 0.35795892755569453,
+            "brier": 0.10586219315199995
+          }
+        },
+        "previous_marginal": 0.7479516160000002,
+        "t": 6,
+        "target_marginal": 0.7586890342400001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7514218005130848,
+            "brier": 0.25446692615288913
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5450109485099637,
+            "brier": 0.17962661498627155
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8165166818229747,
+            "brier": 0.29521405478174717
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3545854031266469,
+            "brier": 0.10448780361727995
+          }
+        },
+        "previous_marginal": 0.7586890342400001,
+        "t": 7,
+        "target_marginal": 0.7655609819136001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7414538616250785,
+            "brier": 0.25063605162892044
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5395012387071324,
+            "brier": 0.177183255813436
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8266286046831868,
+            "brier": 0.2994009950603182
+          },
+          "stateful_markov": {
+            "bce_nats": 0.35242634749205637,
+            "brier": 0.10360819431505916
+          }
+        },
+        "previous_marginal": 0.7655609819136001,
+        "t": 8,
+        "target_marginal": 0.7699590284247041
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7349669436698363,
+            "brier": 0.2481436875002919
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5359750244333202,
+            "brier": 0.17561950594282122
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8331002353137226,
+            "brier": 0.3020806368386036
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3510445518859185,
+            "brier": 0.10304524436163784
+          }
+        },
+        "previous_marginal": 0.7699590284247041,
+        "t": 9,
+        "target_marginal": 0.7727737781918107
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7307713099558719,
+            "brier": 0.24653194288209468
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5337182472980806,
+            "brier": 0.1746187060256278
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8372420789172657,
+            "brier": 0.3037956075767063
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3501602026979902,
+            "brier": 0.1026849563914482
+          }
+        },
+        "previous_marginal": 0.7727737781918107,
+        "t": 10,
+        "target_marginal": 0.7745752180427589
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7280680794301537,
+            "brier": 0.24549361403297
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5322739099315271,
+            "brier": 0.17397819407862397
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8398928588235329,
+            "brier": 0.304893188849092
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34959421921771616,
+            "brier": 0.10245437209052682
+          }
+        },
+        "previous_marginal": 0.7745752180427589,
+        "t": 11,
+        "target_marginal": 0.7757281395473657
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7263306288746734,
+            "brier": 0.24482629325412147
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.531349534016933,
+            "brier": 0.17356826643254158
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8415893579635441,
+            "brier": 0.3055956408634189
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3492319897903407,
+            "brier": 0.10230679813793715
+          }
+        },
+        "previous_marginal": 0.7757281395473657,
+        "t": 12,
+        "target_marginal": 0.7764660093103141
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7252156364345752,
+            "brier": 0.24439806504246697
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5307579334315927,
+            "brier": 0.1733059127390488
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8426751174131513,
+            "brier": 0.3060452101525881
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34900016295682046,
+            "brier": 0.10221235080827977
+          }
+        },
+        "previous_marginal": 0.7764660093103141,
+        "t": 13,
+        "target_marginal": 0.7769382459586011
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7245008026078639,
+            "brier": 0.24412353084976487
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5303793090569748,
+            "brier": 0.1731380063752134
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8433700034608997,
+            "brier": 0.30633293449765636
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3488517937833675,
+            "brier": 0.10215190451729902
+          }
+        },
+        "previous_marginal": 0.7769382459586011,
+        "t": 14,
+        "target_marginal": 0.7772404774135048
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7240428016015648,
+            "brier": 0.24394763721742074
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5301369894572194,
+            "brier": 0.17303054630235878
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8438147305314588,
+            "brier": 0.30651707807850004
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34875683751235753,
+            "brier": 0.10211321889107136
+          }
+        },
+        "previous_marginal": 0.7772404774135048,
+        "t": 15,
+        "target_marginal": 0.7774339055446431
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7237494731440228,
+            "brier": 0.24383498675232404
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5299819049133762,
+            "brier": 0.17296177185573186
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8440993558566168,
+            "brier": 0.30663492997024006
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3486960654989112,
+            "brier": 0.10208846009028566
+          }
+        },
+        "previous_marginal": 0.7774339055446431,
+        "t": 16,
+        "target_marginal": 0.7775576995485716
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.723561657810782,
+            "brier": 0.24376285828451577
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5298826508053163,
+            "brier": 0.17291775620989058
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8442815160647177,
+            "brier": 0.3067103551809536
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3486571714103056,
+            "brier": 0.1020726144577828
+          }
+        },
+        "previous_marginal": 0.7775576995485716,
+        "t": 17,
+        "target_marginal": 0.7776369277110858
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7234414211321862,
+            "brier": 0.2437166828882265
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.529819128176158,
+            "brier": 0.17288958619655218
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8443980985979023,
+            "brier": 0.3067586273158103
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34863227919359796,
+            "brier": 0.10206247325298098
+          }
+        },
+        "previous_marginal": 0.7776369277110858,
+        "t": 18,
+        "target_marginal": 0.777687633735095
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7233644553770493,
+            "brier": 0.24368712523734642
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297784736934967,
+            "brier": 0.17287155738801563
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8444727114191406,
+            "brier": 0.3067895214821186
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34861634817490506,
+            "brier": 0.10205598288190781
+          }
+        },
+        "previous_marginal": 0.777687633735095,
+        "t": 19,
+        "target_marginal": 0.7777200855904608
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7233151914443311,
+            "brier": 0.2436682061300675
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297524548245934,
+            "brier": 0.17286001895055217
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445204636247329,
+            "brier": 0.30680929374855587
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3486061523229417,
+            "brier": 0.10205182904442098
+          }
+        },
+        "previous_marginal": 0.7777200855904608,
+        "t": 20,
+        "target_marginal": 0.777740854777895
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232836601314651,
+            "brier": 0.2436560969958999
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297358027484954,
+            "brier": 0.17285263435057557
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445510250363122,
+            "brier": 0.30682194799907575
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34859962697768504,
+            "brier": 0.10204917058842941
+          }
+        },
+        "previous_marginal": 0.777740854777895,
+        "t": 21,
+        "target_marginal": 0.7777541470578528
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232634791098591,
+            "brier": 0.2436483467791361
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297251454197927,
+            "brier": 0.17284790820659057
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445705843397228,
+            "brier": 0.3068300467194085
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485954507567208,
+            "brier": 0.1020474691765948
+          }
+        },
+        "previous_marginal": 0.7777541470578528,
+        "t": 22,
+        "target_marginal": 0.7777626541170258
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232505628540615,
+            "brier": 0.24364338648848805
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297183247294228,
+            "brier": 0.1728448834744402
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445831022939055,
+            "brier": 0.3068352299004214
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34859277797530375,
+            "brier": 0.10204638027302065
+          }
+        },
+        "previous_marginal": 0.7777626541170258,
+        "t": 23,
+        "target_marginal": 0.7777680986348966
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232422962857044,
+            "brier": 0.24364021184024715
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297139594875862,
+            "brier": 0.17284294764586391
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445911137845826,
+            "brier": 0.3068385471362697
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34859106739519674,
+            "brier": 0.1020456833747332
+          }
+        },
+        "previous_marginal": 0.7777680986348966,
+        "t": 24,
+        "target_marginal": 0.7777715831263339
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232370056145163,
+            "brier": 0.2436381800398852
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297111657328107,
+            "brier": 0.1728417087155751
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445962411386159,
+            "brier": 0.3068406701672126
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485899726239283,
+            "brier": 0.10204523735982923
+          }
+        },
+        "previous_marginal": 0.7777715831263339,
+        "t": 25,
+        "target_marginal": 0.7777738132008537
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232336195573329,
+            "brier": 0.24363687967721376
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297093777297545,
+            "brier": 0.1728409158001903
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445995226451972,
+            "brier": 0.30684202890701606
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485892719703165,
+            "brier": 0.1020449519102907
+          }
+        },
+        "previous_marginal": 0.7777738132008537,
+        "t": 26,
+        "target_marginal": 0.7777752404485464
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232314524694209,
+            "brier": 0.24363604744082784
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297082334077984,
+            "brier": 0.17284040833434394
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8446016228094093,
+            "brier": 0.30684289850049024
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34858882355200493,
+            "brier": 0.10204476922258603
+          }
+        },
+        "previous_marginal": 0.7777752404485464,
+        "t": 27,
+        "target_marginal": 0.7777761538870698
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232300655285231,
+            "brier": 0.2436355148077894
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297075010417466,
+            "brier": 0.17284008355620234
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.844602966914505,
+            "brier": 0.30684345504031374
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34858853656428557,
+            "brier": 0.10204465230245503
+          }
+        },
+        "previous_marginal": 0.7777761538870698,
+        "t": 28,
+        "target_marginal": 0.7777767384877247
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.72322917788445,
+            "brier": 0.24363517392192735
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297070323274733,
+            "brier": 0.17283987569819168
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8446038271417662,
+            "brier": 0.30684381122580084
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485883528921452,
+            "brier": 0.10204457747357121
+          }
+        },
+        "previous_marginal": 0.7777767384877247,
+        "t": 29,
+        "target_marginal": 0.7777771126321439
+      }
+    ]
+  },
+  "public_source_initial_distribution": {
+    "average": {
+      "deranged_memory": {
+        "bce_nats": 0.7538588581099713,
+        "brier": 0.2554575864012429
+      },
+      "memoryless_marginal": {
+        "bce_nats": 0.5502146900532113,
+        "brier": 0.1820098047516213
+      },
+      "reset_each_trial": {
+        "bce_nats": 0.8054537249136806,
+        "brier": 0.2906333295800275
+      },
+      "stateful_markov": {
+        "bce_nats": 0.3569475195886135,
+        "brier": 0.10545014084453198
+      }
+    },
+    "parameters": {
+      "eigenvalue": 0.64,
+      "horizon": 29,
+      "initial_one_probability": 0.5,
+      "memoryless_prediction": 0.76074929577734,
+      "p01": 0.28,
+      "p11": 0.92,
+      "pooled_target_probability": 0.76074929577734,
+      "stationary_one_probability": 0.7777777777777779
+    },
+    "per_step": [
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.97775072768164,
+            "brier": 0.3424
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.7361681716180444,
+            "brier": 0.2658403360929107
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.4358613446080309,
+            "brier": 0.13759999999999997
+          },
+          "stateful_markov": {
+            "bce_nats": 0.4358613446080309,
+            "brier": 0.13759999999999997
+          }
+        },
+        "previous_marginal": 0.5,
+        "t": 1,
+        "target_marginal": 0.6000000000000001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.9246567577908068,
+            "brier": 0.321408
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.6621334907032745,
+            "brier": 0.23246442623341118
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.5830091888656228,
+            "brier": 0.198528
+          },
+          "stateful_markov": {
+            "bce_nats": 0.40444295004014214,
+            "brier": 0.12479999999999997
+          }
+        },
+        "previous_marginal": 0.6000000000000001,
+        "t": 2,
+        "target_marginal": 0.664
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.8679259332017112,
+            "brier": 0.2993747968
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.614751294917822,
+            "brier": 0.21110384392333148
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.6771838091904816,
+            "brier": 0.23752191999999994
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3843351775166934,
+            "brier": 0.11660799999999996
+          }
+        },
+        "previous_marginal": 0.664,
+        "t": 3,
+        "target_marginal": 0.70496
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.822299525356059,
+            "brier": 0.28175167356927994
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5844266896151321,
+            "brier": 0.19743307124488044
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7374555661983913,
+            "brier": 0.26247802880000004
+          },
+          "stateful_markov": {
+            "bce_nats": 0.37146620310168615,
+            "brier": 0.11136511999999996
+          }
+        },
+        "previous_marginal": 0.70496,
+        "t": 4,
+        "target_marginal": 0.7311744000000001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7892816929623463,
+            "brier": 0.269030315445977
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5650189422214107,
+            "brier": 0.18868377673067177
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7760294906834535,
+            "brier": 0.278449938432
+          },
+          "stateful_markov": {
+            "bce_nats": 0.36323005947608156,
+            "brier": 0.10800967679999995
+          }
+        },
+        "previous_marginal": 0.7311744000000001,
+        "t": 5,
+        "target_marginal": 0.7479516160000002
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7665868651401961,
+            "brier": 0.2602977739759521
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.552597983889429,
+            "brier": 0.18308422824157827
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8007168023538932,
+            "brier": 0.28867196059648
+          },
+          "stateful_markov": {
+            "bce_nats": 0.35795892755569453,
+            "brier": 0.10586219315199995
+          }
+        },
+        "previous_marginal": 0.7479516160000002,
+        "t": 6,
+        "target_marginal": 0.7586890342400001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7514218005130848,
+            "brier": 0.25446692615288913
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5446485705569607,
+            "brier": 0.17950051720855842
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8165166818229747,
+            "brier": 0.29521405478174717
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3545854031266469,
+            "brier": 0.10448780361727995
+          }
+        },
+        "previous_marginal": 0.7586890342400001,
+        "t": 7,
+        "target_marginal": 0.7655609819136001
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7414538616250785,
+            "brier": 0.25063605162892044
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.539560946024181,
+            "brier": 0.17720694214742572
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8266286046831868,
+            "brier": 0.2994009950603182
+          },
+          "stateful_markov": {
+            "bce_nats": 0.35242634749205637,
+            "brier": 0.10360819431505916
+          }
+        },
+        "previous_marginal": 0.7655609819136001,
+        "t": 8,
+        "target_marginal": 0.7699590284247041
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7349669436698363,
+            "brier": 0.2481436875002919
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.536304866323202,
+            "brier": 0.17573905410830076
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8331002353137226,
+            "brier": 0.3020806368386036
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3510445518859185,
+            "brier": 0.10304524436163784
+          }
+        },
+        "previous_marginal": 0.7699590284247041,
+        "t": 9,
+        "target_marginal": 0.7727737781918107
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7307713099558719,
+            "brier": 0.24653194288209468
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5342209753145755,
+            "brier": 0.1747996057632608
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8372420789172657,
+            "brier": 0.3037956075767063
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3501602026979902,
+            "brier": 0.1026849563914482
+          }
+        },
+        "previous_marginal": 0.7727737781918107,
+        "t": 10,
+        "target_marginal": 0.7745752180427589
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7280680794301537,
+            "brier": 0.24549361403297
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5328872850690544,
+            "brier": 0.17419835882243523
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8398928588235329,
+            "brier": 0.304893188849092
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34959421921771616,
+            "brier": 0.10245437209052682
+          }
+        },
+        "previous_marginal": 0.7745752180427589,
+        "t": 11,
+        "target_marginal": 0.7757281395473657
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7263306288746734,
+            "brier": 0.24482629325412147
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.532033723311921,
+            "brier": 0.1738135607803069
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8415893579635441,
+            "brier": 0.3055956408634189
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3492319897903407,
+            "brier": 0.10230679813793715
+          }
+        },
+        "previous_marginal": 0.7757281395473657,
+        "t": 12,
+        "target_marginal": 0.7764660093103141
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7252156364345752,
+            "brier": 0.24439806504246697
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5314874437873556,
+            "brier": 0.1735672900333447
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8426751174131513,
+            "brier": 0.3060452101525881
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34900016295682046,
+            "brier": 0.10221235080827977
+          }
+        },
+        "previous_marginal": 0.7764660093103141,
+        "t": 13,
+        "target_marginal": 0.7769382459586011
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7245008026078639,
+            "brier": 0.24412353084976487
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5311378248916336,
+            "brier": 0.17340967675528893
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8433700034608997,
+            "brier": 0.30633293449765636
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3488517937833675,
+            "brier": 0.10215190451729902
+          }
+        },
+        "previous_marginal": 0.7769382459586011,
+        "t": 14,
+        "target_marginal": 0.7772404774135048
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7240428016015648,
+            "brier": 0.24394763721742074
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5309140687983718,
+            "brier": 0.17330880425733325
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8438147305314588,
+            "brier": 0.30651707807850004
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34875683751235753,
+            "brier": 0.10211321889107136
+          }
+        },
+        "previous_marginal": 0.7772404774135048,
+        "t": 15,
+        "target_marginal": 0.7774339055446431
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7237494731440228,
+            "brier": 0.24383498675232404
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5307708648986841,
+            "brier": 0.17324424585864162
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8440993558566168,
+            "brier": 0.30663492997024006
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3486960654989112,
+            "brier": 0.10208846009028566
+          }
+        },
+        "previous_marginal": 0.7774339055446431,
+        "t": 16,
+        "target_marginal": 0.7775576995485716
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.723561657810782,
+            "brier": 0.24376285828451577
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.530679214402884,
+            "brier": 0.17320292848347896
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8442815160647177,
+            "brier": 0.3067103551809536
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3486571714103056,
+            "brier": 0.1020726144577828
+          }
+        },
+        "previous_marginal": 0.7775576995485716,
+        "t": 17,
+        "target_marginal": 0.7776369277110858
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7234414211321862,
+            "brier": 0.2437166828882265
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.530620558085572,
+            "brier": 0.17317648536337485
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8443980985979023,
+            "brier": 0.3067586273158103
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34863227919359796,
+            "brier": 0.10206247325298098
+          }
+        },
+        "previous_marginal": 0.7776369277110858,
+        "t": 18,
+        "target_marginal": 0.777687633735095
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7233644553770493,
+            "brier": 0.24368712523734642
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305830180424922,
+            "brier": 0.17315956176650826
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8444727114191406,
+            "brier": 0.3067895214821186
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34861634817490506,
+            "brier": 0.10205598288190781
+          }
+        },
+        "previous_marginal": 0.777687633735095,
+        "t": 19,
+        "target_marginal": 0.7777200855904608
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7233151914443311,
+            "brier": 0.2436682061300675
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305589924149211,
+            "brier": 0.17314873066451358
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445204636247329,
+            "brier": 0.30680929374855587
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3486061523229417,
+            "brier": 0.10205182904442098
+          }
+        },
+        "previous_marginal": 0.7777200855904608,
+        "t": 20,
+        "target_marginal": 0.777740854777895
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232836601314651,
+            "brier": 0.2436560969958999
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305436160132756,
+            "brier": 0.17314179875923702
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445510250363122,
+            "brier": 0.30682194799907575
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34859962697768504,
+            "brier": 0.10204917058842941
+          }
+        },
+        "previous_marginal": 0.777740854777895,
+        "t": 21,
+        "target_marginal": 0.7777541470578528
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232634791098591,
+            "brier": 0.2436483467791361
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305337751162226,
+            "brier": 0.17313736233986002
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445705843397228,
+            "brier": 0.3068300467194085
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485954507567208,
+            "brier": 0.1020474691765948
+          }
+        },
+        "previous_marginal": 0.7777541470578528,
+        "t": 22,
+        "target_marginal": 0.7777626541170258
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232505628540615,
+            "brier": 0.24364338648848805
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305274769421086,
+            "brier": 0.17313452303145874
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445831022939055,
+            "brier": 0.3068352299004214
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34859277797530375,
+            "brier": 0.10204638027302065
+          }
+        },
+        "previous_marginal": 0.7777626541170258,
+        "t": 23,
+        "target_marginal": 0.7777680986348966
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232422962857044,
+            "brier": 0.24364021184024715
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305234461106756,
+            "brier": 0.1731327058740819
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445911137845826,
+            "brier": 0.3068385471362697
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34859106739519674,
+            "brier": 0.1020456833747332
+          }
+        },
+        "previous_marginal": 0.7777680986348966,
+        "t": 24,
+        "target_marginal": 0.7777715831263339
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232370056145163,
+            "brier": 0.2436381800398852
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305208663785586,
+            "brier": 0.17313154289336075
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445962411386159,
+            "brier": 0.3068406701672126
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485899726239283,
+            "brier": 0.10204523735982923
+          }
+        },
+        "previous_marginal": 0.7777715831263339,
+        "t": 25,
+        "target_marginal": 0.7777738132008537
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232336195573329,
+            "brier": 0.24363687967721376
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305192153500037,
+            "brier": 0.1731307985856992
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8445995226451972,
+            "brier": 0.30684202890701606
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485892719703165,
+            "brier": 0.1020449519102907
+          }
+        },
+        "previous_marginal": 0.7777738132008537,
+        "t": 26,
+        "target_marginal": 0.7777752404485464
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232314524694209,
+            "brier": 0.24363604744082784
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305181586917285,
+            "brier": 0.1731303222287958
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8446016228094093,
+            "brier": 0.30684289850049024
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34858882355200493,
+            "brier": 0.10204476922258603
+          }
+        },
+        "previous_marginal": 0.7777752404485464,
+        "t": 27,
+        "target_marginal": 0.7777761538870698
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232300655285231,
+            "brier": 0.2436355148077894
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305174824304324,
+            "brier": 0.17313001736037764
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.844602966914505,
+            "brier": 0.30684345504031374
+          },
+          "stateful_markov": {
+            "bce_nats": 0.34858853656428557,
+            "brier": 0.10204465230245503
+          }
+        },
+        "previous_marginal": 0.7777761538870698,
+        "t": 28,
+        "target_marginal": 0.7777767384877247
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.72322917788445,
+            "brier": 0.24363517392192735
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5305170496232028,
+            "brier": 0.17312982224459
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.8446038271417662,
+            "brier": 0.30684381122580084
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485883528921452,
+            "brier": 0.10204457747357121
+          }
+        },
+        "previous_marginal": 0.7777767384877247,
+        "t": 29,
+        "target_marginal": 0.7777771126321439
+      }
+    ]
+  },
+  "scope": "Synthetic Bernoulli Markov forecasting only; no consciousness inference.",
+  "stationary_closed_form_cross_check": {
+    "average": {
+      "deranged_memory": {
+        "bce_nats": 0.7232275998468843,
+        "brier": 0.24363456790123447
+      },
+      "memoryless_marginal": {
+        "bce_nats": 0.5297061990576544,
+        "brier": 0.17283950617283944
+      },
+      "reset_each_trial": {
+        "bce_nats": 0.6873426691572835,
+        "brier": 0.23007232801466346
+      },
+      "stateful_markov": {
+        "bce_nats": 0.3485880263638955,
+        "brier": 0.10204444444444441
+      }
+    },
+    "decay_factor": 0.09578521125246335,
+    "logit_difference": 3.3868086442100562,
+    "reset_per_step": [
+      {
+        "bce_nats": 0.3485880263638955,
+        "brier": 0.1020444444444444,
+        "t": 1
+      },
+      {
+        "bce_nats": 0.4834582728177715,
+        "brier": 0.1530168888888888,
+        "t": 2
+      },
+      {
+        "bce_nats": 0.5697752305482521,
+        "brier": 0.18563925333333323,
+        "t": 3
+      },
+      {
+        "bce_nats": 0.6250180834957597,
+        "brier": 0.2065175665777777,
+        "t": 4
+      },
+      {
+        "bce_nats": 0.6603735093821645,
+        "brier": 0.21987968705422214,
+        "t": 5
+      },
+      {
+        "bce_nats": 0.6830009819494637,
+        "brier": 0.22843144415914657,
+        "t": 6
+      },
+      {
+        "bce_nats": 0.6974825643925351,
+        "brier": 0.23390456870629822,
+        "t": 7
+      },
+      {
+        "bce_nats": 0.7067507771561008,
+        "brier": 0.23740736841647528,
+        "t": 8
+      },
+      {
+        "bce_nats": 0.7126824333247829,
+        "brier": 0.23964916023098856,
+        "t": 9
+      },
+      {
+        "bce_nats": 0.7164786932727394,
+        "brier": 0.24108390699227708,
+        "t": 10
+      },
+      {
+        "bce_nats": 0.7189082996394316,
+        "brier": 0.24200214491950175,
+        "t": 11
+      },
+      {
+        "bce_nats": 0.7204632477141146,
+        "brier": 0.24258981719292552,
+        "t": 12
+      },
+      {
+        "bce_nats": 0.7214584144819117,
+        "brier": 0.24296592744791676,
+        "t": 13
+      },
+      {
+        "bce_nats": 0.7220953212133019,
+        "brier": 0.24320663801111114,
+        "t": 14
+      },
+      {
+        "bce_nats": 0.7225029415213915,
+        "brier": 0.24336069277155553,
+        "t": 15
+      },
+      {
+        "bce_nats": 0.722763818518569,
+        "brier": 0.24345928781823994,
+        "t": 16
+      },
+      {
+        "bce_nats": 0.7229307797967625,
+        "brier": 0.24352238864811798,
+        "t": 17
+      },
+      {
+        "bce_nats": 0.7230376350148063,
+        "brier": 0.2435627731792399,
+        "t": 18
+      },
+      {
+        "bce_nats": 0.7231060223543544,
+        "brier": 0.24358861927915798,
+        "t": 19
+      },
+      {
+        "bce_nats": 0.7231497902516651,
+        "brier": 0.24360516078310548,
+        "t": 20
+      },
+      {
+        "bce_nats": 0.723177801705944,
+        "brier": 0.24361574734563193,
+        "t": 21
+      },
+      {
+        "bce_nats": 0.7231957290366826,
+        "brier": 0.24362252274564886,
+        "t": 22
+      },
+      {
+        "bce_nats": 0.7232072025283552,
+        "brier": 0.24362685900165967,
+        "t": 23
+      },
+      {
+        "bce_nats": 0.7232145455630257,
+        "brier": 0.2436296342055066,
+        "t": 24
+      },
+      {
+        "bce_nats": 0.7232192451052148,
+        "brier": 0.24363141033596863,
+        "t": 25
+      },
+      {
+        "bce_nats": 0.7232222528122159,
+        "brier": 0.24363254705946435,
+        "t": 26
+      },
+      {
+        "bce_nats": 0.7232241777446965,
+        "brier": 0.24363327456250158,
+        "t": 27
+      },
+      {
+        "bce_nats": 0.7232254097014841,
+        "brier": 0.24363374016444542,
+        "t": 28
+      },
+      {
+        "bce_nats": 0.7232261981538282,
+        "brier": 0.24363403814968945,
+        "t": 29
+      }
+    ]
+  },
+  "stationary_initial_distribution": {
+    "average": {
+      "deranged_memory": {
+        "bce_nats": 0.7232275998468843,
+        "brier": 0.2436345679012345
+      },
+      "memoryless_marginal": {
+        "bce_nats": 0.5297061990576544,
+        "brier": 0.17283950617283944
+      },
+      "reset_each_trial": {
+        "bce_nats": 0.6873426691572834,
+        "brier": 0.23007232801466349
+      },
+      "stateful_markov": {
+        "bce_nats": 0.3485880263638955,
+        "brier": 0.1020444444444444
+      }
+    },
+    "parameters": {
+      "eigenvalue": 0.64,
+      "horizon": 29,
+      "initial_one_probability": 0.7777777777777779,
+      "memoryless_prediction": 0.7777777777777779,
+      "p01": 0.28,
+      "p11": 0.92,
+      "pooled_target_probability": 0.7777777777777779,
+      "stationary_one_probability": 0.7777777777777779
+    },
+    "per_step": [
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 1,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.4834582728177716,
+            "brier": 0.15301688888888887
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 2,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.5697752305482521,
+            "brier": 0.18563925333333325
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 3,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.6250180834957597,
+            "brier": 0.2065175665777777
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 4,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.6603735093821647,
+            "brier": 0.21987968705422214
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 5,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.6830009819494637,
+            "brier": 0.2284314441591466
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 6,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.6974825643925351,
+            "brier": 0.23390456870629822
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 7,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7067507771561009,
+            "brier": 0.23740736841647528
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 8,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7126824333247828,
+            "brier": 0.23964916023098853
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 9,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7164786932727395,
+            "brier": 0.2410839069922771
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 10,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7189082996394316,
+            "brier": 0.24200214491950173
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 11,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7204632477141145,
+            "brier": 0.24258981719292555
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 12,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7214584144819116,
+            "brier": 0.24296592744791673
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 13,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7220953212133018,
+            "brier": 0.24320663801111114
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 14,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7225029415213915,
+            "brier": 0.2433606927715555
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 15,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.722763818518569,
+            "brier": 0.24345928781824
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 16,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7229307797967625,
+            "brier": 0.24352238864811798
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 17,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7230376350148063,
+            "brier": 0.2435627731792399
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 18,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7231060223543544,
+            "brier": 0.24358861927915798
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 19,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.723149790251665,
+            "brier": 0.24360516078310548
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 20,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7231778017059443,
+            "brier": 0.24361574734563196
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 21,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7231957290366825,
+            "brier": 0.24362252274564883
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 22,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7232072025283551,
+            "brier": 0.24362685900165965
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 23,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7232145455630257,
+            "brier": 0.24362963420550662
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 24,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7232192451052148,
+            "brier": 0.2436314103359687
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 25,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.723222252812216,
+            "brier": 0.24363254705946435
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 26,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7232241777446965,
+            "brier": 0.2436332745625016
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 27,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7232254097014841,
+            "brier": 0.24363374016444544
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 28,
+        "target_marginal": 0.7777777777777779
+      },
+      {
+        "arms": {
+          "deranged_memory": {
+            "bce_nats": 0.7232275998468843,
+            "brier": 0.2436345679012345
+          },
+          "memoryless_marginal": {
+            "bce_nats": 0.5297061990576544,
+            "brier": 0.17283950617283944
+          },
+          "reset_each_trial": {
+            "bce_nats": 0.7232261981538283,
+            "brier": 0.24363403814968954
+          },
+          "stateful_markov": {
+            "bce_nats": 0.3485880263638955,
+            "brier": 0.1020444444444444
+          }
+        },
+        "previous_marginal": 0.7777777777777779,
+        "t": 29,
+        "target_marginal": 0.7777777777777779
+      }
+    ]
+  },
+  "status": "executed_independent_exact_expectation_and_exhaustive_short_path_checks",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "run": 8
+  }
+}

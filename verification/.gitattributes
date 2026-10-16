@@ -1,0 +1,5 @@
+# Keep full evidence available while making the authored changes easier to review.
+2026-10-15/results/** linguist-generated=true
+2026-10-15/reference/** linguist-vendored=true
+2026-10-15/review/*.diff linguist-generated=true
+2026-10-15/verification_report.* linguist-generated=true

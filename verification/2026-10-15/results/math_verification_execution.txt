@@ -1,0 +1,25 @@
+Wrote results/math_verification.json
+stationary_initial_distribution
+  stateful_markov        Brier=0.102044444444 BCE=0.348588026364
+  memoryless_marginal    Brier=0.172839506173 BCE=0.529706199058
+  reset_each_trial       Brier=0.230072328015 BCE=0.687342669157
+  deranged_memory        Brier=0.243634567901 BCE=0.723227599847
+public_source_initial_distribution
+  stateful_markov        Brier=0.105450140845 BCE=0.356947519589
+  memoryless_marginal    Brier=0.182009804752 BCE=0.550214690053
+  reset_each_trial       Brier=0.290633329580 BCE=0.805453724914
+  deranged_memory        Brier=0.255457586401 BCE=0.753858858110
+
+test_exhaustive_negative_eigenvalue_paths (__main__.IndependentMathTests.test_exhaustive_negative_eigenvalue_paths) ... ok
+test_exhaustive_nonstationary_paths (__main__.IndependentMathTests.test_exhaustive_nonstationary_paths) ... ok
+test_exhaustive_stationary_paths (__main__.IndependentMathTests.test_exhaustive_stationary_paths) ... ok
+test_general_brier_variance_identities (__main__.IndependentMathTests.test_general_brier_variance_identities) ... ok
+test_marginal_eigenvalue_formula_matches_forward_recursion (__main__.IndependentMathTests.test_marginal_eigenvalue_formula_matches_forward_recursion) ... ok
+test_pooled_marginal_minimizes_constant_forecast_average_risk (__main__.IndependentMathTests.test_pooled_marginal_minimizes_constant_forecast_average_risk) ... ok
+test_stationary_compact_formulas_at_every_time (__main__.IndependentMathTests.test_stationary_compact_formulas_at_every_time) ... ok
+test_t1_reset_equals_stateful (__main__.IndependentMathTests.test_t1_reset_equals_stateful) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.018s
+
+OK

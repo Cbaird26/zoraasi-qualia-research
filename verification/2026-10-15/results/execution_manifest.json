@@ -1,0 +1,152 @@
+{
+  "python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.3-arm64-arm-64bit-Mach-O",
+  "repository_commit": "e941c5fd17a49de71fcdbfbb60cb8d84e168877d",
+  "published_checksums": [
+    {
+      "file": "PROTOCOL.md",
+      "pass": true
+    },
+    {
+      "file": "experiments/connection_study_synthetic_report.json",
+      "pass": true
+    },
+    {
+      "file": "paper/main.tex",
+      "pass": true
+    },
+    {
+      "file": "tests/test_connection_study.py",
+      "pass": true
+    },
+    {
+      "file": "verify_report.py",
+      "pass": true
+    },
+    {
+      "file": "zora_lab/__init__.py",
+      "pass": true
+    },
+    {
+      "file": "zora_lab/connection_study.py",
+      "pass": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "original_phase23",
+      "arguments": [
+        "original/phase2_3_protocol_reproduction.py"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "elapsed_seconds": 0.12172300000383984
+    },
+    {
+      "name": "original_phase24",
+      "arguments": [
+        "original/synthetic_qualia_engine_v1.py"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "elapsed_seconds": 0.04938816600042628
+    },
+    {
+      "name": "repository_tests",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "reference/repository",
+      "exit_code": 0,
+      "elapsed_seconds": 0.04169829199963715
+    },
+    {
+      "name": "repository_frozen_verify",
+      "arguments": [
+        "verify_report.py"
+      ],
+      "cwd": "reference/repository",
+      "exit_code": 0,
+      "elapsed_seconds": 0.03011720799986506
+    },
+    {
+      "name": "repository_reproduction",
+      "arguments": [
+        "-m",
+        "zora_lab.connection_study",
+        "--out",
+        "../../results/repository_reproduced.json"
+      ],
+      "cwd": "reference/repository",
+      "exit_code": 0,
+      "elapsed_seconds": 0.03622533299494535
+    },
+    {
+      "name": "corrected_tests",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "corrected",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "elapsed_seconds": 0.3297951250060578
+    },
+    {
+      "name": "math_verification_execution",
+      "arguments": [
+        "review/math_verify.py",
+        "--out",
+        "results/math_verification.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "elapsed_seconds": 0.058207458998367656
+    },
+    {
+      "name": "phase23_corrected_console",
+      "arguments": [
+        "corrected/phase2_3_protocol_reproduction.py",
+        "--seeds",
+        "200",
+        "--output",
+        "results/phase23_corrected_benchmark.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "elapsed_seconds": 0.16970854199462337
+    },
+    {
+      "name": "phase24_corrected_console",
+      "arguments": [
+        "corrected/phase2_4_functional_state_engine.py",
+        "--seeds",
+        "200",
+        "--output",
+        "results/phase24_corrected_benchmark.json"
+      ],
+      "cwd": ".",
+      "exit_code": 0,
+      "elapsed_seconds": 20.731419875002757
+    },
+    {
+      "name": "original_200_seed_benchmarks",
+      "exit_code": 0,
+      "elapsed_seconds": 1.2793891249966691
+    }
+  ],
+  "success": true,
+  "git_blob_hashes_verified": 13,
+  "reference_source_unchanged": true,
+  "extracted_script_checksums_match_provenance": true
+}

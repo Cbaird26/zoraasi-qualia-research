@@ -1,0 +1,526 @@
+#!/usr/bin/env python3
+"""
+phase2_6_novelty_aware_gate.py
+
+ZoraASI Phase 2.6: Novelty-Aware Bayesian Retrieval Gate & Post-Switch Lag Fix.
+Directly addresses the two trade-offs identified in PR #1 commit 7be77aa:
+  1. Prevents harmful memory reuse in novel/unfamiliar regimes via an exact
+     Beta-Binomial marginal likelihood novelty null (H_novel) + row-wise check.
+  2. Resolves the first-10-steps post-switch Brier penalty via instantaneous
+     surprise-driven plasticity and local-Bayes OOD fallback when H_novel wins.
+
+Status: Unexecuted in chat session; pure Python standard library for local run.
+"""
+
+from dataclasses import dataclass, field
+import math
+import random
+import statistics
+from typing import Dict, List, Optional, Tuple
+import unittest
+
+
+def clip(val: float, low: float, high: float) -> float:
+    return min(max(val, low), high)
+
+
+def brier_score(y_true: List[int], y_prob: List[float]) -> float:
+    return sum((p - y) ** 2 for y, p in zip(y_true, y_prob)) / len(y_true)
+
+
+def binary_cross_entropy(y_true: List[int], y_prob: List[float], eps: float = 1e-12) -> float:
+    total = 0.0
+    for y, p in zip(y_true, y_prob):
+        pc = clip(p, eps, 1.0 - eps)
+        total -= y * math.log(pc) + (1 - y) * math.log(1.0 - pc)
+    return total / len(y_true)
+
+
+def beta_binomial_row_log_evidence(n_i1: int, n_i0: int) -> float:
+    """
+    Exact log marginal likelihood of observing (n_i1, n_i0) transitions
+    under a uniform Beta(1,1) novelty prior: ln [ (n_i1! n_i0!) / (n_i + 1)! ].
+    """
+    n_total = n_i1 + n_i0
+    return (
+        math.lgamma(n_i1 + 1.0)
+        + math.lgamma(n_i0 + 1.0)
+        - math.lgamma(n_total + 2.0)
+    )
+
+
+def point_row_log_likelihood(n_i1: int, n_i0: int, p_i1: float, eps: float = 1e-12) -> float:
+    """Exact log-likelihood of counts (n_i1, n_i0) under point parameter p_i1."""
+    pc = clip(p_i1, eps, 1.0 - eps)
+    return n_i1 * math.log(pc) + n_i0 * math.log(1.0 - pc)
+
+
+@dataclass
+class EpisodicSnapshot:
+    p11: float
+    p01: float
+    valence_score: float
+    maturity_steps: int = 0
+
+
+class NoveltyAwareEngineV1_2:
+    """
+    Phase 2.6 Engine featuring:
+      - Dual-threshold Bayesian Novelty Gate (H_k vs H_fast AND H_k vs H_novel)
+      - Row-wise Bayes factor consistency check (prevents partial-row mismatch)
+      - Instantaneous squared-error plasticity + local-Bayes OOD reset on novel shifts
+      - Retrieval cooldown to prevent post-switch oscillation.
+    """
+
+    def __init__(
+        self,
+        enable_episodic_memory: bool = True,
+        enable_novelty_gate: bool = True,
+        enable_ood_fallback: bool = True,
+        window_size: int = 8,
+        adv_margin: float = 0.35,
+        novelty_bf_threshold: float = 0.15,
+        row_bf_floor: float = -0.25,
+        max_snapshots: int = 8,
+    ) -> None:
+        self.enable_episodic_memory = enable_episodic_memory
+        self.enable_novelty_gate = enable_novelty_gate
+        self.enable_ood_fallback = enable_ood_fallback
+        self.window_size = window_size
+        self.adv_margin = adv_margin
+        self.novelty_bf_threshold = novelty_bf_threshold
+        self.row_bf_floor = row_bf_floor
+        self.max_snapshots = max_snapshots
+
+        self.p11_fast: float = 0.92
+        self.p01_fast: float = 0.28
+        self.p11_slow: float = 0.92
+        self.p01_slow: float = 0.28
+        self.p_marginal_online: float = 7.0 / 9.0
+
+        self.arousal: float = 0.18
+        self.valence: float = 0.0
+        self.continuity: float = 1.0
+        self.stable_steps: int = 10
+        self.cooldown: int = 0
+
+        self.memory: List[EpisodicSnapshot] = [
+            EpisodicSnapshot(0.92, 0.28, valence_score=0.5, maturity_steps=30)
+        ]
+        self.window: List[Tuple[int, int]] = []
+
+        # Diagnostic counters
+        self.familiar_retrievals: int = 0
+        self.novelty_rejections: int = 0
+        self.ood_fallbacks: int = 0
+
+    def predict_proba(self, prev_s: int) -> float:
+        p_raw = self.p11_fast if prev_s == 1 else self.p01_fast
+        # Light uncertainty damping during high-surprise transition steps
+        if self.enable_ood_fallback and self.continuity < 0.62 and len(self.window) >= 2:
+            n11, n10, n01, n00 = self._window_counts()
+            local_p = (n11 + 1.0) / (n11 + n10 + 2.0) if prev_s == 1 else (n01 + 1.0) / (n01 + n00 + 2.0)
+            blend = clip((0.62 - self.continuity) * 0.85, 0.0, 0.35)
+            return (1.0 - blend) * p_raw + blend * local_p
+        return p_raw
+
+    def _window_counts(self) -> Tuple[int, int, int, int]:
+        n11 = n10 = n01 = n00 = 0
+        for prv, nxt in self.window:
+            if prv == 1:
+                if nxt == 1:
+                    n11 += 1
+                else:
+                    n10 += 1
+            else:
+                if nxt == 1:
+                    n01 += 1
+                else:
+                    n00 += 1
+        return n11, n10, n01, n00
+
+    def _candidate_passes_gate(
+        self,
+        snap: EpisodicSnapshot,
+        n11: int,
+        n10: int,
+        n01: int,
+        n00: int,
+        ll_fast: float,
+        ll_novel_r1: float,
+        ll_novel_r0: float,
+    ) -> Tuple[bool, float]:
+        ll_snap_r1 = point_row_log_likelihood(n11, n10, snap.p11)
+        ll_snap_r0 = point_row_log_likelihood(n01, n00, snap.p01)
+        ll_snap = ll_snap_r1 + ll_snap_r0
+
+        # Condition 1: Relative advantage over current fast parameters
+        if (ll_snap - ll_fast) <= self.adv_margin:
+            return False, ll_snap
+
+        if not self.enable_novelty_gate:
+            return True, ll_snap
+
+        # Condition 2: Global log-Bayes factor against H_novel (Beta-Binomial prior)
+        ll_novel_total = ll_novel_r1 + ll_novel_r0
+        if (ll_snap - ll_novel_total) <= self.novelty_bf_threshold:
+            return False, ll_snap
+
+        # Condition 3: Row-wise consistency (neither state row can strongly favor H_novel)
+        if (n11 + n10) >= 2 and (ll_snap_r1 - ll_novel_r1) < self.row_bf_floor:
+            return False, ll_snap
+        if (n01 + n00) >= 2 and (ll_snap_r0 - ll_novel_r0) < self.row_bf_floor:
+            return False, ll_snap
+
+        return True, ll_snap
+
+    def step_update(self, prev_s: int, curr_s: int) -> float:
+        p_pred = self.predict_proba(prev_s)
+        err = abs(curr_s - p_pred)
+        sq_err = (curr_s - p_pred) ** 2
+
+        self.p_marginal_online = 0.94 * self.p_marginal_online + 0.06 * curr_s
+        pc = clip(p_pred, 1e-12, 1.0 - 1e-12)
+        pm = clip(self.p_marginal_online, 1e-12, 1.0 - 1e-12)
+        loss_agent = -(curr_s * math.log(pc) + (1 - curr_s) * math.log(1.0 - pc))
+        loss_marg = -(curr_s * math.log(pm) + (1 - curr_s) * math.log(1.0 - pm))
+
+        ent = -(pc * math.log(pc) + (1 - pc) * math.log(1.0 - pc)) / math.log(2.0)
+        self.arousal = clip(0.65 * self.arousal + 0.35 * (0.80 * err + 0.20 * ent), 0.0, 1.0)
+        self.valence = math.tanh(0.80 * self.valence + 0.60 * (loss_marg - loss_agent))
+
+        # Instantaneous + smoothed surprise learning rate (fixes post-switch steps 1..5 lag)
+        lr = clip(0.025 + 0.24 * (self.arousal ** 1.3) + 0.22 * sq_err, 0.02, 0.42)
+
+        if prev_s == 1:
+            self.p11_fast = clip((1.0 - lr) * self.p11_fast + lr * curr_s, 0.02, 0.98)
+        else:
+            self.p01_fast = clip((1.0 - lr) * self.p01_fast + lr * curr_s, 0.02, 0.98)
+
+        dot = self.p11_fast * self.p11_slow + self.p01_fast * self.p01_slow
+        nf = math.hypot(self.p11_fast, self.p01_fast)
+        ns = math.hypot(self.p11_slow, self.p01_slow)
+        cos_sim = dot / max(nf * ns, 1e-12)
+        self.continuity = clip(cos_sim * math.exp(-0.90 * err), 0.0, 1.0)
+
+        self.p11_slow = 0.88 * self.p11_slow + 0.12 * self.p11_fast
+        self.p01_slow = 0.88 * self.p01_slow + 0.12 * self.p01_fast
+
+        self.window.append((prev_s, curr_s))
+        if len(self.window) > self.window_size:
+            self.window.pop(0)
+
+        if self.cooldown > 0:
+            self.cooldown -= 1
+
+        # Evaluate Episodic Retrieval & OOD Novelty Fallback
+        if len(self.window) >= 6 and self.cooldown == 0:
+            n11, n10, n01, n00 = self._window_counts()
+            ll_fast = (
+                point_row_log_likelihood(n11, n10, self.p11_fast)
+                + point_row_log_likelihood(n01, n00, self.p01_fast)
+            )
+            ll_novel_r1 = beta_binomial_row_log_evidence(n11, n10)
+            ll_novel_r0 = beta_binomial_row_log_evidence(n01, n00)
+            ll_novel = ll_novel_r1 + ll_novel_r0
+
+            if self.arousal > 0.38 and self.continuity < 0.72:
+                best_snap: Optional[EpisodicSnapshot] = None
+                best_ll = -1e9
+                any_raw_advantage = False
+
+                if self.enable_episodic_memory and self.memory:
+                    for snap in self.memory:
+                        ll_s = (
+                            point_row_log_likelihood(n11, n10, snap.p11)
+                            + point_row_log_likelihood(n01, n00, snap.p01)
+                        )
+                        if (ll_s - ll_fast) > self.adv_margin:
+                            any_raw_advantage = True
+                        passed, _ = self._candidate_passes_gate(
+                            snap, n11, n10, n01, n00, ll_fast, ll_novel_r1, ll_novel_r0
+                        )
+                        if passed and ll_s > best_ll:
+                            best_ll = ll_s
+                            best_snap = snap
+
+                if best_snap is not None:
+                    # Verified familiar return: snap fast state to retrieved memory
+                    self.p11_fast = 0.75 * best_snap.p11 + 0.25 * self.p11_fast
+                    self.p01_fast = 0.75 * best_snap.p01 + 0.25 * self.p01_fast
+                    self.familiar_retrievals += 1
+                    self.cooldown = 6
+                    self.stable_steps = 0
+                else:
+                    if any_raw_advantage and self.enable_novelty_gate:
+                        self.novelty_rejections += 1
+                    # If H_novel strongly beats current fast state, trigger OOD local-Bayes reset
+                    if self.enable_ood_fallback and (ll_novel - ll_fast) > 0.45:
+                        p11_local = (n11 + 1.0) / (n11 + n10 + 2.0)
+                        p01_local = (n01 + 1.0) / (n01 + n00 + 2.0)
+                        self.p11_fast = 0.65 * p11_local + 0.35 * self.p11_fast
+                        self.p01_fast = 0.65 * p01_local + 0.35 * self.p01_fast
+                        self.ood_fallbacks += 1
+                        self.cooldown = 5
+                        self.stable_steps = 0
+
+        # Consolidate mature, high-continuity regimes into episodic memory
+        if self.continuity > 0.78 and err < 0.35:
+            self.stable_steps += 1
+        else:
+            self.stable_steps = max(0, self.stable_steps - 1)
+
+        if self.enable_episodic_memory and self.stable_steps >= 14 and self.valence > 0.10:
+            self._consolidate(self.p11_fast, self.p01_fast, self.valence)
+
+        return p_pred
+
+    def _consolidate(self, p11: float, p01: float, val: float) -> None:
+        for snap in self.memory:
+            if math.hypot(snap.p11 - p11, snap.p01 - p01) < 0.14:
+                snap.p11 = 0.6 * snap.p11 + 0.4 * p11
+                snap.p01 = 0.6 * snap.p01 + 0.4 * p01
+                snap.valence_score = max(snap.valence_score, val)
+                snap.maturity_steps += 1
+                return
+        if len(self.memory) < self.max_snapshots:
+            self.memory.append(EpisodicSnapshot(p11, p01, val, maturity_steps=14))
+
+
+class FixedEMABaseline:
+    def __init__(self, lr: float = 0.16) -> None:
+        self.lr = lr
+        self.p11 = 0.92
+        self.p01 = 0.28
+
+    def step_update(self, prev_s: int, curr_s: int) -> float:
+        p_pred = self.p11 if prev_s == 1 else self.p01
+        if prev_s == 1:
+            self.p11 = (1.0 - self.lr) * self.p11 + self.lr * curr_s
+        else:
+            self.p01 = (1.0 - self.lr) * self.p01 + self.lr * curr_s
+        return p_pred
+
+
+class TunedCUSUMBaseline:
+    def __init__(self, lr: float = 0.14, drift: float = 0.36, threshold: float = 1.45) -> None:
+        self.lr = lr
+        self.drift = drift
+        self.threshold = threshold
+        self.p11 = 0.92
+        self.p01 = 0.28
+        self.g_pos = 0.0
+
+    def step_update(self, prev_s: int, curr_s: int) -> float:
+        p_pred = self.p11 if prev_s == 1 else self.p01
+        err = abs(curr_s - p_pred)
+        self.g_pos = max(0.0, self.g_pos + err - self.drift)
+        if self.g_pos > self.threshold:
+            self.p11 = 0.50
+            self.p01 = 0.50
+            self.g_pos = 0.0
+        if prev_s == 1:
+            self.p11 = (1.0 - self.lr) * self.p11 + self.lr * curr_s
+        else:
+            self.p01 = (1.0 - self.lr) * self.p01 + self.lr * curr_s
+        return p_pred
+
+
+def generate_scheduled_stream(
+    schedule: List[Tuple[int, float, float]], seed: int
+) -> List[int]:
+    rng = random.Random(seed)
+    stream = [1]
+    for dwell, p11, p01 in schedule:
+        for _ in range(dwell):
+            p_next = p11 if stream[-1] == 1 else p01
+            stream.append(1 if rng.random() < p_next else 0)
+    return stream
+
+
+def mixed_familiar_novel_schedule() -> List[Tuple[int, float, float]]:
+    return [
+        (45, 0.92, 0.28),  # Block 0: Familiar A
+        (45, 0.15, 0.85),  # Block 1: Familiar B
+        (45, 0.92, 0.28),  # Block 2: Familiar A (Return)
+        (45, 0.15, 0.85),  # Block 3: Familiar B (Return)
+        (45, 0.50, 0.50),  # Block 4: Novel C (Max-entropy white noise)
+        (45, 0.88, 0.88),  # Block 5: Novel D (High-rate Bernoulli, row 0 mismatch with A)
+        (45, 0.08, 0.12),  # Block 6: Novel E (Sparse arrival regime)
+        (45, 0.15, 0.85),  # Block 7: Familiar B (Return after novel blocks)
+        (45, 0.92, 0.28),  # Block 8: Familiar A (Return after novel blocks)
+    ]
+
+
+def tune_baselines_on_validation(n_val_seeds: int = 30, val_seed_start: int = 30260921) -> Tuple[float, Tuple[float, float, float]]:
+    """Tunes EMA and CUSUM strictly on held-out validation seeds (no test leakage)."""
+    sched = mixed_familiar_novel_schedule()
+    val_streams = [generate_scheduled_stream(sched, val_seed_start + k) for k in range(n_val_seeds)]
+
+    best_ema_lr = 0.15
+    best_ema_bs = 1.0
+    for lr_i in range(4, 36, 2):
+        lr = lr_i * 0.01
+        bs_list = []
+        for s in val_streams:
+            m = FixedEMABaseline(lr=lr)
+            preds = [m.step_update(s[t - 1], s[t]) for t in range(1, len(s))]
+            bs_list.append(brier_score(s[1:], preds))
+        mean_bs = statistics.mean(bs_list)
+        if mean_bs < best_ema_bs:
+            best_ema_bs = mean_bs
+            best_ema_lr = lr
+
+    best_cusum_params = (0.14, 0.36, 1.45)
+    best_cusum_bs = 1.0
+    for lr in (0.10, 0.14, 0.18):
+        for drift in (0.32, 0.36, 0.40):
+            for thresh in (1.25, 1.45, 1.65):
+                bs_list = []
+                for s in val_streams:
+                    m = TunedCUSUMBaseline(lr=lr, drift=drift, threshold=thresh)
+                    preds = [m.step_update(s[t - 1], s[t]) for t in range(1, len(s))]
+                    bs_list.append(brier_score(s[1:], preds))
+                mean_bs = statistics.mean(bs_list)
+                if mean_bs < best_cusum_bs:
+                    best_cusum_bs = mean_bs
+                    best_cusum_params = (lr, drift, thresh)
+
+    return best_ema_lr, best_cusum_params
+
+
+def evaluate_phase26_benchmark(
+    n_test_seeds: int = 100, test_seed_start: int = 20260921
+) -> Dict[str, Dict[str, float]]:
+    ema_lr, cusum_params = tune_baselines_on_validation()
+    sched = mixed_familiar_novel_schedule()
+    block_len = 45
+
+    # Slice masks for Novel Blocks (4, 5, 6), Familiar Return Blocks (2, 3, 7, 8),
+    # and First-10-Steps Post-Switch across all switches (blocks 1..8, steps 0..9)
+    novel_indices = [t for b in (4, 5, 6) for t in range(b * block_len, (b + 1) * block_len)]
+    familiar_indices = [t for b in (2, 3, 7, 8) for t in range(b * block_len, (b + 1) * block_len)]
+    first10_indices = [t for b in range(1, len(sched)) for t in range(b * block_len, b * block_len + 10)]
+
+    models_spec = [
+        "phase26_novelty_gated",
+        "phase25_ungated_memory",
+        "no_memory_adaptive",
+        "val_tuned_ema",
+        "val_tuned_cusum",
+    ]
+
+    agg: Dict[str, Dict[str, List[float]]] = {
+        m: {
+            "overall_brier": [],
+            "overall_bce": [],
+            "familiar_brier": [],
+            "novel_brier": [],
+            "first10_brier": [],
+            "first10_bce": [],
+        }
+        for m in models_spec
+    }
+
+    for k in range(n_test_seeds):
+        stream = generate_scheduled_stream(sched, test_seed_start + k)
+        y_true = stream[1:]
+
+        instances = {
+            "phase26_novelty_gated": NoveltyAwareEngineV1_2(
+                enable_episodic_memory=True, enable_novelty_gate=True, enable_ood_fallback=True
+            ),
+            "phase25_ungated_memory": NoveltyAwareEngineV1_2(
+                enable_episodic_memory=True, enable_novelty_gate=False, enable_ood_fallback=False
+            ),
+            "no_memory_adaptive": NoveltyAwareEngineV1_2(
+                enable_episodic_memory=False, enable_novelty_gate=False, enable_ood_fallback=True
+            ),
+            "val_tuned_ema": FixedEMABaseline(lr=ema_lr),
+            "val_tuned_cusum": TunedCUSUMBaseline(*cusum_params),
+        }
+
+        for name, mod in instances.items():
+            preds = [mod.step_update(stream[t - 1], stream[t]) for t in range(1, len(stream))]
+
+            y_fam = [y_true[i] for i in familiar_indices]
+            p_fam = [preds[i] for i in familiar_indices]
+
+            y_nov = [y_true[i] for i in novel_indices]
+            p_nov = [preds[i] for i in novel_indices]
+
+            y_f10 = [y_true[i] for i in first10_indices]
+            p_f10 = [preds[i] for i in first10_indices]
+
+            agg[name]["overall_brier"].append(brier_score(y_true, preds))
+            agg[name]["overall_bce"].append(binary_cross_entropy(y_true, preds))
+            agg[name]["familiar_brier"].append(brier_score(y_fam, p_fam))
+            agg[name]["novel_brier"].append(brier_score(y_nov, p_nov))
+            agg[name]["first10_brier"].append(brier_score(y_f10, p_f10))
+            agg[name]["first10_bce"].append(binary_cross_entropy(y_f10, p_f10))
+
+    return {
+        name: {metric: statistics.mean(vals) for metric, vals in m_dict.items()}
+        for name, m_dict in agg.items()
+    }
+
+
+class TestPhase26NoveltyGate(unittest.TestCase):
+    def test_beta_binomial_evidence_rejects_mismatched_snapshot_on_novel_regime(self) -> None:
+        """
+        Verifies analytically that on Novel Regime D counts (n11=4, n10=0, n01=2, n00=0),
+        Snapshot A (0.92, 0.28) beats stale Regime B (0.15, 0.85) on raw likelihood,
+        but is rejected by the Beta-Binomial Novelty Gate.
+        """
+        snap_a = EpisodicSnapshot(0.92, 0.28, valence_score=0.5)
+        n11, n10, n01, n00 = 4, 0, 2, 0
+
+        ll_fast_b = point_row_log_likelihood(n11, n10, 0.15) + point_row_log_likelihood(n01, n00, 0.85)
+        ll_novel_r1 = beta_binomial_row_log_evidence(n11, n10)
+        ll_novel_r0 = beta_binomial_row_log_evidence(n01, n00)
+
+        ungated_eng = NoveltyAwareEngineV1_2(enable_novelty_gate=False)
+        gated_eng = NoveltyAwareEngineV1_2(enable_novelty_gate=True)
+
+        passed_ungated, _ = ungated_eng._candidate_passes_gate(
+            snap_a, n11, n10, n01, n00, ll_fast_b, ll_novel_r1, ll_novel_r0
+        )
+        passed_gated, _ = gated_eng._candidate_passes_gate(
+            snap_a, n11, n10, n01, n00, ll_fast_b, ll_novel_r1, ll_novel_r0
+        )
+
+        self.assertTrue(passed_ungated)
+        self.assertFalse(passed_gated)
+
+    def test_novelty_gate_improves_novel_blocks_without_losing_familiar_gains(self) -> None:
+        summary = evaluate_phase26_benchmark(n_test_seeds=30)
+        gated = summary["phase26_novelty_gated"]
+        ungated = summary["phase25_ungated_memory"]
+        no_mem = summary["no_memory_adaptive"]
+
+        # 1. Gated memory beats ungated memory on novel regimes
+        self.assertLess(gated["novel_brier"], ungated["novel_brier"])
+        # 2. Gated memory beats no-memory baseline on familiar returns
+        self.assertLess(gated["familiar_brier"], no_mem["familiar_brier"])
+        # 3. Gated engine improves first-10-step post-switch Brier over ungated Phase 2.5
+        self.assertLess(gated["first10_brier"], ungated["first10_brier"])
+
+
+if __name__ == "__main__":
+    summary = evaluate_phase26_benchmark(n_test_seeds=100)
+    print("=== Phase 2.6 Multi-Seed Benchmark (100 Test Seeds, Out-of-Sample Tuned Baselines) ===")
+    header = (
+        f"{'Model Variant':<24} | {'Overall BS':<10} | {'Overall BCE':<11} | "
+        f"{'Familiar BS':<11} | {'Novel BS':<10} | {'First-10 BS':<11}"
+    )
+    print(header)
+    print("-" * len(header))
+    for name, metrics in summary.items():
+        print(
+            f"{name:<24} | {metrics['overall_brier']:<10.6f} | {metrics['overall_bce']:<11.6f} | "
+            f"{metrics['familiar_brier']:<11.6f} | {metrics['novel_brier']:<10.6f} | "
+            f"{metrics['first10_brier']:<11.6f}"
+        )
+    print("\nRunning deterministic Phase 2.6 verification tests...")
+    unittest.main(verbosity=2)
+

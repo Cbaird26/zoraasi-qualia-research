@@ -1,0 +1,255 @@
+PHASE 2.5 LOCAL IMPLEMENTATION / VERIFICATION NOTES
+
+Scope and files
+The entire uploaded text and extracted Python source are preserved under original/.
+The corrected standalone standard-library implementation is
+corrected/phase2_5_falsification_suite.py; deterministic tests are in test_phase25.py.
+This is a local verification extension. No public repository, frozen artifact,
+external conversation, or other remote data was modified by this implementation.
+All named scalar states are functional computational variables. No prediction
+result establishes phenomenological consciousness or a physical theory.
+
+Audit findings from the supplied script
+1. EMA selection minimizes Brier on the exact stream that is subsequently scored.
+   This is explicitly labeled an oracle in parts of the source and is a valid
+   hindsight comparator. It is not a validation-tuned predictor with an unbiased
+   held-out performance estimate. The corrected evaluation selects baselines on
+   separate validation seeds, writes a frozen manifest, then evaluates new seeds.
+2. The advertised EMA search interval is .01 through .50; range(1,45) actually
+   searches only .01 through .44. The local grid includes .01 through .50.
+3. BCE is defined in the supplied source but not reported by its experiments.
+   Every local evaluation, block, window and paired comparison includes Brier and
+   BCE in natural-log units. Baseline selection uses Brier only, not BCE separately.
+4. PageHinkleyChangepointBaseline uses cumulative absolute error minus the fixed
+   reference .38 and its running minimum. It does not estimate a running mean as
+   in a conventional Page-Hinkley statistic. It is renamed ErrorCUSUM; its actual
+   update/reset equations are preserved, with rate/reference/threshold validation.
+5. The online marginal is updated with the current target before its current loss
+   is computed, whereas the agent prediction is from before the target. The
+   reference therefore receives an unfair in-sample advantage. This is corrected
+   by computing both losses from pre-observation predictions, then updating the
+   marginal. The original target prediction itself was pre-observation; this bug
+   is a biased comparative valence signal, not target leakage into that prediction.
+6. All supplied engines start from simulator truth .92,.28 and marginal 7/9.
+   Corrected runs initialize from real independent Laplace-smoothed training counts.
+   An explicitly privileged current-regime oracle is included as a reference.
+7. The promised random-snapshot control is absent. The local random control draws
+   one memory index uniformly at each eligible retrieval, with the same eligibility
+   and likelihood-improvement gate as the best-likelihood arm. It does not force
+   retrieval of a poor snapshot; that would confound selection with gate removal.
+8. The desynchronized schedule is A22, B45, A45, B45, A45, B45, A45, B45, B23.
+   Its final two blocks are both B. A strict phase-shifted A/B clock ends with A23.
+   Pointwise/circular schedule construction fixes this endpoint error; a regression
+   test verifies the entire expected block sequence. A fixed offset is still a
+   correlated deterministic schedule, not independent stochastic regime timing.
+9. Independent stochastic donor dwell times are claimed in prose but not supplied.
+   The local suite separates synchronous, fixed-offset and independently drawn
+   dwell schedules. Schedule and observation RNGs use different namespaces.
+10. The original offline donor replay uses donor scalars computed after observing
+    donor time t, then updates the recipient after its current prediction. That can
+    be causal: its effect begins at recipient prediction t+1. It must not be called
+    future leakage merely because the donor trace was computed offline. Local
+    online orchestration makes the contract explicit: ALL target/donor predictions
+    at t precede ANY current outcome update. Same-time donor post-observation
+    scalars affect only the recipient update for subsequent predictions.
+11. The two supplied unit tests assert stochastic performance rankings at one seed.
+    Such tests do not define software correctness. They are replaced by deterministic
+    checks of causality, equations, RNG separation, memory, schedules, bounds and
+    metrics. Statistical comparisons are reported without requiring a favorable sign.
+12. max_snapshots=0 still seeds a memory item in the original. Local initialization
+    respects zero capacity and disabled memory, and fully resets states/history/RNG.
+    A zero learning rate no longer clips and changes an otherwise frozen estimate.
+    Invalid probabilities, labels, shapes, donor scalars and capacities are rejected.
+
+Changes from Phase 2.4 that preclude attributing score differences solely to
+removing the self-model/marginal blend
+The supplied Phase 2.5 changes Regime B from (.18,.82) to (.15,.85), sometimes
+extends the horizon from 360 to 450 transitions, changes initial arousal .25->.20,
+error/entropy weights .70/.30 -> .75/.25, plasticity .02+.28*a^1.5 ->
+.02+.32*a^1.4, continuity error factor .8->.85, slow trace rate .08->.10,
+retrieval arousal/continuity gates .48/.65 -> .44/.68, retrieval margin .35->.30,
+retrieval mixing .55/.45 -> .65/.35, consolidation gates .25/.80 -> .20/.82,
+minimum memory window 4->6, and introduces an online marginal. Continuity is
+computed before the fast update in Phase 2.5; Phase 2.4 used the post-fast-update
+vector. Donor transfer now controls active post-observation signals while retaining
+endogenous scalar history, whereas the Phase 2.4 control copied prior state fields.
+The local engine preserves these proposed Phase 2.5 equations rather than silently
+redesigning the model. A legacy_marginal_order audit arm differs from corrected
+full_engine only in the comparative-marginal update ordering. A regression test
+with oracle initialization confirms exact original per-step predictions and
+scalar states when that legacy option is enabled. Parent bridge evaluation replays
+Phase 2.4 models on identical new streams/fits to separate task and model changes.
+
+Before-test selection protocol (fixed before executing evaluation scores)
+- Learned initialization: 24 independent stationary regime-A trials, each with 30
+  states, giving 696 transitions. Row estimates and target-arrival marginal use
+  Beta(1,1) smoothing. Initial training states have pi_A=7/9. This is a Phase 2.5
+  extension, not an assertion of exact public Phase 2.3 training reproduction.
+- Validation: 30 seeds 41000000..41000029 on recurrent_45 only.
+- Primary test: 100 seeds 51000000..51000099.
+- Disjoint followup: 100 seeds 61000000..61000099.
+- Training streams use seed+1,000,000,000 and separate RNG domains. Their numeric
+  identifiers cannot overlap evaluation seeds. SHA256-derived random seeds separate
+  training, target observations, each donor's observations, and stochastic schedules.
+- EMA candidates: rates .01,.02,...,.50; learned transition initialization and the
+  engine's [.02,.98] clipping for positive-rate updates.
+- Error-CUSUM candidates: rates [.02,.05,.10,.20,.35,.50], thresholds
+  [.50,1,1.65,2.5,4,1e9], reference errors [.30,.38,.45]. The large threshold permits
+  no-reset behavior. As in the supplied CUSUM, convex EMA updates are not clipped.
+  Search capacity is explicitly finite and does not establish optimality over all
+  adaptive algorithms. CUSUM is not guaranteed stronger than a well-tuned plain EMA.
+- Each baseline is selected by mean validation Brier over its specified grid; exact
+  ties retain grid order. All candidate per-seed Brier/BCE scores are retained.
+- corrected_validation_manifest.json is written, hashed, and re-read BEFORE any
+  test evaluation. It includes source SHA256, grids, scores, choices and the test
+  plan. SelectedBaselines is immutable and reused in all conditions. Engine
+  hyperparameters are inherited/fixed; no test/followup feedback changes them.
+- This is an exploratory verification with held-out simulation seeds, not an
+  independent external or preregistered confirmation. Reviewing the proposed
+  algorithm and earlier results already informed the questions asked here.
+
+Evaluation conditions and observables
+1. recurrent_45: 450 transitions, alternating A=(.92,.28), B=(.15,.85), dwell 45.
+2. familiar_novel: 360 transitions, A/B/A/B/C/D/B/A, each dwell 45; C=(.5,.5),
+   D=(.88,.88). Novel and postnovel revisited blocks are reported separately.
+3. unseen_random: 450 transitions, held-out transition family (.80,.12)/(.30,.70),
+   independently drawn recipient dwell times uniform integer 25..65 with a truncated
+   final block and random starting regime. This family is absent from validation.
+4. stationary_a: 450 transitions in A; checks the cost of unnecessary adaptation.
+5. recurrent_q0_zero and recurrent_q0_half: recurrent_45 with target initial state
+   drawn from Bernoulli(0) or Bernoulli(.5), compared with default Bernoulli(1).
+   The first-30-transition score is retained to avoid diluting initial-state effects.
+
+All arms see the identical target stream within each seed/scenario; predictions
+precede observations. Arms are full_engine, no_memory, random_snapshot, donor_sync,
+donor_offset, donor_independent, legacy_marginal_order, validation_tuned_ema,
+validation_tuned_cusum, frozen_learned_markov, and oracle_current_regime.
+Default/synchronous donor shares recipient schedule; offset is a 23-transition
+circular rotation; independent donor has separately sampled uniform 25..65 dwell
+lengths and random starting phase. On unseen_random it shares the held-out regime
+family but has its own schedule. On other tasks its family is A/B. Independent
+control is therefore schedule-independent, not matched to C/D novel-block content.
+A circular shift is predetermined schedule information, not future observations;
+it still shares regime structure and must not be described as an independent null.
+Donor endogenous state histories remain on independent donor streams. The recipient
+uses donor scalar activations only to govern its current plasticity and memory
+operations, while preserving its own endogenous scalar history. No donor changes
+its own prediction in response to recipient observations.
+
+Record structure
+Each raw_per_seed record preserves training counts, target block parameters,
+initial-state probability, all donor schedules, overall and window metrics,
+per-block and first-10-block metrics, per-block memory event counts and final counts.
+Scopes include overall, initial_30, first_visits, revisited, early_10_after_change,
+later_than_10, novel_C_D and postnovel_revisited when applicable. Visit counts refer
+to occurrences within the test stream; A was already present in training.
+Counters include eligible retrievals, candidate draws, candidate-is-best counts,
+accepted retrievals, consolidation calls, stores, merges, capacity rejections and
+memory size. This tests whether the random control actually deviates and whether
+memory-related changes occur on returns, not only in aggregate performance.
+The memory retains its bounded-capacity/no-eviction policy; the suite exposes that
+limitation rather than replacing it. Missing storage of a newly distant regime
+when capacity is full is not silently fixed by changing the memory algorithm.
+
+Statistics and interpretation
+One seed's stream-level mean is the sampling unit. Each scenario separately reports
+means, SDs, normal Monte Carlo intervals mean +/-1.96*s/sqrt(N), and paired full
+minus comparator differences. Negative difference favors full_engine. Blocks and
+individual transitions are never treated as independent sample sizes. Scenarios
+reuse seeds/innovations and are not independent replicates to pool. Followup seeds
+are disjoint. Intervals are exploratory/pointwise, without multiplicity correction.
+BCE uses natural logarithms and evaluation clips probabilities to [1e-12,1-1e-12];
+the engine and plain EMA separately retain their stated model-parameter clipping.
+Strong evidence of improved predictive performance within a condition is still
+conditional on these environments, parameter grids, scalar definitions and controls.
+Random-snapshot selection tests retrieval ordering, not all possible memory
+mechanisms. Donor improvements or harms do not establish feelings or consciousness.
+
+Commands from the artifact root
+python3 corrected/test_phase25.py
+python3 corrected/phase2_5_falsification_suite.py --test-seeds 100 --validation-seeds 30 --followup-seeds 100 --output results/corrected_benchmark.json
+
+Outputs
+results/corrected_tests.txt
+results/corrected_console.txt
+results/corrected_validation_manifest.json (saved before evaluation)
+results/corrected_benchmark.json (all per-seed and per-window data, paired summaries)
+
+Actual executed results
+All 18 corrected deterministic tests passed. The benchmark completed all 1,200
+seed-scenario records: 100 test plus 100 followup seeds, each evaluated in 6
+conditions. These are 200 unique evaluation seeds, not 1,200 independent seeds.
+Validation separately used 30 seeds and 158 candidates (50 EMA +108 CUSUM).
+Selected parameters, frozen before evaluation: EMA rate .32; Error-CUSUM rate .20,
+threshold 1.0, fixed reference .38. Manifest SHA256:
+475c29cfca150e47660e441e88e01d36d0ac56fc3248e99fcf6e7f86d90051f7
+
+Recurrent-45 test overall: full Brier .160388, BCE .502727. Paired full-minus-EMA
+Brier -.003823, 95% normal MC interval [-.004569,-.003076]; BCE -.048450
+[-.051308,-.045593]. Against CUSUM: Brier -.002767 [-.003530,-.002003]; BCE
+-.040682 [-.042399,-.038965]. The directions replicate on followup seeds:
+full-minus-EMA Brier -.003724 [-.004457,-.002990]; full-minus-CUSUM -.003381
+[-.004101,-.002662]. These are advantages over the particular validation-selected
+baselines and grid, not over all optimized statistical predictors.
+
+Falsification of unrestricted memory benefit: on novel C/D blocks the full engine
+is WORSE than no_memory, test Brier +.007321 [.005754,.008887], BCE +.018791
+[.015277,.022305]; followup Brier +.006667 [.005298,.008036], BCE +.016743
+[.013611,.019876]. It is also worse than random snapshot selection on those novel
+blocks: test Brier +.004780 [.003431,.006128], followup +.004174 [.002996,.005352].
+On returns after novel blocks, memory helps relative to its ablation: test Brier
+-.012581 [-.014085,-.011077], followup -.012970 [-.014526,-.011414]. The conditions
+of the memory effect matter; the supplied aspiration of no novel-regime harm is
+not supported by either split.
+
+Adaptation-window limitation: a lower OVERALL score does not mean faster initial
+adaptation than tuned baselines. In the first 10 outcomes after recurrent changes,
+full-engine test Brier minus EMA is +.027288 [.024342,.030234] and minus CUSUM is
++.031539 [.029463,.033615]; followup +.029184 [.026331,.032037] and +.030747
+[.028058,.033436]. Thus the engine is slower by this specific early-window Brier
+measure despite better overall performance. Against no_memory, the same early
+window DOES improve (test -.027594 [-.030080,-.025107]), so conclusions depend on
+which comparator is being discussed. BCE early-window comparisons can be less
+resolved; refer to the paired intervals rather than assuming identical conclusions.
+
+Donor falsification controls: recurrent test full-minus-sync Brier -.004178
+[-.005203,-.003154]; minus-offset -.031112 [-.033130,-.029094]; minus-independent
+-.021472 [-.023342,-.019602]. Followup directions reproduce. This supports a
+conditional predictive contribution of endogenous signals in this refined model
+and changing task; it is not a general proof of phenomenological selfhood or of
+superiority in all environments. Stationary donor Brier comparisons reverse:
+full-minus-sync +.001851 [.001518,.002183] in test, +.001833 [.001532,.002134]
+in followup. Shared-clock performance cannot be interpreted as an independent null.
+
+The random control is active, not merely declared: recurrent test averages per
+450 transitions are 113.89 eligible random draws, 36.05 selections equal to the
+best candidate, and 9.03 accepted random retrievals, versus 16.71 accepted best
+retrievals for full. Same-seed candidate RNGs and identical eligibility/gating RULES
+are used; once model trajectories differ, eligibility counts need not remain equal.
+A forced deterministic two-snapshot fixture independently verifies random index
+selection and the preserved likelihood gate.
+
+Held-out transition family with random dwell: full test Brier .212047, BCE .621049;
+full-minus-EMA Brier -.009026 [-.009921,-.008131], minus-CUSUM -.001925
+[-.002878,-.000973]. Followup full .210047/.615979, paired Brier -.009048
+[-.009780,-.008317] and -.001795 [-.002675,-.000914]. This is a narrow successful
+family-transfer check, not broad environmental generalization.
+
+Stationary cost: the frozen learned Markov baseline remains better than the full
+engine. Test Brier .103225 versus .109452 and BCE .352339 versus .374690;
+followup Brier .102508 versus .108861 and BCE .349782 versus .372551. The EMA and
+CUSUM were tuned for recurring changes, so their stationarity disadvantage should
+not be described as evidence against stationarity-tuned alternatives.
+
+Initial-state check: recurrent test full-engine first-30 Brier is .099199 for q0=1,
+.106647 for q0=.5, and .112648 for q0=0 (followup .108892, .115668, .120740).
+These are direct engine simulations. Separate analytic Phase 2.3 reset/derangement
+calculations are needed for claims about those distinct frozen-memory arms.
+
+Isolating the marginal-order fix: recurrent overall corrected-minus-legacy Brier
++.000015 [-.000167,+.000198] in test and -.000056 [-.000196,+.000084] in followup
+is unresolved; fixing a fairness/interpretation bug does not guarantee improvement
+in target loss. In unseen-random test it slightly worsens Brier +.000338
+[.000074,.000602], with followup +.000202 [-.000029,+.000434]. Never attribute all
+Phase 2.4-to-2.5 performance changes to this fix or removal of shrinkage. Parent
+bridge output provides exact matched-stream comparisons for that separate audit.

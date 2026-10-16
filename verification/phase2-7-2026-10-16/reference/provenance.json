@@ -1,0 +1,14 @@
+{
+  "phase25_suite.py": {
+    "commit": "e9df7d0d58019ae8a0bb1cd6db5d311025171af4",
+    "source_path": "verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py",
+    "sha256": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+    "url": "https://github.com/Cbaird26/zoraasi-qualia-research/blob/e9df7d0d58019ae8a0bb1cd6db5d311025171af4/verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py"
+  },
+  "phase26_engine.py": {
+    "commit": "e9df7d0d58019ae8a0bb1cd6db5d311025171af4",
+    "source_path": "verification/phase2-6-2026-10-15/corrected/phase2_6_novelty_aware_gate.py",
+    "sha256": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+    "url": "https://github.com/Cbaird26/zoraasi-qualia-research/blob/e9df7d0d58019ae8a0bb1cd6db5d311025171af4/verification/phase2-6-2026-10-15/corrected/phase2_6_novelty_aware_gate.py"
+  }
+}

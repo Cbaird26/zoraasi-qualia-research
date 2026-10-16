@@ -1,0 +1,5234 @@
+{
+  "source": "unchanged uploaded code",
+  "interval_interpretation": "Approximate normal Monte Carlo mean CI over independent simulated seeds, not an individual-run interval.",
+  "single_seed": {
+    "seed": 20260921,
+    "metrics": {
+      "full_phase24_engine": {
+        "brier": 0.18151341264973067,
+        "bce": 0.5455969077031986
+      },
+      "ablate_episodic_mem": {
+        "brier": 0.1906135873237588,
+        "bce": 0.5646388875340814
+      },
+      "ablate_affective_lr": {
+        "brier": 0.18797507107958494,
+        "bce": 0.561474297859354
+      },
+      "ablate_self_model": {
+        "brier": 0.16753899879892498,
+        "bce": 0.5169161975333542
+      },
+      "frozen_phase23_markov": {
+        "brier": 0.33655555555555555,
+        "bce": 0.9769837101097345
+      }
+    }
+  },
+  "summary": {
+    "full_phase24_engine": {
+      "brier": {
+        "mean": 0.18375061422873626,
+        "sd_across_seeds": 0.012326630872554405,
+        "mc_mean_ci95": [
+          0.1820422303500196,
+          0.18545899810745292
+        ],
+        "ci_half_width": 0.0017083838787166673,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.5502041738209958,
+        "sd_across_seeds": 0.02835576241794804,
+        "mc_mean_ci95": [
+          0.5462742656502725,
+          0.5541340819917192
+        ],
+        "ci_half_width": 0.003929908170723359,
+        "n_seeds": 200
+      }
+    },
+    "ablate_episodic_mem": {
+      "brier": {
+        "mean": 0.19293622312741138,
+        "sd_across_seeds": 0.012358233155510203,
+        "mc_mean_ci95": [
+          0.1912234593957332,
+          0.19464898685908955
+        ],
+        "ci_half_width": 0.001712763731678155,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.5700987829374035,
+        "sd_across_seeds": 0.028330791000431278,
+        "mc_mean_ci95": [
+          0.5661723356285778,
+          0.5740252302462291
+        ],
+        "ci_half_width": 0.003926447308825618,
+        "n_seeds": 200
+      }
+    },
+    "ablate_affective_lr": {
+      "brier": {
+        "mean": 0.19641442843553847,
+        "sd_across_seeds": 0.013234510432586943,
+        "mc_mean_ci95": [
+          0.19458021886931548,
+          0.19824863800176146
+        ],
+        "ci_half_width": 0.0018342095662230017,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.579542827023495,
+        "sd_across_seeds": 0.02925387728954705,
+        "mc_mean_ci95": [
+          0.5754884464820372,
+          0.5835972075649528
+        ],
+        "ci_half_width": 0.00405438054145782,
+        "n_seeds": 200
+      }
+    },
+    "ablate_self_model": {
+      "brier": {
+        "mean": 0.17039079984062636,
+        "sd_across_seeds": 0.010786527569125402,
+        "mc_mean_ci95": [
+          0.16889586338986784,
+          0.17188573629138487
+        ],
+        "ci_half_width": 0.0014949364507585066,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.5237771990646588,
+        "sd_across_seeds": 0.026025386268867304,
+        "mc_mean_ci95": [
+          0.5201702645503706,
+          0.527384133578947
+        ],
+        "ci_half_width": 0.003606934514288205,
+        "n_seeds": 200
+      }
+    },
+    "frozen_phase23_markov": {
+      "brier": {
+        "mean": 0.3358942222222222,
+        "sd_across_seeds": 0.014090054719117182,
+        "mc_mean_ci95": [
+          0.33394144026734346,
+          0.33784700417710095
+        ],
+        "ci_half_width": 0.0019527819548787457,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.9753580837078445,
+        "sd_across_seeds": 0.03837411258243423,
+        "mc_mean_ci95": [
+          0.9700397030429496,
+          0.9806764643727394
+        ],
+        "ci_half_width": 0.00531838066489483,
+        "n_seeds": 200
+      }
+    }
+  },
+  "paired_comparator_minus_reference": {
+    "ablate_episodic_mem": {
+      "brier": {
+        "mean": 0.009185608898675125,
+        "sd_across_seeds": 0.0033113764924660844,
+        "mc_mean_ci95": [
+          0.008726675531189765,
+          0.009644542266160485
+        ],
+        "ci_half_width": 0.0004589333674853605,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.019894609116407617,
+        "sd_across_seeds": 0.007550947229404883,
+        "mc_mean_ci95": [
+          0.01884810122231,
+          0.020941117010505234
+        ],
+        "ci_half_width": 0.0010465078940976172,
+        "n_seeds": 200
+      }
+    },
+    "ablate_affective_lr": {
+      "brier": {
+        "mean": 0.012663814206802218,
+        "sd_across_seeds": 0.004733958196953415,
+        "mc_mean_ci95": [
+          0.012007721073990016,
+          0.01331990733961442
+        ],
+        "ci_half_width": 0.0006560931328122027,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.029338653202499187,
+        "sd_across_seeds": 0.010533487355748458,
+        "mc_mean_ci95": [
+          0.02787878633609586,
+          0.030798520068902515
+        ],
+        "ci_half_width": 0.001459866866403328,
+        "n_seeds": 200
+      }
+    },
+    "ablate_self_model": {
+      "brier": {
+        "mean": -0.013359814388109905,
+        "sd_across_seeds": 0.0058828970834162945,
+        "mc_mean_ci95": [
+          -0.014175142326568324,
+          -0.012544486449651485
+        ],
+        "ci_half_width": 0.0008153279384584199,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": -0.026426974756337016,
+        "sd_across_seeds": 0.012619431014739712,
+        "mc_mean_ci95": [
+          -0.02817593866440372,
+          -0.024678010848270312
+        ],
+        "ci_half_width": 0.0017489639080667037,
+        "n_seeds": 200
+      }
+    },
+    "frozen_phase23_markov": {
+      "brier": {
+        "mean": 0.15214360799348597,
+        "sd_across_seeds": 0.016251095625136484,
+        "mc_mean_ci95": [
+          0.14989132104950995,
+          0.154395894937462
+        ],
+        "ci_half_width": 0.0022522869439760285,
+        "n_seeds": 200
+      },
+      "bce": {
+        "mean": 0.42515390988684865,
+        "sd_across_seeds": 0.039890278755084406,
+        "mc_mean_ci95": [
+          0.41962539931106485,
+          0.43068242046263244
+        ],
+        "ci_half_width": 0.005528510575783804,
+        "n_seeds": 200
+      }
+    }
+  },
+  "reference_arm": "full_phase24_engine",
+  "per_seed": [
+    {
+      "seed": 20260921,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18151341264973067,
+          "bce": 0.5455969077031986
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1906135873237588,
+          "bce": 0.5646388875340814
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18797507107958494,
+          "bce": 0.561474297859354
+        },
+        "ablate_self_model": {
+          "brier": 0.16753899879892498,
+          "bce": 0.5169161975333542
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33655555555555555,
+          "bce": 0.9769837101097345
+        }
+      }
+    },
+    {
+      "seed": 20260922,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17194234679132206,
+          "bce": 0.5233556717655312
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18353028872902372,
+          "bce": 0.549115655209085
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1850585348701811,
+          "bce": 0.5556356616189647
+        },
+        "ablate_self_model": {
+          "brier": 0.15840341060148685,
+          "bce": 0.4962077707147232
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3253111111111111,
+          "bce": 0.9452557477594953
+        }
+      }
+    },
+    {
+      "seed": 20260923,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19294758246602534,
+          "bce": 0.5709645603684137
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20402036602603807,
+          "bce": 0.5937879787873191
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19917345924752006,
+          "bce": 0.584916456461902
+        },
+        "ablate_self_model": {
+          "brier": 0.17893702062319722,
+          "bce": 0.543132068316714
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33380000000000004,
+          "bce": 0.9702994911872954
+        }
+      }
+    },
+    {
+      "seed": 20260924,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17637261422166858,
+          "bce": 0.5369495448458129
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18563935268834703,
+          "bce": 0.5569072178586385
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18468605537552862,
+          "bce": 0.5569705019856637
+        },
+        "ablate_self_model": {
+          "brier": 0.1665827668632179,
+          "bce": 0.5175089386702982
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3274444444444444,
+          "bce": 0.951359149363207
+        }
+      }
+    },
+    {
+      "seed": 20260925,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1598337249710832,
+          "bce": 0.4922827201635882
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.16246313281089664,
+          "bce": 0.49834324533473084
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17567503777636953,
+          "bce": 0.533584814053068
+        },
+        "ablate_self_model": {
+          "brier": 0.15509927552404193,
+          "bce": 0.4838870437282804
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.2962,
+          "bce": 0.8665641950128118
+        }
+      }
+    },
+    {
+      "seed": 20260926,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20930762267429082,
+          "bce": 0.6049784640778642
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21739905526571215,
+          "bce": 0.6217665022146732
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2301595279171349,
+          "bce": 0.6490431641986227
+        },
+        "ablate_self_model": {
+          "brier": 0.18433157470985628,
+          "bce": 0.5544534111391156
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33108888888888893,
+          "bce": 0.966463593377033
+        }
+      }
+    },
+    {
+      "seed": 20260927,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18845618465659458,
+          "bce": 0.5610921183988403
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19614340928115911,
+          "bce": 0.5771033910633558
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1985126387870358,
+          "bce": 0.5855721625533958
+        },
+        "ablate_self_model": {
+          "brier": 0.17378792294414075,
+          "bce": 0.5293104731490392
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32153333333333334,
+          "bce": 0.9366289200848118
+        }
+      }
+    },
+    {
+      "seed": 20260928,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1954172999348742,
+          "bce": 0.5783182895911843
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20768524088287907,
+          "bce": 0.6041652353766115
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2078088463243208,
+          "bce": 0.6054978514164377
+        },
+        "ablate_self_model": {
+          "brier": 0.17718818971065833,
+          "bce": 0.5430117683302407
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34473333333333334,
+          "bce": 1.0005902435531004
+        }
+      }
+    },
+    {
+      "seed": 20260929,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1832015386143871,
+          "bce": 0.5479731498700187
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19275570428468086,
+          "bce": 0.5683816643541731
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1954158418720541,
+          "bce": 0.5749153355011298
+        },
+        "ablate_self_model": {
+          "brier": 0.17152087378437014,
+          "bce": 0.5257814582114746
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33697777777777776,
+          "bce": 0.9768836317117038
+        }
+      }
+    },
+    {
+      "seed": 20260930,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17707021372320406,
+          "bce": 0.5352672148823556
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1860202292167574,
+          "bce": 0.5566744168487237
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18687281596098163,
+          "bce": 0.5568436704689289
+        },
+        "ablate_self_model": {
+          "brier": 0.1652494273075492,
+          "bce": 0.5134470745697656
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3472222222222222,
+          "bce": 1.0052071154781517
+        }
+      }
+    },
+    {
+      "seed": 20260931,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18226641203349783,
+          "bce": 0.5486155605623187
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19380496124550806,
+          "bce": 0.5730287728255703
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19427118956066053,
+          "bce": 0.5773746890153383
+        },
+        "ablate_self_model": {
+          "brier": 0.1744276438190647,
+          "bce": 0.5357129550490625
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34486666666666665,
+          "bce": 0.999884687989229
+        }
+      }
+    },
+    {
+      "seed": 20260932,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18329256890648513,
+          "bce": 0.5539108223493592
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19301887683926225,
+          "bce": 0.5738801637957199
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19761792414621354,
+          "bce": 0.586563766773031
+        },
+        "ablate_self_model": {
+          "brier": 0.16884493211249532,
+          "bce": 0.5216541113125325
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33675555555555553,
+          "bce": 0.9776646058264928
+        }
+      }
+    },
+    {
+      "seed": 20260933,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19875256803518365,
+          "bce": 0.5866554200310525
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2084500814633228,
+          "bce": 0.6071541150632854
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21433569814201844,
+          "bce": 0.6201256327001462
+        },
+        "ablate_self_model": {
+          "brier": 0.18575313700327642,
+          "bce": 0.5622660158956041
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3356,
+          "bce": 0.97642755263812
+        }
+      }
+    },
+    {
+      "seed": 20260934,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1780736806393018,
+          "bce": 0.5385631364514287
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19038597118907172,
+          "bce": 0.5647126031706851
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1936936397814134,
+          "bce": 0.574138547454981
+        },
+        "ablate_self_model": {
+          "brier": 0.15855684875351467,
+          "bce": 0.4986185101628834
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3425333333333333,
+          "bce": 0.993100390668759
+        }
+      }
+    },
+    {
+      "seed": 20260935,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17530992898524503,
+          "bce": 0.528857115129841
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18826666233828737,
+          "bce": 0.5591352438505535
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19270493947193823,
+          "bce": 0.5720439876198697
+        },
+        "ablate_self_model": {
+          "brier": 0.1652900362233244,
+          "bce": 0.5074081422605697
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3399111111111111,
+          "bce": 0.9857106161824487
+        }
+      }
+    },
+    {
+      "seed": 20260936,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18472903920166464,
+          "bce": 0.5551354066457347
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19076377942431008,
+          "bce": 0.5683595748886023
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1957946434661646,
+          "bce": 0.5811996653818816
+        },
+        "ablate_self_model": {
+          "brier": 0.1758488180370521,
+          "bce": 0.5361507408330851
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32313333333333333,
+          "bce": 0.9420760858188783
+        }
+      }
+    },
+    {
+      "seed": 20260937,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19361935551792042,
+          "bce": 0.5747142747944538
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19861873924248327,
+          "bce": 0.5847605976213672
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20296183283833963,
+          "bce": 0.5971502339211463
+        },
+        "ablate_self_model": {
+          "brier": 0.1791097557675842,
+          "bce": 0.5462969122580869
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33695555555555556,
+          "bce": 0.9783455015432512
+        }
+      }
+    },
+    {
+      "seed": 20260938,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18720459651063628,
+          "bce": 0.5613116687889824
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19449340061616038,
+          "bce": 0.5764017881922613
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20189374503327098,
+          "bce": 0.5942826748298841
+        },
+        "ablate_self_model": {
+          "brier": 0.17832745231883634,
+          "bce": 0.5431748789218652
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33482222222222224,
+          "bce": 0.9722420999395395
+        }
+      }
+    },
+    {
+      "seed": 20260939,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18888365242603627,
+          "bce": 0.5625401635577566
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19867450324495683,
+          "bce": 0.5836328638793625
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19892914242987408,
+          "bce": 0.5831359276502
+        },
+        "ablate_self_model": {
+          "brier": 0.17006180543990757,
+          "bce": 0.5277796389112841
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33084444444444444,
+          "bce": 0.9629343765480979
+        }
+      }
+    },
+    {
+      "seed": 20260940,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18574386504938104,
+          "bce": 0.5576156176681785
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19864790102184174,
+          "bce": 0.5847292581136878
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19816615115218086,
+          "bce": 0.5846355761845532
+        },
+        "ablate_self_model": {
+          "brier": 0.17366982672639958,
+          "bce": 0.5373829862518473
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34153333333333336,
+          "bce": 0.9896959120849675
+        }
+      }
+    },
+    {
+      "seed": 20260941,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16444612660848776,
+          "bce": 0.5106831759954259
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17440643490481264,
+          "bce": 0.5319278148628633
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1761781961647905,
+          "bce": 0.5392929000374058
+        },
+        "ablate_self_model": {
+          "brier": 0.15796222627076656,
+          "bce": 0.4965874034537306
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34126666666666666,
+          "bce": 0.9876285650875799
+        }
+      }
+    },
+    {
+      "seed": 20260942,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16278977901125238,
+          "bce": 0.502643950427959
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17066846487366608,
+          "bce": 0.5200505670783575
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17501657732628412,
+          "bce": 0.5319188828425664
+        },
+        "ablate_self_model": {
+          "brier": 0.151325738891405,
+          "bce": 0.4788653872362635
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3245111111111111,
+          "bce": 0.9425321648924619
+        }
+      }
+    },
+    {
+      "seed": 20260943,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20117899308998305,
+          "bce": 0.5911523322933047
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21264105065261565,
+          "bce": 0.6164170734401428
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2055915961103394,
+          "bce": 0.6009598811498353
+        },
+        "ablate_self_model": {
+          "brier": 0.18406780923223584,
+          "bce": 0.558901167398926
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33995555555555557,
+          "bce": 0.9885589372946255
+        }
+      }
+    },
+    {
+      "seed": 20260944,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18787795516334735,
+          "bce": 0.561013883893636
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20241851007370662,
+          "bce": 0.5930137165147831
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20737000727972604,
+          "bce": 0.6047040588699
+        },
+        "ablate_self_model": {
+          "brier": 0.16583583130769194,
+          "bce": 0.5123063112785877
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.36704444444444445,
+          "bce": 1.0619034027052734
+        }
+      }
+    },
+    {
+      "seed": 20260945,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18994787578197908,
+          "bce": 0.5664915911197069
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19582177655254646,
+          "bce": 0.5789158379254612
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20593673215258249,
+          "bce": 0.6035307011047466
+        },
+        "ablate_self_model": {
+          "brier": 0.1792536161677263,
+          "bce": 0.5448039474510995
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32984444444444444,
+          "bce": 0.9595298979643064
+        }
+      }
+    },
+    {
+      "seed": 20260946,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18004219615580233,
+          "bce": 0.5448558067954296
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1887596317612614,
+          "bce": 0.5638578627098023
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1902635675125263,
+          "bce": 0.5686901375170994
+        },
+        "ablate_self_model": {
+          "brier": 0.16945383178601042,
+          "bce": 0.5214118541170821
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3393111111111111,
+          "bce": 0.9836679290321737
+        }
+      }
+    },
+    {
+      "seed": 20260947,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16447338328279756,
+          "bce": 0.5070770317742108
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.16972024324050267,
+          "bce": 0.5174313950427759
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17416633161502396,
+          "bce": 0.5316362658233238
+        },
+        "ablate_self_model": {
+          "brier": 0.15802019268028175,
+          "bce": 0.49228024391957254
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3078888888888889,
+          "bce": 0.896730209133473
+        }
+      }
+    },
+    {
+      "seed": 20260948,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17918443759216407,
+          "bce": 0.5403199874453979
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19049638375781533,
+          "bce": 0.5663151527888641
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20463832384875477,
+          "bce": 0.5980717993421798
+        },
+        "ablate_self_model": {
+          "brier": 0.1738816198130988,
+          "bce": 0.5329166796845787
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33124444444444445,
+          "bce": 0.9642961679816143
+        }
+      }
+    },
+    {
+      "seed": 20260949,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20664693925786487,
+          "bce": 0.6026191269565706
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21532300669508414,
+          "bce": 0.6205802067246101
+        },
+        "ablate_affective_lr": {
+          "brier": 0.22365227162569823,
+          "bce": 0.6408707471588898
+        },
+        "ablate_self_model": {
+          "brier": 0.18917411525886405,
+          "bce": 0.5658698698778182
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3470666666666667,
+          "bce": 1.0073745408735701
+        }
+      }
+    },
+    {
+      "seed": 20260950,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20278475918178532,
+          "bce": 0.5953280491431995
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21451409961325993,
+          "bce": 0.6197450300181299
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2096104208947926,
+          "bce": 0.6100644329741514
+        },
+        "ablate_self_model": {
+          "brier": 0.19273229617301005,
+          "bce": 0.5800391460113719
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34728888888888887,
+          "bce": 1.006593566758781
+        }
+      }
+    },
+    {
+      "seed": 20260951,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20136366584434645,
+          "bce": 0.5936016052577763
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20712589966495526,
+          "bce": 0.6056261131534966
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21326760765560676,
+          "bce": 0.619551790700677
+        },
+        "ablate_self_model": {
+          "brier": 0.19129194666603028,
+          "bce": 0.5751955826303543
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.37135555555555555,
+          "bce": 1.071186466249602
+        }
+      }
+    },
+    {
+      "seed": 20260952,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18486814849556552,
+          "bce": 0.55225970835824
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19047078055533595,
+          "bce": 0.5640608845385248
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1944510174428022,
+          "bce": 0.5761525566500875
+        },
+        "ablate_self_model": {
+          "brier": 0.17576216454388108,
+          "bce": 0.5355727372479642
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.30477777777777776,
+          "bce": 0.8915325198896941
+        }
+      }
+    },
+    {
+      "seed": 20260953,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.2029477265172015,
+          "bce": 0.5955863137968355
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20797782479225782,
+          "bce": 0.6049894154638673
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20962983312660524,
+          "bce": 0.6103441110404006
+        },
+        "ablate_self_model": {
+          "brier": 0.18464425276421118,
+          "bce": 0.5595893086040625
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35244444444444445,
+          "bce": 1.0214485342823199
+        }
+      }
+    },
+    {
+      "seed": 20260954,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.195730286039018,
+          "bce": 0.5788617449915391
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20869735561181177,
+          "bce": 0.607488650360579
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21641625741857257,
+          "bce": 0.6261398435920863
+        },
+        "ablate_self_model": {
+          "brier": 0.18669283599755462,
+          "bce": 0.5645050298555853
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3310444444444445,
+          "bce": 0.9636152722648562
+        }
+      }
+    },
+    {
+      "seed": 20260955,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.187973285730723,
+          "bce": 0.5572668654941725
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19374756959838288,
+          "bce": 0.5689176944881958
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20244016224171485,
+          "bce": 0.5917327013585432
+        },
+        "ablate_self_model": {
+          "brier": 0.16989240377209708,
+          "bce": 0.520881066444936
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33011111111111113,
+          "bce": 0.9615972449616941
+        }
+      }
+    },
+    {
+      "seed": 20260956,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1936636119412287,
+          "bce": 0.5746157365448608
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20195337564416144,
+          "bce": 0.5915786833642787
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21057014168123891,
+          "bce": 0.6119496554200912
+        },
+        "ablate_self_model": {
+          "brier": 0.18604357992415818,
+          "bce": 0.5630050151556748
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3346222222222222,
+          "bce": 0.9715612042227811
+        }
+      }
+    },
+    {
+      "seed": 20260957,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16786481598414113,
+          "bce": 0.5172946545400301
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1801992071153785,
+          "bce": 0.5449607727442319
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17617381172202565,
+          "bce": 0.5390029099264508
+        },
+        "ablate_self_model": {
+          "brier": 0.1645308050501287,
+          "bce": 0.5112166560839243
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3470444444444445,
+          "bce": 1.003064349929846
+        }
+      }
+    },
+    {
+      "seed": 20260958,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20659975585325788,
+          "bce": 0.599657919869312
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21184763032195408,
+          "bce": 0.6109222531132404
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21737854432859166,
+          "bce": 0.6243438798646657
+        },
+        "ablate_self_model": {
+          "brier": 0.19636836818627626,
+          "bce": 0.5816320502206742
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3346,
+          "bce": 0.9730230740543285
+        }
+      }
+    },
+    {
+      "seed": 20260959,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17669018521595278,
+          "bce": 0.5328229243981074
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18628654920722798,
+          "bce": 0.5540048404515902
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19637166621136204,
+          "bce": 0.5775356756931466
+        },
+        "ablate_self_model": {
+          "brier": 0.16405913462178257,
+          "bce": 0.5069789944267964
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3399111111111111,
+          "bce": 0.9857106161824487
+        }
+      }
+    },
+    {
+      "seed": 20260960,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17432709903565366,
+          "bce": 0.529904718239048
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17980949389921888,
+          "bce": 0.5424202531308617
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18753250727170773,
+          "bce": 0.5604704333285551
+        },
+        "ablate_self_model": {
+          "brier": 0.16745908306714374,
+          "bce": 0.5173539023999152
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32866666666666666,
+          "bce": 0.9539826538322091
+        }
+      }
+    },
+    {
+      "seed": 20260961,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18964479798865239,
+          "bce": 0.5627266496851154
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19900300747904462,
+          "bce": 0.58293534666079
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2036491113423184,
+          "bce": 0.5945299946271085
+        },
+        "ablate_self_model": {
+          "brier": 0.17214867249585025,
+          "bce": 0.5269126112845749
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3237333333333333,
+          "bce": 0.944118772969153
+        }
+      }
+    },
+    {
+      "seed": 20260962,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18054626144927002,
+          "bce": 0.5433739063866337
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1905971701055959,
+          "bce": 0.5663620513362985
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19725546041625885,
+          "bce": 0.5816389770563726
+        },
+        "ablate_self_model": {
+          "brier": 0.15778941278651568,
+          "bce": 0.49333091256824774
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3435333333333333,
+          "bce": 0.9965048692525506
+        }
+      }
+    },
+    {
+      "seed": 20260963,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19747245969925137,
+          "bce": 0.5828649536422653
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20654489255910696,
+          "bce": 0.6022699643439969
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20839407171652277,
+          "bce": 0.6074455668162759
+        },
+        "ablate_self_model": {
+          "brier": 0.1748710072620917,
+          "bce": 0.5387436526211273
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3445111111111111,
+          "bce": 1.0013712176678893
+        }
+      }
+    },
+    {
+      "seed": 20260964,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1873303916414923,
+          "bce": 0.5593214141736393
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19203556965294888,
+          "bce": 0.5690009392624462
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1943883001149634,
+          "bce": 0.5753677930459824
+        },
+        "ablate_self_model": {
+          "brier": 0.17574452672206242,
+          "bce": 0.5343522213051247
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33797777777777777,
+          "bce": 0.9802881102954952
+        }
+      }
+    },
+    {
+      "seed": 20260965,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17672493443515974,
+          "bce": 0.535874099157199
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18360444835524609,
+          "bce": 0.5507207195511586
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18909989107727476,
+          "bce": 0.5638694057332739
+        },
+        "ablate_self_model": {
+          "brier": 0.1670673335357555,
+          "bce": 0.5161622869398093
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32784444444444444,
+          "bce": 0.9527209407967234
+        }
+      }
+    },
+    {
+      "seed": 20260966,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17965327246050364,
+          "bce": 0.5374036211235439
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19031875771963594,
+          "bce": 0.5617613927101377
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1965958749222567,
+          "bce": 0.5779991595281386
+        },
+        "ablate_self_model": {
+          "brier": 0.16660850990778056,
+          "bce": 0.5103859177781215
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32395555555555555,
+          "bce": 0.943337798854364
+        }
+      }
+    },
+    {
+      "seed": 20260967,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.169128425897885,
+          "bce": 0.517676730678044
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18439122006391603,
+          "bce": 0.5526531187260384
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19467068707275068,
+          "bce": 0.5773699434506467
+        },
+        "ablate_self_model": {
+          "brier": 0.16015910817154896,
+          "bce": 0.49993063937963284
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34742222222222224,
+          "bce": 1.00588801119491
+        }
+      }
+    },
+    {
+      "seed": 20260968,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18222175529428672,
+          "bce": 0.5494748033259953
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1953586633714479,
+          "bce": 0.5767626656083951
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2000911683447191,
+          "bce": 0.5897230054074983
+        },
+        "ablate_self_model": {
+          "brier": 0.16923777327970313,
+          "bce": 0.523892450968218
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34728888888888887,
+          "bce": 1.006593566758781
+        }
+      }
+    },
+    {
+      "seed": 20260969,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18206729597235127,
+          "bce": 0.546400691056028
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.191509778838394,
+          "bce": 0.5683041781400835
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19038238613054523,
+          "bce": 0.5662740452804609
+        },
+        "ablate_self_model": {
+          "brier": 0.16950543092736958,
+          "bce": 0.5252157508619054
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3513777777777778,
+          "bce": 1.016657604417899
+        }
+      }
+    },
+    {
+      "seed": 20260970,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17054620998623257,
+          "bce": 0.5214487522448643
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17871136068501461,
+          "bce": 0.538888737925836
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17815184762155184,
+          "bce": 0.5404277725601666
+        },
+        "ablate_self_model": {
+          "brier": 0.15972011998032926,
+          "bce": 0.500305871471422
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33142222222222223,
+          "bce": 0.9606668727546486
+        }
+      }
+    },
+    {
+      "seed": 20260971,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17025624095698585,
+          "bce": 0.5217701888798505
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17769991227933388,
+          "bce": 0.5370904498414609
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18005447849937922,
+          "bce": 0.5462656326160428
+        },
+        "ablate_self_model": {
+          "brier": 0.16314894192465587,
+          "bce": 0.5060606412561942
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3312222222222222,
+          "bce": 0.9599859770378902
+        }
+      }
+    },
+    {
+      "seed": 20260972,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16635252878215526,
+          "bce": 0.510409919342134
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1738601408169823,
+          "bce": 0.5256845071092219
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17443435214906514,
+          "bce": 0.5313998218428047
+        },
+        "ablate_self_model": {
+          "brier": 0.16065962925324773,
+          "bce": 0.5003783544516485
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3145777777777778,
+          "bce": 0.9156458911104486
+        }
+      }
+    },
+    {
+      "seed": 20260973,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18590659666944434,
+          "bce": 0.5565222084132624
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19118574455772877,
+          "bce": 0.5671633956671067
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20062598465001444,
+          "bce": 0.5916244890254654
+        },
+        "ablate_self_model": {
+          "brier": 0.17395036751911785,
+          "bce": 0.5291916038653965
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3225555555555556,
+          "bce": 0.938571528837056
+        }
+      }
+    },
+    {
+      "seed": 20260974,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20124226378823426,
+          "bce": 0.5924527070951564
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20933974462792027,
+          "bce": 0.6099721414189845
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2044650954946149,
+          "bce": 0.5984163575030185
+        },
+        "ablate_self_model": {
+          "brier": 0.18547232964581156,
+          "bce": 0.5643111914871999
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3521777777777778,
+          "bce": 1.019381187284932
+        }
+      }
+    },
+    {
+      "seed": 20260975,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17601797456457674,
+          "bce": 0.5326605314128106
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18515319293156554,
+          "bce": 0.5519135096829033
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19100074257187394,
+          "bce": 0.565650184881737
+        },
+        "ablate_self_model": {
+          "brier": 0.15254661826224825,
+          "bce": 0.48315035333306305
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3423333333333333,
+          "bce": 0.9924194949520009
+        }
+      }
+    },
+    {
+      "seed": 20260976,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18954572023869687,
+          "bce": 0.5557845010555063
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19309451041055092,
+          "bce": 0.56261436010537
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20246142731364267,
+          "bce": 0.5852292442695638
+        },
+        "ablate_self_model": {
+          "brier": 0.17042390481120054,
+          "bce": 0.5182924389908927
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33542222222222223,
+          "bce": 0.9742847870898143
+        }
+      }
+    },
+    {
+      "seed": 20260977,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1922550785124692,
+          "bce": 0.5706160453359642
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20287115978202286,
+          "bce": 0.5939074727547043
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21202428680000138,
+          "bce": 0.6145164366968026
+        },
+        "ablate_self_model": {
+          "brier": 0.17741139935700848,
+          "bce": 0.5410102088792325
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35082222222222226,
+          "bce": 1.017463238379801
+        }
+      }
+    },
+    {
+      "seed": 20260978,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18106492678821778,
+          "bce": 0.5465723016577702
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1872532301772478,
+          "bce": 0.5593822983399531
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19210058492589477,
+          "bce": 0.571939604750154
+        },
+        "ablate_self_model": {
+          "brier": 0.1766926488914817,
+          "bce": 0.540766750808002
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33242222222222223,
+          "bce": 0.9640713513384399
+        }
+      }
+    },
+    {
+      "seed": 20260979,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1907337499659193,
+          "bce": 0.5624367900389671
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19713252639810408,
+          "bce": 0.5771851375639723
+        },
+        "ablate_affective_lr": {
+          "brier": 0.204932400039059,
+          "bce": 0.5962955815982218
+        },
+        "ablate_self_model": {
+          "brier": 0.18161885325931465,
+          "bce": 0.5457875981598054
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3260888888888889,
+          "bce": 0.9494412004580757
+        }
+      }
+    },
+    {
+      "seed": 20260980,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1837991222118072,
+          "bce": 0.5524317506166155
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19336462244726876,
+          "bce": 0.5733172648839285
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19760314721453984,
+          "bce": 0.5843105367086908
+        },
+        "ablate_self_model": {
+          "brier": 0.17101945339775243,
+          "bce": 0.5244494504961136
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33715555555555554,
+          "bce": 0.9790263972600095
+        }
+      }
+    },
+    {
+      "seed": 20260981,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19303712021787303,
+          "bce": 0.5739674976664002
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20246146918295793,
+          "bce": 0.5933527180155709
+        },
+        "ablate_affective_lr": {
+          "brier": 0.205296349875864,
+          "bce": 0.6012783678491292
+        },
+        "ablate_self_model": {
+          "brier": 0.17337806592425775,
+          "bce": 0.5333867397930632
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3559333333333333,
+          "bce": 1.0294698847911627
+        }
+      }
+    },
+    {
+      "seed": 20260982,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.15572792565856555,
+          "bce": 0.48529574945698434
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1623992323043827,
+          "bce": 0.4992658453892316
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1695183688421184,
+          "bce": 0.5207758016809025
+        },
+        "ablate_self_model": {
+          "brier": 0.1411943576415209,
+          "bce": 0.45413698916484957
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32624444444444445,
+          "bce": 0.9472737750626572
+        }
+      }
+    },
+    {
+      "seed": 20260983,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18482142177266825,
+          "bce": 0.5539022311524652
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1984216558091772,
+          "bce": 0.5848288484532242
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1974701843993164,
+          "bce": 0.5839515636039899
+        },
+        "ablate_self_model": {
+          "brier": 0.17037874434200037,
+          "bce": 0.5269812695760013
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3320666666666667,
+          "bce": 0.9655578810171002
+        }
+      }
+    },
+    {
+      "seed": 20260984,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.15386300913648232,
+          "bce": 0.4812374111549803
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.16894570628307634,
+          "bce": 0.5170064355557547
+        },
+        "ablate_affective_lr": {
+          "brier": 0.16756136417585915,
+          "bce": 0.5190948621645006
+        },
+        "ablate_self_model": {
+          "brier": 0.1516594740691401,
+          "bce": 0.4769496833337882
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34959999999999997,
+          "bce": 1.0090676731355268
+        }
+      }
+    },
+    {
+      "seed": 20260985,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18263719958442404,
+          "bce": 0.5486617106166054
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1941861444740201,
+          "bce": 0.5732692136873807
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19380185977225256,
+          "bce": 0.5725810183210471
+        },
+        "ablate_self_model": {
+          "brier": 0.16786576062077516,
+          "bce": 0.5165762349585055
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3405111111111111,
+          "bce": 0.9877533033327235
+        }
+      }
+    },
+    {
+      "seed": 20260986,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1889791335735075,
+          "bce": 0.5608653910782748
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19763976756378873,
+          "bce": 0.5803977902713413
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2116713993256524,
+          "bce": 0.6112149085484042
+        },
+        "ablate_self_model": {
+          "brier": 0.17347629732439246,
+          "bce": 0.5298714823845182
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3278888888888889,
+          "bce": 0.9555692619089005
+        }
+      }
+    },
+    {
+      "seed": 20260987,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18644440896096645,
+          "bce": 0.5578526497440285
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19531550024912658,
+          "bce": 0.5772132250255289
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20246718253456056,
+          "bce": 0.5937607718527408
+        },
+        "ablate_self_model": {
+          "brier": 0.17297530738142056,
+          "bce": 0.5327876711022899
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34568888888888893,
+          "bce": 1.0011464010247149
+        }
+      }
+    },
+    {
+      "seed": 20260988,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18513549584894454,
+          "bce": 0.55855223054336
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19940027889064013,
+          "bce": 0.5885923592849506
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20066792274247708,
+          "bce": 0.5924890913731704
+        },
+        "ablate_self_model": {
+          "brier": 0.17378646743497314,
+          "bce": 0.5379843028112206
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35142222222222225,
+          "bce": 1.0195059255300758
+        }
+      }
+    },
+    {
+      "seed": 20260989,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19526406287683507,
+          "bce": 0.5765857897365614
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2111244003036907,
+          "bce": 0.6124715191400367
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20308378657647097,
+          "bce": 0.5952771851886305
+        },
+        "ablate_self_model": {
+          "brier": 0.18832439673530807,
+          "bce": 0.5689875991612272
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3373555555555556,
+          "bce": 0.9797072929767676
+        }
+      }
+    },
+    {
+      "seed": 20260990,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1793930520621078,
+          "bce": 0.5402582718898378
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18362966167320716,
+          "bce": 0.5487790772868048
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1896465088635768,
+          "bce": 0.5650762028364223
+        },
+        "ablate_self_model": {
+          "brier": 0.1737005050274773,
+          "bce": 0.5291889311180811
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31464444444444445,
+          "bce": 0.9170323423910781
+        }
+      }
+    },
+    {
+      "seed": 20260991,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1809032262099791,
+          "bce": 0.544764777687178
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18804607009689045,
+          "bce": 0.5595000808287064
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19043328168074047,
+          "bce": 0.5677208874133126
+        },
+        "ablate_self_model": {
+          "brier": 0.171554313960215,
+          "bce": 0.529281344617723
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3518,
+          "bce": 1.0165575260198683
+        }
+      }
+    },
+    {
+      "seed": 20260992,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1958214235523942,
+          "bce": 0.5755676924914536
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20198302338105156,
+          "bce": 0.5881443629899202
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20864019317703691,
+          "bce": 0.6038538354583065
+        },
+        "ablate_self_model": {
+          "brier": 0.18321914257947153,
+          "bce": 0.5523493403282463
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3476888888888889,
+          "bce": 1.0079553581922978
+        }
+      }
+    },
+    {
+      "seed": 20260993,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16431085393532102,
+          "bce": 0.5056802427740958
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17968590791965175,
+          "bce": 0.5408124498885442
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17790659527293096,
+          "bce": 0.537984295725573
+        },
+        "ablate_self_model": {
+          "brier": 0.1527747807159196,
+          "bce": 0.4794138389315597
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35413333333333336,
+          "bce": 1.0233418233403382
+        }
+      }
+    },
+    {
+      "seed": 20260994,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16409524268450712,
+          "bce": 0.5036351247596842
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1737084642738756,
+          "bce": 0.5253609129390228
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1701631670193097,
+          "bce": 0.5202158048948871
+        },
+        "ablate_self_model": {
+          "brier": 0.1535960268517887,
+          "bce": 0.4829642875195884
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31637777777777776,
+          "bce": 0.9217739525612731
+        }
+      }
+    },
+    {
+      "seed": 20260995,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.15963746147646843,
+          "bce": 0.49082919533924363
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.16918738664853053,
+          "bce": 0.5115429822171746
+        },
+        "ablate_affective_lr": {
+          "brier": 0.16927303530344207,
+          "bce": 0.5134667705701719
+        },
+        "ablate_self_model": {
+          "brier": 0.1543172059342841,
+          "bce": 0.4825474455316535
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32726666666666665,
+          "bce": 0.9492163838149013
+        }
+      }
+    },
+    {
+      "seed": 20260996,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.171049746289995,
+          "bce": 0.5242293953949592
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18171592949247417,
+          "bce": 0.5469216785226351
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18152237615111752,
+          "bce": 0.54887571295256
+        },
+        "ablate_self_model": {
+          "brier": 0.1653420579710286,
+          "bce": 0.5129235853954914
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34957777777777777,
+          "bce": 1.0105295429670744
+        }
+      }
+    },
+    {
+      "seed": 20260997,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16431571170368744,
+          "bce": 0.5041312234710696
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17512622130930763,
+          "bce": 0.527838505548218
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17022225243916475,
+          "bce": 0.518574092776679
+        },
+        "ablate_self_model": {
+          "brier": 0.15990930854658,
+          "bce": 0.4967238835066499
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3241111111111111,
+          "bce": 0.9411703734589455
+        }
+      }
+    },
+    {
+      "seed": 20260998,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17300054292534112,
+          "bce": 0.5251704621808602
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1823464936528385,
+          "bce": 0.545467022164122
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1955229476818302,
+          "bce": 0.5788496745546082
+        },
+        "ablate_self_model": {
+          "brier": 0.15684875599296294,
+          "bce": 0.49203349614623954
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32804444444444447,
+          "bce": 0.9534018365134818
+        }
+      }
+    },
+    {
+      "seed": 20260999,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18089211847732242,
+          "bce": 0.5423424398830581
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19198411978599314,
+          "bce": 0.5667375780810184
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19144844001299585,
+          "bce": 0.5672185744206386
+        },
+        "ablate_self_model": {
+          "brier": 0.16895597667115375,
+          "bce": 0.5189439725599968
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32295555555555555,
+          "bce": 0.9399333202705725
+        }
+      }
+    },
+    {
+      "seed": 20261000,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20134593690652697,
+          "bce": 0.5902762265756765
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20680267998290766,
+          "bce": 0.6013994653341606
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20698489644624812,
+          "bce": 0.6039277269011928
+        },
+        "ablate_self_model": {
+          "brier": 0.1903195523250641,
+          "bce": 0.5683332849718329
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32453333333333334,
+          "bce": 0.9468423558361863
+        }
+      }
+    },
+    {
+      "seed": 20261001,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18401872418380522,
+          "bce": 0.5473595312436789
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1905937765545104,
+          "bce": 0.5622243514639881
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19034564547736552,
+          "bce": 0.5619919028169088
+        },
+        "ablate_self_model": {
+          "brier": 0.18230853447372727,
+          "bce": 0.5453564568168974
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3100888888888889,
+          "bce": 0.9042200620178142
+        }
+      }
+    },
+    {
+      "seed": 20261002,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17962569043297494,
+          "bce": 0.5421344131967997
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19350585641169976,
+          "bce": 0.5719126983680296
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19071297731376674,
+          "bce": 0.5665855802661602
+        },
+        "ablate_self_model": {
+          "brier": 0.16564268716777908,
+          "bce": 0.5154352260663976
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34526666666666667,
+          "bce": 1.0012464794227456
+        }
+      }
+    },
+    {
+      "seed": 20261003,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18862998598980504,
+          "bce": 0.5601478621003075
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1940135152485085,
+          "bce": 0.5711491896893155
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20223424353281108,
+          "bce": 0.5906055017101396
+        },
+        "ablate_self_model": {
+          "brier": 0.17909146349116345,
+          "bce": 0.542276035729913
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34802222222222223,
+          "bce": 1.0079306983451848
+        }
+      }
+    },
+    {
+      "seed": 20261004,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1897928558859016,
+          "bce": 0.5626089223014665
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1999067070593966,
+          "bce": 0.5849821873918657
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20028208039870438,
+          "bce": 0.5879663968429589
+        },
+        "ablate_self_model": {
+          "brier": 0.1764337964464019,
+          "bce": 0.5353547947754229
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3360222222222222,
+          "bce": 0.9763274742400893
+        }
+      }
+    },
+    {
+      "seed": 20261005,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18652730266006834,
+          "bce": 0.5547983469667507
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19471717550058384,
+          "bce": 0.5741833260495723
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1996784759757934,
+          "bce": 0.5870554463796163
+        },
+        "ablate_self_model": {
+          "brier": 0.17521076965800286,
+          "bce": 0.5327681760292834
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3185777777777778,
+          "bce": 0.9292638054456144
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19982347113536075,
+          "bce": 0.58124449067508
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2040339342761416,
+          "bce": 0.5894933131044303
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21542004075669854,
+          "bce": 0.6144959162060832
+        },
+        "ablate_self_model": {
+          "brier": 0.17921200100387635,
+          "bce": 0.538878619743834
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31864444444444445,
+          "bce": 0.9306502567262438
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17707413953186266,
+          "bce": 0.5325317240879264
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18363130750329032,
+          "bce": 0.5467101616969899
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1896945447530179,
+          "bce": 0.5634946412894917
+        },
+        "ablate_self_model": {
+          "brier": 0.1709799521922246,
+          "bce": 0.5231414980672192
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31993333333333335,
+          "bce": 0.9311817543507456
+        }
+      }
+    },
+    {
+      "seed": 20261008,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.15651785610117488,
+          "bce": 0.48659971114179945
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1663163927218235,
+          "bce": 0.5102695013195968
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1688792596178398,
+          "bce": 0.5168503866670708
+        },
+        "ablate_self_model": {
+          "brier": 0.14480671844412193,
+          "bce": 0.46156343594653076
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3430888888888889,
+          "bce": 0.9922947567068571
+        }
+      }
+    },
+    {
+      "seed": 20261009,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18224532150451378,
+          "bce": 0.5473229974012092
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19031899911629716,
+          "bce": 0.5636747578475971
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19615381220743583,
+          "bce": 0.5811358120825896
+        },
+        "ablate_self_model": {
+          "brier": 0.1715917174669484,
+          "bce": 0.5265132306631622
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3363555555555555,
+          "bce": 0.9763028143929762
+        }
+      }
+    },
+    {
+      "seed": 20261010,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18720306433941503,
+          "bce": 0.5577534775057922
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19690136092748017,
+          "bce": 0.5786412954329011
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1986474413084035,
+          "bce": 0.581306437601416
+        },
+        "ablate_self_model": {
+          "brier": 0.17267668972456812,
+          "bce": 0.5268385758418895
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3534,
+          "bce": 1.0220046917539345
+        }
+      }
+    },
+    {
+      "seed": 20261011,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19019203614931152,
+          "bce": 0.5592096421225097
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20035080084818988,
+          "bce": 0.5820811812293211
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2186916579615336,
+          "bce": 0.6217870074255687
+        },
+        "ablate_self_model": {
+          "brier": 0.1661508052025604,
+          "bce": 0.50925663161433
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3315111111111111,
+          "bce": 0.9663635149790022
+        }
+      }
+    },
+    {
+      "seed": 20261012,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18028892603086485,
+          "bce": 0.53529064579048
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18447262386485686,
+          "bce": 0.543991560542365
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19084265992957442,
+          "bce": 0.5602713337536079
+        },
+        "ablate_self_model": {
+          "brier": 0.16416666161039214,
+          "bce": 0.49893482661103966
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3196,
+          "bce": 0.9312064141978584
+        }
+      }
+    },
+    {
+      "seed": 20261013,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1946954804077922,
+          "bce": 0.5729471856654075
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20910693903535124,
+          "bce": 0.6034554809929281
+        },
+        "ablate_affective_lr": {
+          "brier": 0.22256863679442318,
+          "bce": 0.6313667780331864
+        },
+        "ablate_self_model": {
+          "brier": 0.1682909549461362,
+          "bce": 0.5194199625736919
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32995555555555556,
+          "bce": 0.9637646703571128
+        }
+      }
+    },
+    {
+      "seed": 20261014,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18766070719240643,
+          "bce": 0.5579802408627632
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2079022511368518,
+          "bce": 0.6039767600050856
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19922655901217878,
+          "bce": 0.5844861247289819
+        },
+        "ablate_self_model": {
+          "brier": 0.170985646719882,
+          "bce": 0.5274266581380261
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3435333333333333,
+          "bce": 0.9965048692525506
+        }
+      }
+    },
+    {
+      "seed": 20261015,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19327246817566252,
+          "bce": 0.5685572629079256
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21085109266107263,
+          "bce": 0.6088355493725869
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1987050969285505,
+          "bce": 0.5829094713186573
+        },
+        "ablate_self_model": {
+          "brier": 0.1739851422191504,
+          "bce": 0.5329234484678763
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3366222222222222,
+          "bce": 0.978370161390364
+        }
+      }
+    },
+    {
+      "seed": 20261016,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19378592589028662,
+          "bce": 0.5750066494874124
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20196837450098212,
+          "bce": 0.592004927598927
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20571978152318657,
+          "bce": 0.6027585439872675
+        },
+        "ablate_self_model": {
+          "brier": 0.18156205037987375,
+          "bce": 0.5538304801084651
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3460888888888889,
+          "bce": 1.0025081924582315
+        }
+      }
+    },
+    {
+      "seed": 20261017,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18628437941061826,
+          "bce": 0.5545260655891509
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19663103908548565,
+          "bce": 0.5765821847903236
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2017058439821898,
+          "bce": 0.5916531626899783
+        },
+        "ablate_self_model": {
+          "brier": 0.167522289382023,
+          "bce": 0.5131467007701919
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3211777777777778,
+          "bce": 0.9381154497634722
+        }
+      }
+    },
+    {
+      "seed": 20261018,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17697457654406784,
+          "bce": 0.5379160479363745
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18618732091617538,
+          "bce": 0.557381807951414
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1846753723521515,
+          "bce": 0.55570014056983
+        },
+        "ablate_self_model": {
+          "brier": 0.16442904206089837,
+          "bce": 0.5129087815269311
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3591111111111111,
+          "bce": 1.0360540253155712
+        }
+      }
+    },
+    {
+      "seed": 20261019,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1820697805721492,
+          "bce": 0.5442365271070989
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19052835905422588,
+          "bce": 0.5628195044017837
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18634267246064667,
+          "bce": 0.5526789954488116
+        },
+        "ablate_self_model": {
+          "brier": 0.17131281553653752,
+          "bce": 0.5251396884760732
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33871111111111113,
+          "bce": 0.9816252418818989
+        }
+      }
+    },
+    {
+      "seed": 20261020,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1625632503369747,
+          "bce": 0.4968603533121528
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1726378154455529,
+          "bce": 0.5192060750588317
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17190371460695897,
+          "bce": 0.5231054488738983
+        },
+        "ablate_self_model": {
+          "brier": 0.15728905605533466,
+          "bce": 0.4872199578884557
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31853333333333333,
+          "bce": 0.9264154843334376
+        }
+      }
+    },
+    {
+      "seed": 20261021,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16797191530899938,
+          "bce": 0.5102621839881402
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1741980956528781,
+          "bce": 0.5255657300231174
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1829689760417617,
+          "bce": 0.5500195541179391
+        },
+        "ablate_self_model": {
+          "brier": 0.16241415429279765,
+          "bce": 0.4976459713155064
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.29244444444444445,
+          "bce": 0.8564754975065811
+        }
+      }
+    },
+    {
+      "seed": 20261022,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1685705963793769,
+          "bce": 0.512998891269851
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17508388352584411,
+          "bce": 0.5270201527957268
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17989464003634942,
+          "bce": 0.5392175666631652
+        },
+        "ablate_self_model": {
+          "brier": 0.1623259558345509,
+          "bce": 0.4994785584546818
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3237111111111111,
+          "bce": 0.9398085820254288
+        }
+      }
+    },
+    {
+      "seed": 20261023,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18083526650348378,
+          "bce": 0.5406813899863442
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1929363132775615,
+          "bce": 0.5675204299535366
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19293008369503023,
+          "bce": 0.5699899915195354
+        },
+        "ablate_self_model": {
+          "brier": 0.15294842873713715,
+          "bce": 0.48428123818331303
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3366222222222222,
+          "bce": 0.978370161390364
+        }
+      }
+    },
+    {
+      "seed": 20261024,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.192621609049772,
+          "bce": 0.5723261816550619
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2010997342264217,
+          "bce": 0.5898018535454579
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20557030946153884,
+          "bce": 0.6023656087882097
+        },
+        "ablate_self_model": {
+          "brier": 0.1770298665023136,
+          "bce": 0.5393583539189737
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32,
+          "bce": 0.9325682056313751
+        }
+      }
+    },
+    {
+      "seed": 20261025,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19426132892232076,
+          "bce": 0.5751016608588526
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20147569449537406,
+          "bce": 0.5903414166766426
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20665208860201278,
+          "bce": 0.6034181298523106
+        },
+        "ablate_self_model": {
+          "brier": 0.168818795768256,
+          "bce": 0.5226026946499829
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34097777777777777,
+          "bce": 0.9905015460468696
+        }
+      }
+    },
+    {
+      "seed": 20261026,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18571446103268585,
+          "bce": 0.5559363057161182
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19494635886205205,
+          "bce": 0.5765128364037626
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20194913726976932,
+          "bce": 0.5937528871584463
+        },
+        "ablate_self_model": {
+          "brier": 0.1733056532268115,
+          "bce": 0.5305900129488359
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3326,
+          "bce": 0.9662141168867456
+        }
+      }
+    },
+    {
+      "seed": 20261027,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19643706359309807,
+          "bce": 0.5786420475721532
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20106000459939694,
+          "bce": 0.5877684276401123
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20941703606926576,
+          "bce": 0.6085629654273851
+        },
+        "ablate_self_model": {
+          "brier": 0.16974313595237994,
+          "bce": 0.5260278622626147
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3295111111111111,
+          "bce": 0.9595545578114193
+        }
+      }
+    },
+    {
+      "seed": 20261028,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17843873039807714,
+          "bce": 0.5403811815694599
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18307575533674122,
+          "bce": 0.5503395020017996
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1880449435814211,
+          "bce": 0.5638758872809196
+        },
+        "ablate_self_model": {
+          "brier": 0.17214634075244795,
+          "bce": 0.5313015650387362
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3379111111111111,
+          "bce": 0.9789016590148658
+        }
+      }
+    },
+    {
+      "seed": 20261029,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17328056747665307,
+          "bce": 0.5255118577371077
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17947199325284555,
+          "bce": 0.5386219817972717
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1851037376125477,
+          "bce": 0.5555963996921894
+        },
+        "ablate_self_model": {
+          "brier": 0.1683760783140528,
+          "bce": 0.5168935543791537
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31048888888888887,
+          "bce": 0.9055818534513308
+        }
+      }
+    },
+    {
+      "seed": 20261030,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20356656802479003,
+          "bce": 0.5951513116328401
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21300439543300967,
+          "bce": 0.6154827830427647
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2209887431853644,
+          "bce": 0.6335743622149828
+        },
+        "ablate_self_model": {
+          "brier": 0.18558660881870712,
+          "bce": 0.5599879047614709
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3284888888888889,
+          "bce": 0.9576119490591752
+        }
+      }
+    },
+    {
+      "seed": 20261031,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1637484378009806,
+          "bce": 0.505324949163947
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.16805303878425323,
+          "bce": 0.5132056309508273
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17414727245882392,
+          "bce": 0.5326486417228484
+        },
+        "ablate_self_model": {
+          "brier": 0.16022840765017607,
+          "bce": 0.49788422053122855
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31204444444444446,
+          "bce": 0.9081806980732202
+        }
+      }
+    },
+    {
+      "seed": 20261032,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17764157375732678,
+          "bce": 0.5354414166109259
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18403441438560922,
+          "bce": 0.5485731976724983
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19387394222212617,
+          "bce": 0.5737261993600886
+        },
+        "ablate_self_model": {
+          "brier": 0.16599837508372858,
+          "bce": 0.5103221335356531
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33382222222222224,
+          "bce": 0.968837621355748
+        }
+      }
+    },
+    {
+      "seed": 20261033,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18076460295724936,
+          "bce": 0.544739489227973
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19093486919944094,
+          "bce": 0.5664282908512209
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1960731931079231,
+          "bce": 0.5804220506979513
+        },
+        "ablate_self_model": {
+          "brier": 0.1677783612230947,
+          "bce": 0.5200318281595968
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3254888888888889,
+          "bce": 0.9473985133078009
+        }
+      }
+    },
+    {
+      "seed": 20261034,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19515011045055325,
+          "bce": 0.5727657124232661
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20754169052877794,
+          "bce": 0.5991217147340445
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21113730122674215,
+          "bce": 0.6053393415656224
+        },
+        "ablate_self_model": {
+          "brier": 0.1789787032447298,
+          "bce": 0.54451571217785
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34095555555555557,
+          "bce": 0.991963415878417
+        }
+      }
+    },
+    {
+      "seed": 20261035,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19530658870276885,
+          "bce": 0.5765243820329558
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19951934184567435,
+          "bce": 0.5846911624979223
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20727528921429642,
+          "bce": 0.6046173367734782
+        },
+        "ablate_self_model": {
+          "brier": 0.17851760264486924,
+          "bce": 0.5451720318177344
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3195777777777778,
+          "bce": 0.9326682840294058
+        }
+      }
+    },
+    {
+      "seed": 20261036,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.2013239454331153,
+          "bce": 0.5894309684984234
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2071659992526338,
+          "bce": 0.6014016433411499
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20820580083146722,
+          "bce": 0.6049319817920501
+        },
+        "ablate_self_model": {
+          "brier": 0.18811967852190037,
+          "bce": 0.5661959217245074
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3320666666666667,
+          "bce": 0.9655578810171002
+        }
+      }
+    },
+    {
+      "seed": 20261037,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1853689483812207,
+          "bce": 0.5560803873246634
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19795195320125086,
+          "bce": 0.5841124590273308
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19311010291560868,
+          "bce": 0.572921577016461
+        },
+        "ablate_self_model": {
+          "brier": 0.16944266556141974,
+          "bce": 0.5256752726958855
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34426666666666667,
+          "bce": 0.9978420008389542
+        }
+      }
+    },
+    {
+      "seed": 20261038,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16005035045905872,
+          "bce": 0.4964571930325782
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17499545923548449,
+          "bce": 0.5308352801622738
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1680223572054279,
+          "bce": 0.5172623313394267
+        },
+        "ablate_self_model": {
+          "brier": 0.14724103658932805,
+          "bce": 0.4717203032505759
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3512,
+          "bce": 1.0145148388695933
+        }
+      }
+    },
+    {
+      "seed": 20261039,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20090598106632504,
+          "bce": 0.5916941590659952
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21256219033587734,
+          "bce": 0.6168173322901987
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21123740464378654,
+          "bce": 0.614645369159383
+        },
+        "ablate_self_model": {
+          "brier": 0.17765110195257278,
+          "bce": 0.545743387124351
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3496666666666667,
+          "bce": 1.016226185191428
+        }
+      }
+    },
+    {
+      "seed": 20261040,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1880293599984213,
+          "bce": 0.5615889403277519
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19660529836273943,
+          "bce": 0.5793841108977167
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1981470012500601,
+          "bce": 0.5855573901977977
+        },
+        "ablate_self_model": {
+          "brier": 0.17071144906214594,
+          "bce": 0.5268487809382228
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33044444444444443,
+          "bce": 0.9615725851145812
+        }
+      }
+    },
+    {
+      "seed": 20261041,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17656735780752103,
+          "bce": 0.5355294667105706
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18757982054775668,
+          "bce": 0.5584964001551767
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19560551838149304,
+          "bce": 0.5786194039500341
+        },
+        "ablate_self_model": {
+          "brier": 0.16032587231561848,
+          "bce": 0.504266938886465
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3405111111111111,
+          "bce": 0.9877533033327235
+        }
+      }
+    },
+    {
+      "seed": 20261042,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1894293820310235,
+          "bce": 0.5621211775245791
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19681909503758144,
+          "bce": 0.5771859975163693
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19889165304314893,
+          "bce": 0.5833039975219172
+        },
+        "ablate_self_model": {
+          "brier": 0.16946968882530622,
+          "bce": 0.5197132232465071
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3352,
+          "bce": 0.9750657612046034
+        }
+      }
+    },
+    {
+      "seed": 20261043,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1711820487820299,
+          "bce": 0.5211604943693424
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17671619463018198,
+          "bce": 0.5325672420132621
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18017484913329432,
+          "bce": 0.5430968720302907
+        },
+        "ablate_self_model": {
+          "brier": 0.1676580074991883,
+          "bce": 0.5138625513931366
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31995555555555555,
+          "bce": 0.9297198845191981
+        }
+      }
+    },
+    {
+      "seed": 20261044,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16726454357998857,
+          "bce": 0.5076118883127635
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17042276448085666,
+          "bce": 0.515181176399452
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17908773138369768,
+          "bce": 0.5380554672141614
+        },
+        "ablate_self_model": {
+          "brier": 0.15523389102017243,
+          "bce": 0.48303899369017056
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.30015555555555556,
+          "bce": 0.8773337882358007
+        }
+      }
+    },
+    {
+      "seed": 20261045,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1917670285620735,
+          "bce": 0.5687918671763287
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20019665396501468,
+          "bce": 0.5863861997117004
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19960306263051145,
+          "bce": 0.5884518088654077
+        },
+        "ablate_self_model": {
+          "brier": 0.17775310139136036,
+          "bce": 0.5414627363184019
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3411111111111111,
+          "bce": 0.9897959904829984
+        }
+      }
+    },
+    {
+      "seed": 20261046,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19559098071063055,
+          "bce": 0.5805072725438919
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2096701600036772,
+          "bce": 0.6106997401918681
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20495678672210624,
+          "bce": 0.6011437596213187
+        },
+        "ablate_self_model": {
+          "brier": 0.17964723487362722,
+          "bce": 0.5471382203067715
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35304444444444444,
+          "bce": 1.0234912214325949
+        }
+      }
+    },
+    {
+      "seed": 20261047,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18959911156052778,
+          "bce": 0.56302976594398
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1919419685698377,
+          "bce": 0.5680853665775772
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19992702782171728,
+          "bce": 0.5891905328002601
+        },
+        "ablate_self_model": {
+          "brier": 0.18384627679440066,
+          "bce": 0.5542390355607674
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34013333333333334,
+          "bce": 0.9849296420676596
+        }
+      }
+    },
+    {
+      "seed": 20261048,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.2002854127497124,
+          "bce": 0.5877292009189627
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20620768804192247,
+          "bce": 0.6004125620521354
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21493250838597716,
+          "bce": 0.6206739362509563
+        },
+        "ablate_self_model": {
+          "brier": 0.19067234230799215,
+          "bce": 0.571490096502096
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31522222222222224,
+          "bce": 0.9205368993729002
+        }
+      }
+    },
+    {
+      "seed": 20261049,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19683995423805625,
+          "bce": 0.5830870976936642
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20244913042665003,
+          "bce": 0.5943596226234524
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20574698253644283,
+          "bce": 0.603289610004833
+        },
+        "ablate_self_model": {
+          "brier": 0.18779298641937245,
+          "bce": 0.567497604925418
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3425333333333333,
+          "bce": 0.993100390668759
+        }
+      }
+    },
+    {
+      "seed": 20261050,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18318980602823626,
+          "bce": 0.5508676908398957
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19439006240909476,
+          "bce": 0.5748486149785805
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19723974808113293,
+          "bce": 0.5838727005602047
+        },
+        "ablate_self_model": {
+          "brier": 0.1676455495388912,
+          "bce": 0.5188309181519506
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.37175555555555556,
+          "bce": 1.0725482576831187
+        }
+      }
+    },
+    {
+      "seed": 20261051,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17865117386833707,
+          "bce": 0.5417550927587433
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19052368762839308,
+          "bce": 0.567039867356985
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1953128867103992,
+          "bce": 0.5801519622115979
+        },
+        "ablate_self_model": {
+          "brier": 0.16347470384038304,
+          "bce": 0.5092130641151879
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3344,
+          "bce": 0.9723421783375702
+        }
+      }
+    },
+    {
+      "seed": 20261052,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19378342799743065,
+          "bce": 0.5753683759702312
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20592907501232396,
+          "bce": 0.6009425931615994
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21434240140574284,
+          "bce": 0.6201927432241363
+        },
+        "ablate_self_model": {
+          "brier": 0.17246587236446564,
+          "bce": 0.5331988839614229
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3577333333333333,
+          "bce": 1.0355979462419873
+        }
+      }
+    },
+    {
+      "seed": 20261053,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20228665030553006,
+          "bce": 0.5913723456677821
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20899773856998458,
+          "bce": 0.6055813425441829
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21768160477878004,
+          "bce": 0.6266660801901484
+        },
+        "ablate_self_model": {
+          "brier": 0.1772779637365661,
+          "bce": 0.5400976442058779
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3221777777777778,
+          "bce": 0.9415199283472636
+        }
+      }
+    },
+    {
+      "seed": 20261054,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17279615025741027,
+          "bce": 0.5280813325326389
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1810272314542628,
+          "bce": 0.5458747183799201
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1833962646706422,
+          "bce": 0.5530287356213235
+        },
+        "ablate_self_model": {
+          "brier": 0.16151283347289888,
+          "bce": 0.5051774803854817
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33199999999999996,
+          "bce": 0.9641714297364706
+        }
+      }
+    },
+    {
+      "seed": 20261055,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17895708593506052,
+          "bce": 0.5421671641975907
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18763048998608362,
+          "bce": 0.5599896418961972
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1921063833838491,
+          "bce": 0.5725257883334859
+        },
+        "ablate_self_model": {
+          "brier": 0.16686787761525143,
+          "bce": 0.5173586429095902
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3522,
+          "bce": 1.0179193174533847
+        }
+      }
+    },
+    {
+      "seed": 20261056,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20595854966170635,
+          "bce": 0.59973754922833
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2099924830615256,
+          "bce": 0.6081078709031236
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21474288826112684,
+          "bce": 0.618732141165525
+        },
+        "ablate_self_model": {
+          "brier": 0.18446795782138017,
+          "bce": 0.5555490515489839
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3429111111111111,
+          "bce": 0.9959240519338229
+        }
+      }
+    },
+    {
+      "seed": 20261057,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20418529258163412,
+          "bce": 0.5972781775979369
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21364780679147166,
+          "bce": 0.6181089635483562
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21137958986728947,
+          "bce": 0.6145838019409774
+        },
+        "ablate_self_model": {
+          "brier": 0.19905461162750618,
+          "bce": 0.592216820336418
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32535555555555556,
+          "bce": 0.9481040688716721
+        }
+      }
+    },
+    {
+      "seed": 20261058,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.21419808789099015,
+          "bce": 0.615969736084444
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21982970663285617,
+          "bce": 0.6275221051664213
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2253738707154673,
+          "bce": 0.6397666448803027
+        },
+        "ablate_self_model": {
+          "brier": 0.19020530845668937,
+          "bce": 0.5688241694015076
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3473333333333333,
+          "bce": 1.0094418878709581
+        }
+      }
+    },
+    {
+      "seed": 20261059,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17991478368212918,
+          "bce": 0.5385053767699641
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19282446970090927,
+          "bce": 0.5663178559941069
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20111321369538632,
+          "bce": 0.5827067073238064
+        },
+        "ablate_self_model": {
+          "brier": 0.16502566355961262,
+          "bce": 0.5097080244499852
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33482222222222224,
+          "bce": 0.9722420999395395
+        }
+      }
+    },
+    {
+      "seed": 20261060,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.169672689461225,
+          "bce": 0.5156940219324807
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.177050882694778,
+          "bce": 0.531299075635005
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18420162409983748,
+          "bce": 0.5515045695775466
+        },
+        "ablate_self_model": {
+          "brier": 0.15814381302635627,
+          "bce": 0.49037637255944405
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3217555555555555,
+          "bce": 0.9358479459700229
+        }
+      }
+    },
+    {
+      "seed": 20261061,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18506415001021279,
+          "bce": 0.5536448802625481
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19364640153606322,
+          "bce": 0.5714082337749105
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19450208271348352,
+          "bce": 0.5758743672609211
+        },
+        "ablate_self_model": {
+          "brier": 0.17590672929403334,
+          "bce": 0.5379594835623283
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3363555555555555,
+          "bce": 0.9763028143929762
+        }
+      }
+    },
+    {
+      "seed": 20261062,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1856711484567598,
+          "bce": 0.54815099016396
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18658279069560907,
+          "bce": 0.5499273824596712
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19464242571008003,
+          "bce": 0.5682412296966496
+        },
+        "ablate_self_model": {
+          "brier": 0.1772597667313337,
+          "bce": 0.5314539665387936
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3102888888888889,
+          "bce": 0.9049009577345726
+        }
+      }
+    },
+    {
+      "seed": 20261063,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17775173333352356,
+          "bce": 0.5334008010234197
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1825783532730137,
+          "bce": 0.544782413428598
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19159585313555477,
+          "bce": 0.5659680393379175
+        },
+        "ablate_self_model": {
+          "brier": 0.17266445480509815,
+          "bce": 0.5220749259684216
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3355777777777778,
+          "bce": 0.9721173616943958
+        }
+      }
+    },
+    {
+      "seed": 20261064,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16888519342033612,
+          "bce": 0.5157847455295215
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1807813567357457,
+          "bce": 0.5428660165287557
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19652331534218276,
+          "bce": 0.5796090558565594
+        },
+        "ablate_self_model": {
+          "brier": 0.15747164746332834,
+          "bce": 0.49061499064958064
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32508888888888887,
+          "bce": 0.9460367218742842
+        }
+      }
+    },
+    {
+      "seed": 20261065,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1957719839605731,
+          "bce": 0.577653799198298
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19936127879936383,
+          "bce": 0.5853030108832878
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20291738594191602,
+          "bce": 0.5951560537123785
+        },
+        "ablate_self_model": {
+          "brier": 0.19028240985984973,
+          "bce": 0.5670573022476185
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3221333333333333,
+          "bce": 0.9386716072350868
+        }
+      }
+    },
+    {
+      "seed": 20261066,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1878447500777649,
+          "bce": 0.5616969564259425
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19950406524509035,
+          "bce": 0.587613729446957
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19847209186191575,
+          "bce": 0.5866312703535711
+        },
+        "ablate_self_model": {
+          "brier": 0.17483382152379207,
+          "bce": 0.5383249806228492
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3506444444444444,
+          "bce": 1.0153204728314953
+        }
+      }
+    },
+    {
+      "seed": 20261067,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18807825838063846,
+          "bce": 0.5604053050957509
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19545921326289337,
+          "bce": 0.5763785495469074
+        },
+        "ablate_affective_lr": {
+          "brier": 0.196387690066606,
+          "bce": 0.5780664080270501
+        },
+        "ablate_self_model": {
+          "brier": 0.17639668052732427,
+          "bce": 0.5379249470391031
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35157777777777777,
+          "bce": 1.0173385001346573
+        }
+      }
+    },
+    {
+      "seed": 20261068,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19278942177479874,
+          "bce": 0.5724577409708606
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20100606879418398,
+          "bce": 0.5894232111194398
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20880439575013832,
+          "bce": 0.6096111753978893
+        },
+        "ablate_self_model": {
+          "brier": 0.18014119595319295,
+          "bce": 0.5508556217865631
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3600888888888889,
+          "bce": 1.04092037373091
+        }
+      }
+    },
+    {
+      "seed": 20261069,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19033022904745425,
+          "bce": 0.5675472123778481
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1960229277464165,
+          "bce": 0.5797057853785538
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19721802737961214,
+          "bce": 0.583498505541969
+        },
+        "ablate_self_model": {
+          "brier": 0.17674114766798985,
+          "bce": 0.5391174394410476
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3772666666666667,
+          "bce": 1.085916695527997
+        }
+      }
+    },
+    {
+      "seed": 20261070,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18315092494935206,
+          "bce": 0.5460465670762434
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19278045985834255,
+          "bce": 0.568726410915192
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19133840499657412,
+          "bce": 0.5667481491573412
+        },
+        "ablate_self_model": {
+          "brier": 0.17204612839464423,
+          "bce": 0.5281155118437463
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3265111111111111,
+          "bce": 0.949341122060045
+        }
+      }
+    },
+    {
+      "seed": 20261071,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20431042249688633,
+          "bce": 0.5967501947826084
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2124573277341632,
+          "bce": 0.6130616619996343
+        },
+        "ablate_affective_lr": {
+          "brier": 0.22869202418111795,
+          "bce": 0.6492112371369015
+        },
+        "ablate_self_model": {
+          "brier": 0.1827318543398702,
+          "bce": 0.5520685409800006
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3320444444444445,
+          "bce": 0.9670197508486477
+        }
+      }
+    },
+    {
+      "seed": 20261072,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16722829626954047,
+          "bce": 0.5101186946412406
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1778459855012543,
+          "bce": 0.5333065778044925
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18045090214311343,
+          "bce": 0.539066043813221
+        },
+        "ablate_self_model": {
+          "brier": 0.15575280511175707,
+          "bce": 0.4853126333607693
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3347555555555556,
+          "bce": 0.9708556486589099
+        }
+      }
+    },
+    {
+      "seed": 20261073,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18752174881045786,
+          "bce": 0.5596602215039659
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20477851535898717,
+          "bce": 0.5978465222650212
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2069710450073645,
+          "bce": 0.6028862200146002
+        },
+        "ablate_self_model": {
+          "brier": 0.17157034266990856,
+          "bce": 0.5288757985052115
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3455333333333333,
+          "bce": 1.0033138264201336
+        }
+      }
+    },
+    {
+      "seed": 20261074,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18422531674345663,
+          "bce": 0.5519274239745015
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18854840623841485,
+          "bce": 0.5608825480756363
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1947495870078221,
+          "bce": 0.5774510741983758
+        },
+        "ablate_self_model": {
+          "brier": 0.16774041068821677,
+          "bce": 0.5185190167566608
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3332,
+          "bce": 0.9682568040370204
+        }
+      }
+    },
+    {
+      "seed": 20261075,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18668089926609624,
+          "bce": 0.5561755769747183
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1934469647902482,
+          "bce": 0.5705542664813292
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20343862625153458,
+          "bce": 0.5951052479331342
+        },
+        "ablate_self_model": {
+          "brier": 0.17382848600874265,
+          "bce": 0.5304768720916628
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3300444444444445,
+          "bce": 0.9602107936810647
+        }
+      }
+    },
+    {
+      "seed": 20261076,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17543482514533165,
+          "bce": 0.5304502070374667
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18161853483206244,
+          "bce": 0.5429105437999948
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18744114177618332,
+          "bce": 0.559682354998807
+        },
+        "ablate_self_model": {
+          "brier": 0.16320954438495214,
+          "bce": 0.5066931760288809
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31993333333333335,
+          "bce": 0.9311817543507456
+        }
+      }
+    },
+    {
+      "seed": 20261077,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19523375072865012,
+          "bce": 0.5736469257560546
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2043641334253099,
+          "bce": 0.5941323904867782
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2058786963897832,
+          "bce": 0.5967689457001425
+        },
+        "ablate_self_model": {
+          "brier": 0.17905185651677624,
+          "bce": 0.544450119258317
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3401777777777778,
+          "bce": 0.9877779631798365
+        }
+      }
+    },
+    {
+      "seed": 20261078,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17135065272938318,
+          "bce": 0.5200747471055824
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17845016624764326,
+          "bce": 0.5354231215912958
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18684216179567198,
+          "bce": 0.5579888083616166
+        },
+        "ablate_self_model": {
+          "brier": 0.15760940201184584,
+          "bce": 0.49100809261331
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3248888888888889,
+          "bce": 0.9453558261575259
+        }
+      }
+    },
+    {
+      "seed": 20261079,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1712249766694113,
+          "bce": 0.518190571868145
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17980017996679518,
+          "bce": 0.5369203702703239
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18777870992733015,
+          "bce": 0.5574484576099706
+        },
+        "ablate_self_model": {
+          "brier": 0.15558742351188656,
+          "bce": 0.48773887505423036
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32784444444444444,
+          "bce": 0.9527209407967234
+        }
+      }
+    },
+    {
+      "seed": 20261080,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.194385480273439,
+          "bce": 0.5709361668841175
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19885728137692768,
+          "bce": 0.5802967041839564
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2074424909891578,
+          "bce": 0.600014351816254
+        },
+        "ablate_self_model": {
+          "brier": 0.17817868291397979,
+          "bce": 0.5373432114621374
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33815555555555554,
+          "bce": 0.982430875843801
+        }
+      }
+    },
+    {
+      "seed": 20261081,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19175290166108244,
+          "bce": 0.5698518765990294
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20373716715037501,
+          "bce": 0.5956347589600994
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20511004323382714,
+          "bce": 0.5990712768597165
+        },
+        "ablate_self_model": {
+          "brier": 0.17781869965511032,
+          "bce": 0.5434103044750315
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32037777777777776,
+          "bce": 0.935391866896439
+        }
+      }
+    },
+    {
+      "seed": 20261082,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17757221426438688,
+          "bce": 0.5381876541962273
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18732643847331967,
+          "bce": 0.5588853743420581
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18900487702140173,
+          "bce": 0.5654833468064933
+        },
+        "ablate_self_model": {
+          "brier": 0.16692936044439313,
+          "bce": 0.5202256818830022
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34388888888888886,
+          "bce": 0.9950183395738902
+        }
+      }
+    },
+    {
+      "seed": 20261083,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20207116651826182,
+          "bce": 0.5942337819473297
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2145015308713996,
+          "bce": 0.6206692940704224
+        },
+        "ablate_affective_lr": {
+          "brier": 0.22003653350438046,
+          "bce": 0.6331256571319932
+        },
+        "ablate_self_model": {
+          "brier": 0.18753326806969722,
+          "bce": 0.5674357138035028
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.36604444444444445,
+          "bce": 1.058498924121482
+        }
+      }
+    },
+    {
+      "seed": 20261084,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1825149192484682,
+          "bce": 0.5439406920571567
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18833265111691155,
+          "bce": 0.5565863980140353
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1864736978712056,
+          "bce": 0.552717988257697
+        },
+        "ablate_self_model": {
+          "brier": 0.16979762295175604,
+          "bce": 0.5195716092209689
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32611111111111113,
+          "bce": 0.9479793306265284
+        }
+      }
+    },
+    {
+      "seed": 20261085,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18349765603143753,
+          "bce": 0.5519203956201981
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1912505342539632,
+          "bce": 0.5693969426612379
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19412436762781482,
+          "bce": 0.5761201369176598
+        },
+        "ablate_self_model": {
+          "brier": 0.1759199237057705,
+          "bce": 0.535777438188174
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35057777777777777,
+          "bce": 1.0139340215508659
+        }
+      }
+    },
+    {
+      "seed": 20261086,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.176113132019733,
+          "bce": 0.5313827412657485
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18899597390696796,
+          "bce": 0.5607616343180554
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1931471660760435,
+          "bce": 0.5731330753954559
+        },
+        "ablate_self_model": {
+          "brier": 0.16588480022639832,
+          "bce": 0.5090121535236573
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34153333333333336,
+          "bce": 0.9896959120849675
+        }
+      }
+    },
+    {
+      "seed": 20261087,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18924574985830478,
+          "bce": 0.5654189354875275
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1983856072620398,
+          "bce": 0.5843741539968593
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2017718368057379,
+          "bce": 0.5932353489692714
+        },
+        "ablate_self_model": {
+          "brier": 0.1722148563325433,
+          "bce": 0.5280484361999627
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.32911111111111113,
+          "bce": 0.9581927663779026
+        }
+      }
+    },
+    {
+      "seed": 20261088,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19731756864809968,
+          "bce": 0.5826203469346682
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20948773688233666,
+          "bce": 0.6074886666476808
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21146652925148035,
+          "bce": 0.6125700264552747
+        },
+        "ablate_self_model": {
+          "brier": 0.17508473492825768,
+          "bce": 0.5367839337616841
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35617777777777776,
+          "bce": 1.032999101620098
+        }
+      }
+    },
+    {
+      "seed": 20261089,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17150898628688474,
+          "bce": 0.5163859868210326
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17749910837424407,
+          "bce": 0.5296905208221249
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17915197433264188,
+          "bce": 0.5349755810757927
+        },
+        "ablate_self_model": {
+          "brier": 0.15627792723676107,
+          "bce": 0.48333466867133057
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31322222222222224,
+          "bce": 0.9137279422053174
+        }
+      }
+    },
+    {
+      "seed": 20261090,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18404654616323246,
+          "bce": 0.5507688915259947
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1946636097134027,
+          "bce": 0.5738064033689348
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19428250560738589,
+          "bce": 0.5736360957490039
+        },
+        "ablate_self_model": {
+          "brier": 0.17098567438871362,
+          "bce": 0.5265256861831961
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3381777777777778,
+          "bce": 0.9809690060122536
+        }
+      }
+    },
+    {
+      "seed": 20261091,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16282116952166806,
+          "bce": 0.4979971082146698
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17264604566589212,
+          "bce": 0.5195814865675817
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17136766739414544,
+          "bce": 0.5165230489022196
+        },
+        "ablate_self_model": {
+          "brier": 0.15475611211229529,
+          "bce": 0.4832791015269992
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3351777777777778,
+          "bce": 0.9707555702608791
+        }
+      }
+    },
+    {
+      "seed": 20261092,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17971406142895882,
+          "bce": 0.5396461499401677
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18975561848897013,
+          "bce": 0.5623783373906832
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1954099939576913,
+          "bce": 0.5749693485669387
+        },
+        "ablate_self_model": {
+          "brier": 0.16441853429434364,
+          "bce": 0.508853488748157
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34688888888888886,
+          "bce": 1.0052317753252646
+        }
+      }
+    },
+    {
+      "seed": 20261093,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.176347877124626,
+          "bce": 0.535818520369473
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1903958372501526,
+          "bce": 0.5665322949949858
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1844619112512314,
+          "bce": 0.5558846038780731
+        },
+        "ablate_self_model": {
+          "brier": 0.1688083777905282,
+          "bce": 0.5203526017649088
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3351555555555556,
+          "bce": 0.9722174400924265
+        }
+      }
+    },
+    {
+      "seed": 20261094,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.2081550880183407,
+          "bce": 0.6046306660798587
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21710826463649022,
+          "bce": 0.6246181957687754
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2198971768998693,
+          "bce": 0.6298945507087402
+        },
+        "ablate_self_model": {
+          "brier": 0.18991812487853496,
+          "bce": 0.5718910004124544
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3526444444444444,
+          "bce": 1.0221294299990782
+        }
+      }
+    },
+    {
+      "seed": 20261095,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18745255960874296,
+          "bce": 0.562133457552828
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.2007596493613967,
+          "bce": 0.5906555095935397
+        },
+        "ablate_affective_lr": {
+          "brier": 0.213062568829327,
+          "bce": 0.6181923802876278
+        },
+        "ablate_self_model": {
+          "brier": 0.1775349673098117,
+          "bce": 0.5438481581132271
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3486888888888889,
+          "bce": 1.0113598367760892
+        }
+      }
+    },
+    {
+      "seed": 20261096,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1782936730449002,
+          "bce": 0.5381321459179976
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1856746806649552,
+          "bce": 0.5532628242310752
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19855491204937542,
+          "bce": 0.583168057043281
+        },
+        "ablate_self_model": {
+          "brier": 0.17501446712145455,
+          "bce": 0.53247603347984
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3078666666666666,
+          "bce": 0.8981920789650204
+        }
+      }
+    },
+    {
+      "seed": 20261097,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20418499645103497,
+          "bce": 0.5963138409486469
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21463938855696385,
+          "bce": 0.6195554091208517
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2098483606292902,
+          "bce": 0.6094397624721218
+        },
+        "ablate_self_model": {
+          "brier": 0.18692862485954784,
+          "bce": 0.5656947581404534
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3552,
+          "bce": 1.0281327532047593
+        }
+      }
+    },
+    {
+      "seed": 20261098,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.15639750768059843,
+          "bce": 0.4888259497458086
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17642546266423303,
+          "bce": 0.5336809475241826
+        },
+        "ablate_affective_lr": {
+          "brier": 0.17296249877822895,
+          "bce": 0.5299546128069947
+        },
+        "ablate_self_model": {
+          "brier": 0.13860945835927213,
+          "bce": 0.4516254957913612
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.36579999999999996,
+          "bce": 1.0549697072925466
+        }
+      }
+    },
+    {
+      "seed": 20261099,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19923468185295026,
+          "bce": 0.5827063637420398
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21038773180452794,
+          "bce": 0.6078476260621813
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21126613460531235,
+          "bce": 0.6104409531183321
+        },
+        "ablate_self_model": {
+          "brier": 0.16421464054754964,
+          "bce": 0.5087009145398376
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3398222222222222,
+          "bce": 0.9892644928584967
+        }
+      }
+    },
+    {
+      "seed": 20261100,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1811928632083474,
+          "bce": 0.5464553866290482
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19461691037311946,
+          "bce": 0.5756303687965227
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18741700714509155,
+          "bce": 0.5612360415283167
+        },
+        "ablate_self_model": {
+          "brier": 0.1676051253287042,
+          "bce": 0.5181197840258938
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3433333333333333,
+          "bce": 0.9958239735357922
+        }
+      }
+    },
+    {
+      "seed": 20261101,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19670501665811221,
+          "bce": 0.5789180496292923
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20677505495106985,
+          "bce": 0.6016625614860296
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21806926812599103,
+          "bce": 0.6278757770285699
+        },
+        "ablate_self_model": {
+          "brier": 0.17829095518474203,
+          "bce": 0.5419902795630773
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3334666666666667,
+          "bce": 0.9703241510344083
+        }
+      }
+    },
+    {
+      "seed": 20261102,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1904689774723775,
+          "bce": 0.5665082854839156
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20643478620262015,
+          "bce": 0.5999133818782477
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20275191365920084,
+          "bce": 0.5950073862303958
+        },
+        "ablate_self_model": {
+          "brier": 0.16303138109948218,
+          "bce": 0.509836829174461
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35504444444444444,
+          "bce": 1.0303001786001778
+        }
+      }
+    },
+    {
+      "seed": 20261103,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.20122395394164552,
+          "bce": 0.5897901535266096
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.21302492846570098,
+          "bce": 0.6146643116588613
+        },
+        "ablate_affective_lr": {
+          "brier": 0.21559599115086361,
+          "bce": 0.6210374790458172
+        },
+        "ablate_self_model": {
+          "brier": 0.17437052276654846,
+          "bce": 0.535974437789548
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35502222222222224,
+          "bce": 1.0317620484317251
+        }
+      }
+    },
+    {
+      "seed": 20261104,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18994478101598208,
+          "bce": 0.5672306442475898
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19764700319151957,
+          "bce": 0.5842429475981535
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20460897133418032,
+          "bce": 0.6008770296536288
+        },
+        "ablate_self_model": {
+          "brier": 0.18476521209844937,
+          "bce": 0.559266140450487
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34488888888888886,
+          "bce": 0.9984228181576816
+        }
+      }
+    },
+    {
+      "seed": 20261105,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16685990400790432,
+          "bce": 0.5133919685948312
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17672581351513358,
+          "bce": 0.5346370603113634
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1739980861898981,
+          "bce": 0.5305921352311145
+        },
+        "ablate_self_model": {
+          "brier": 0.1619776250193062,
+          "bce": 0.5047657145720935
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3308,
+          "bce": 0.960086055435921
+        }
+      }
+    },
+    {
+      "seed": 20261106,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18008272930878938,
+          "bce": 0.5427222307788067
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19042989766066643,
+          "bce": 0.5648894790762339
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19047869588284097,
+          "bce": 0.5671136215303255
+        },
+        "ablate_self_model": {
+          "brier": 0.15644856076212244,
+          "bce": 0.4946171733903386
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3391777777777778,
+          "bce": 0.984373484596045
+        }
+      }
+    },
+    {
+      "seed": 20261107,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1570232139476659,
+          "bce": 0.4920380127629071
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1719882617194544,
+          "bce": 0.5245324443954819
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1716285557233221,
+          "bce": 0.5292267843133301
+        },
+        "ablate_self_model": {
+          "brier": 0.1433801100774914,
+          "bce": 0.46020651599459994
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3516,
+          "bce": 1.01587663030311
+        }
+      }
+    },
+    {
+      "seed": 20261108,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17104069633665492,
+          "bce": 0.5237868580971727
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1763032988588405,
+          "bce": 0.5347520658158741
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1828452139655234,
+          "bce": 0.5516383670845572
+        },
+        "ablate_self_model": {
+          "brier": 0.16279265575780055,
+          "bce": 0.5082691776933483
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33397777777777776,
+          "bce": 0.9666701959603293
+        }
+      }
+    },
+    {
+      "seed": 20261109,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1789565486800874,
+          "bce": 0.5409163943576553
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.18889142048922172,
+          "bce": 0.5616425746524404
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19303159167821674,
+          "bce": 0.5723719062828178
+        },
+        "ablate_self_model": {
+          "brier": 0.1620099588116291,
+          "bce": 0.5067078034934029
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.35104444444444444,
+          "bce": 1.016682264265012
+        }
+      }
+    },
+    {
+      "seed": 20261110,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.19039438098663983,
+          "bce": 0.5669758507203444
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19633670199350461,
+          "bce": 0.5800990961523244
+        },
+        "ablate_affective_lr": {
+          "brier": 0.194079120808928,
+          "bce": 0.576217114668269
+        },
+        "ablate_self_model": {
+          "brier": 0.17129467537835744,
+          "bce": 0.5283257086039872
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33797777777777777,
+          "bce": 0.9802881102954952
+        }
+      }
+    },
+    {
+      "seed": 20261111,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18999538007879113,
+          "bce": 0.5655110551127573
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.20282091358268792,
+          "bce": 0.5945525684178432
+        },
+        "ablate_affective_lr": {
+          "brier": 0.2072792982777134,
+          "bce": 0.6052573437954456
+        },
+        "ablate_self_model": {
+          "brier": 0.16517185231897222,
+          "bce": 0.5138306525956857
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3506888888888889,
+          "bce": 1.018168793943672
+        }
+      }
+    },
+    {
+      "seed": 20261112,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.15964207823937596,
+          "bce": 0.4905219497859206
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17257888123782178,
+          "bce": 0.5187919436459786
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1761324266490606,
+          "bce": 0.5309416829800085
+        },
+        "ablate_self_model": {
+          "brier": 0.14973315922952982,
+          "bce": 0.4706746874080238
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.31597777777777775,
+          "bce": 0.9204121611277565
+        }
+      }
+    },
+    {
+      "seed": 20261113,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18244202960692088,
+          "bce": 0.5431810884838447
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1929017939304306,
+          "bce": 0.5656883826484175
+        },
+        "ablate_affective_lr": {
+          "brier": 0.20080938907097354,
+          "bce": 0.5857687621843951
+        },
+        "ablate_self_model": {
+          "brier": 0.16024109984814286,
+          "bce": 0.4966738521669588
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3087111111111111,
+          "bce": 0.9037639829442304
+        }
+      }
+    },
+    {
+      "seed": 20261114,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16798602812891802,
+          "bce": 0.5152294850902065
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.17839232190669674,
+          "bce": 0.5386458439964796
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1792313397722888,
+          "bce": 0.5434588215724874
+        },
+        "ablate_self_model": {
+          "brier": 0.16018190681942482,
+          "bce": 0.5020604732247156
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3518,
+          "bce": 1.0165575260198683
+        }
+      }
+    },
+    {
+      "seed": 20261115,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18771581210625024,
+          "bce": 0.5578139379540237
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19614168085246458,
+          "bce": 0.5764327281030294
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1981033262452763,
+          "bce": 0.5828515522599267
+        },
+        "ablate_self_model": {
+          "brier": 0.17091758189918357,
+          "bce": 0.5248923920273156
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33184444444444444,
+          "bce": 0.9663388551318893
+        }
+      }
+    },
+    {
+      "seed": 20261116,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.17415619994303091,
+          "bce": 0.5277842048028526
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1837032695977478,
+          "bce": 0.5488097208572007
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18246329344699835,
+          "bce": 0.5468844308503558
+        },
+        "ablate_self_model": {
+          "brier": 0.16872080681400572,
+          "bce": 0.5199805047001234
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3264444444444444,
+          "bce": 0.9479546707794155
+        }
+      }
+    },
+    {
+      "seed": 20261117,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18331823034469086,
+          "bce": 0.5520438947968169
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.19279783965109398,
+          "bce": 0.5724720661636017
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19436482825705736,
+          "bce": 0.5779167483925726
+        },
+        "ablate_self_model": {
+          "brier": 0.16535275951122813,
+          "bce": 0.5142242645534464
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.3405111111111111,
+          "bce": 0.9877533033327235
+        }
+      }
+    },
+    {
+      "seed": 20261118,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.16909137106293654,
+          "bce": 0.5222828177599661
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1803188956847033,
+          "bce": 0.5462474966968537
+        },
+        "ablate_affective_lr": {
+          "brier": 0.1794337151222646,
+          "bce": 0.5463900807395521
+        },
+        "ablate_self_model": {
+          "brier": 0.16106849623038458,
+          "bce": 0.5047715354231963
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33142222222222223,
+          "bce": 0.9606668727546486
+        }
+      }
+    },
+    {
+      "seed": 20261119,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.1739735640001589,
+          "bce": 0.527137468736294
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.185307443778619,
+          "bce": 0.5531016718528037
+        },
+        "ablate_affective_lr": {
+          "brier": 0.18700548127626831,
+          "bce": 0.5594506166873926
+        },
+        "ablate_self_model": {
+          "brier": 0.16302058101090264,
+          "bce": 0.508716783823923
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.34642222222222224,
+          "bce": 1.0024835326111186
+        }
+      }
+    },
+    {
+      "seed": 20261120,
+      "metrics": {
+        "full_phase24_engine": {
+          "brier": 0.18685466788505295,
+          "bce": 0.5557387574596733
+        },
+        "ablate_episodic_mem": {
+          "brier": 0.1976845258075071,
+          "bce": 0.5786478208088622
+        },
+        "ablate_affective_lr": {
+          "brier": 0.19302816642586407,
+          "bce": 0.5701323264625173
+        },
+        "ablate_self_model": {
+          "brier": 0.1642231174617067,
+          "bce": 0.5098217119010552
+        },
+        "frozen_phase23_markov": {
+          "brier": 0.33775555555555553,
+          "bce": 0.9810690844102843
+        }
+      }
+    }
+  ]
+}

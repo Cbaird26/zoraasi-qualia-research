@@ -1,0 +1,25 @@
+test_bounds_window_limits_and_valid_extreme_initial_values (__main__.TestPhase26.test_bounds_window_limits_and_valid_extreme_initial_values) ... ok
+test_candidate_counters_partition_and_aliases (__main__.TestPhase26.test_candidate_counters_partition_and_aliases) ... ok
+test_consolidation_capacity_and_counters (__main__.TestPhase26.test_consolidation_capacity_and_counters) ... ok
+test_corrected_valence_uses_pre_observation_marginal (__main__.TestPhase26.test_corrected_valence_uses_pre_observation_marginal) ... ok
+test_full_reset_learned_initialization (__main__.TestPhase26.test_full_reset_learned_initialization) ... ok
+test_future_outcome_changes_do_not_affect_prefix_predictions (__main__.TestPhase26.test_future_outcome_changes_do_not_affect_prefix_predictions) ... ok
+test_integrated_row_evidence_known_values (__main__.TestPhase26.test_integrated_row_evidence_known_values) ... ok
+test_legacy_equations_exactly_match_minimally_repaired_source (__main__.TestPhase26.test_legacy_equations_exactly_match_minimally_repaired_source) ... ok
+test_memory_instances_do_not_alias (__main__.TestPhase26.test_memory_instances_do_not_alias) ... ok
+test_neutral_defaults_and_disabled_or_zero_capacity_memory (__main__.TestPhase26.test_neutral_defaults_and_disabled_or_zero_capacity_memory) ... ok
+test_ood_fallback_is_separate_from_damping (__main__.TestPhase26.test_ood_fallback_is_separate_from_damping) ... ok
+test_prediction_damping_default_and_independent_flag (__main__.TestPhase26.test_prediction_damping_default_and_independent_flag) ... ok
+test_prediction_is_pure_and_returned_before_current_outcome (__main__.TestPhase26.test_prediction_is_pure_and_returned_before_current_outcome) ... ok
+test_reachable_window_rejects_mismatched_snapshot (__main__.TestPhase26.test_reachable_window_rejects_mismatched_snapshot) ... ok
+test_relative_and_global_gate_strict_thresholds (__main__.TestPhase26.test_relative_and_global_gate_strict_thresholds) ... ok
+test_row_gate_requires_two_observations_and_accepts_floor_equality (__main__.TestPhase26.test_row_gate_requires_two_observations_and_accepts_floor_equality) ... ok
+test_score_known_values_and_shape_validation (__main__.TestPhase26.test_score_known_values_and_shape_validation) ... ok
+test_six_step_retrieval_cooldown_counts_actual_suppression (__main__.TestPhase26.test_six_step_retrieval_cooldown_counts_actual_suppression) ... ok
+test_surprise_boost_flag_removes_only_instantaneous_term (__main__.TestPhase26.test_surprise_boost_flag_removes_only_instantaneous_term) ... ok
+test_validation_rejects_before_reset_or_step_mutation (__main__.TestPhase26.test_validation_rejects_before_reset_or_step_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.027s
+
+OK

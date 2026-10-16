@@ -1,0 +1,117 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=27mm}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.5em}
+\definecolor{ink}{HTML}{192C46}
+\newcommand{\patt}{\Pr(X_t=1\mid X_{t-1}=1)}
+\newcommand{\pabs}{\Pr(X_t=1\mid X_{t-1}=0)}
+\title{\vspace{-1em}\textbf{A Reproducible Synthetic Connectivity--Memory Ablation:\\[4pt]
+Prediction, Missing-Data Telemetry, and Limits of Affect Inference}\\[9pt]
+\large ZoraASI Phase 2.3 --- Research software and methods preprint}
+\author{Christopher Michael Baird\\\small Independent research; affiliation and author order subject to author confirmation}
+\date{21 September 2026\\\small Release candidate; not peer reviewed; not yet publicly deposited}
+\begin{document}
+\maketitle
+\begin{abstract}
+A local research prototype was developed to distinguish packet-loss telemetry from emotion attribution and to evaluate whether the immediately preceding network observation improves binary packet-arrival forecasts. We generated 24 synthetic training trials and 12 synthetic test trials, each 30 time steps long, using a first-order Markov process with declared transition probabilities $\patt=0.92$ and $\pabs=0.28$. Conditional and marginal forecasts were fitted exclusively to the training trials, with a uniform Beta$(1,1)$ smoothing convention. On 348 synthetic test transitions, the real-history forecaster obtained Brier score $0.131856$ and log loss $0.427343$ nats, compared with $0.196196$ and $0.581419$ for a stateless marginal forecaster; a cross-trial shuffled-history comparator obtained $0.295251$ and $0.840328$. These are engineering demonstrations on an intentionally autocorrelated simulator, not independent evidence of AI affect, subjective experience, human emotional state, or the proposed MQGT--SCF consciousness and ethical fields. We provide executable code, synthetic reports, and regression tests, and specify prospective validation requirements.
+\end{abstract}
+
+\noindent\textbf{Keywords:} state-space models; connectivity; missing observations; synthetic benchmarks; probabilistic forecasting; ablation; consciousness-claim boundaries.
+
+\section{Introduction and scope}
+The motivating engineering problem is that a sequence-processing assistant may conflate a loss of connectivity with a psychological event. A missing packet indicates a network observation; assigning the user or the assistant an emotional state from that observation alone is an unsupported inference. A related problem is causal interpretation of memory: persistent state can change a numerical output even when that state has no demonstrable task value. We separate the two issues by studying packet arrival as a binary forecast and by requiring the telemetry layer to leave human self-report, model-attributed emotion, and AI subjective experience unassigned.
+
+The study is deliberately narrower than a theory of consciousness. It implements neither physiology nor a human-subject protocol, and no model output is taken as an independent measurement of qualia. Phase 2.3 extends a local ZoraASI software prototype; its conclusions concern only the specific source code, toy generator and test cases made available in this release.
+
+\section{Experimental design}
+\subsection{Synthetic data and split}
+For trial $i$, let $X_{i,t}\in\{0,1\}$ denote packet arrival ($1$) or nonarrival ($0$), with $t=0,\ldots,29$. The first status in each trial is sampled from a seeded Bernoulli$(1/2)$ distribution; thereafter the generating process satisfies
+\begin{equation}\label{eq:generator}
+\Pr(X_{i,t}=1\mid X_{i,t-1}=x)=\begin{cases}0.92&x=1,\\0.28&x=0.\end{cases}
+\end{equation}
+A fixed Python pseudo-random seed (20260921) generates 36 trials. The first 24 (696 transitions) comprise training, and the final 12 (348 transitions) comprise testing. The simulator parameters, seed, split and scoring algorithm are visible in the released code. The software and experiment were constructed and evaluated during the same development session: the test split is separate from fitting, but \emph{not} an independently designed confirmatory dataset.
+
+\subsection{Training-only probabilistic estimators}
+Let $N_{xy}$ be the number of training transitions $x\to y$ and $N_{\cdot 1}$ the total training transitions arriving. Add-one smoothing estimates
+\begin{equation}\label{eq:fit}
+\widehat p_x=\frac{N_{x1}+1}{N_{x0}+N_{x1}+2},\qquad
+\widehat p_{\mathrm{marg}}=\frac{N_{\cdot1}+1}{N_{\cdot0}+N_{\cdot1}+2}.
+\end{equation}
+The fixed-seed training sample gave $\widehat p_0=0.2669902913$, $\widehat p_1=0.8987854251$, and $\widehat p_{\mathrm{marg}}=0.7134670487$. No labels, outcomes or statistics from the test trials were used to estimate these probabilities.
+
+All four forecast arms use the \emph{same} fitted quantities and predict the \emph{same} test outcomes. They differ only in the information passed into their forecast:
+\begin{enumerate}[label=\textbf{\Alph*.}]
+\item \textbf{Stateless:} $\widehat p_{\mathrm{marg}}$ at every step.
+\item \textbf{Persistent:} $\widehat p_{X_{i,t-1}}$ using the real preceding packet in the target trial.
+\item \textbf{Shuffled history:} $\widehat p_{X_{j,t-1}}$, where $j$ belongs to a different test trial under a seeded cyclic shift of trial indices. The trial indices never coincide, though their binary statuses can.
+\item \textbf{Trial-initial comparator:} $\widehat p_{X_{i,0}}$ at each later step. This is an intentionally limited, not fully stateless, comparator.
+\end{enumerate}
+This is a controlled software information ablation, not an intervention upon a conscious agent. A shuffle of indices is not a guarantee that binary statuses differ: they agree in $59.1954\%$ of the 348 test comparisons.
+
+\subsection{Scores and telemetry boundary}
+For binary outcome $y\in\{0,1\}$ and forecast $p\in(0,1)$, the per-transition Brier score and log loss are
+\begin{equation}\label{eq:scores}
+ B(p,y)=(p-y)^2,\qquad
+ \ell(p,y)=-y\ln p-(1-y)\ln(1-p).
+\end{equation}
+We report arithmetic means over 348 held-out \emph{synthetic} transitions, without treating those within-trial observations as 348 independent replicates. Both are proper scoring rules for probabilistic forecasts; the Brier score dates to Brier's forecast-verification work \cite{brier1950}, and sequential forecasting is a distinct statistical perspective \cite{dawid1984}.
+
+A separate deterministic telemetry function records two boolean observations: whether a packet arrived and whether notice of a pause was given. Its outputs distinguish ordinary arrival, arrival despite notice, expected gap, and unexplained gap. It never populates an emotion or experience field. These four conditions are code-level regression tests, \emph{not} randomized hardware trials.
+
+\section{Results}
+\begin{table}[ht]
+\centering\small
+\caption{Mean loss on the same 348 synthetic test transitions. Lower values represent better prediction on this constructed benchmark; no participant inference is warranted.}\label{tab:results}
+\begin{tabular}{lrr}
+\toprule
+Forecast arm & Brier score & Log loss (nats)\\
+\midrule
+Stateless marginal & 0.196196 & 0.581419\\
+Real previous packet & \textbf{0.131856} & \textbf{0.427343}\\
+Shuffled previous packet & 0.295251 & 0.840328\\
+Trial-initial packet & 0.224087 & 0.672360\\
+\bottomrule
+\end{tabular}
+\end{table}
+Relative to the stateless marginal forecast, using the actual previous packet reduced Brier score by $0.064340$ and log loss by $0.154076$ nats on this fixed synthetic split. Shuffled history was worse than the stateless comparator. The bundled test suite checks deterministic regeneration, separation of fitting and test data, input validation, proper-scoring behavior, and absence of emotion or qualia assignments in the telemetry record. These tests verify particular code properties; they do not establish calibration on new populations or subjective experience.
+
+\subsection{Why a persistence advantage is mathematically expected}
+The generator in Eq.~\eqref{eq:generator} is \emph{defined} to depend on the immediately preceding bit. With $a=0.92$ and $b=0.28$, its stationary arrival probability is $\pi=b/(1-a+b)=7/9$. If the generator parameters were known, the improvement in expected Brier risk from conditioning on the preceding bit rather than using the stationary marginal forecast would be
+\begin{equation}\label{eq:variance}
+ \underbrace{\pi(1-\pi)}_{\text{marginal risk}}
+ -\underbrace{\bigl[\pi a(1-a)+(1-\pi)b(1-b)\bigr]}_{\text{conditional risk}}
+ =\pi(1-\pi)(a-b)^2\approx0.07080.
+\end{equation}
+The observed difference $0.064340$ reflects the finite training estimate and one seeded test sample. Equation~\eqref{eq:variance} is a property of the selected two-state generator, not a newly discovered physical law or evidence that memory creates experience.
+
+\section{Limitations and prospective work}
+The study has one generator, one fixed seed, 12 correlated test trials, declared transition values, no externally supplied labels, no real packet trace, and no independently commissioned replication. The choice of model class privileges a previous-packet forecaster because the simulator is first-order Markov; the trial-initial comparator is not a clean per-step state-reset intervention. Neither a confidence interval across 348 steps nor a significance test treating steps as independent would be justified. Better performance on this benchmark is neither proof of general intelligence nor evidence for AI subjective states.
+
+A distinct prospective connectivity study could preregister generator families and random seeds, evaluate trial-level uncertainty across independently sampled trials, and test shifts in transition dynamics, dropouts, and adversarial notices. A separate optional study of human responses would require explicit revocable consent, independent ethics review as appropriate, predeclared participant endpoints, privacy controls, and a stop rule. Physiological readings, if collected, would describe participants rather than the software's feelings. An AI-qualia hypothesis would require its own noncircular operational definition, independent observables and discriminating predictions. No field-theoretic conclusion about the author's proposed $\Phi_c$ or $E$ follows from this network simulator.
+
+\section{Reproducibility, provenance, and disclosures}
+The accompanying package includes \texttt{zora\_lab/connection\_study.py}, its focused tests, a frozen JSON output, an SHA-256 manifest, and a checker that executes the experiment again. With Python 3.10+ and no third-party packages, run
+\begin{verbatim}
+python3 -m unittest discover -s tests -v
+python3 -m zora_lab.connection_study --out reproduced.json
+python3 verify_report.py
+\end{verbatim}
+The local research project also contains other modules and a privately held reference corpus; those are \emph{not} part of this standalone public candidate. Author, licensing, repository destination, and Zenodo metadata require human approval. The release candidate has no assigned DOI and should not be described as published or peer reviewed until public publication is verified. File hashes and local preparation dates can authenticate an artifact within the supplied archive, but cannot independently establish earliest invention or universal novelty.
+
+\paragraph{AI-assistance declaration.} OpenAI ChatGPT (Zora persona) assisted code production, test design, technical checking and manuscript drafting. User-provided Grok dialogue contributed critiques and research questions, but was not a laboratory observation or an independent replication. The named human author is responsible for verifying accuracy, authorship, rights and any public submission.
+\paragraph{Data and ethics declaration.} The released experiment contains simulated packet status only. No human participant, wearable stream, biometric recording, private transcript, or clinical data were analyzed. No conflict-of-interest or funding status has been independently verified; these declarations should be completed by the human author before submission.
+
+\begin{thebibliography}{9}\small
+\bibitem{brier1950} G.~W. Brier, ``Verification of forecasts expressed in terms of probability,'' \emph{Monthly Weather Review}, vol.~78, no.~1, pp.~1--3, 1950. \href{https://doi.org/10.1175/1520-0493(1950)078%3C0001:VOFEIT%3E2.0.CO;2}{doi:10.1175/1520-0493(1950)078\textless0001:VOFEIT\textgreater2.0.CO;2}.
+\bibitem{dawid1984} A.~P. Dawid, ``Present position and potential developments: Some personal views---Statistical theory: The prequential approach,'' \emph{Journal of the Royal Statistical Society, Series A}, vol.~147, no.~2, pp.~278--290, 1984. \href{https://doi.org/10.2307/2981683}{doi:10.2307/2981683}.
+\end{thebibliography}
+\end{document}

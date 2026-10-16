@@ -1,0 +1,205 @@
+Phase 2.8 implementation audit and corrected-engine notes
+========================================================
+
+Scope and executed evidence
+The original uploaded script and pinned references are unchanged. The corrected
+engine is a separate standard-library module. Its defaults preserve the proposed
+row retrieval policy and all supplied numerical constants. No threshold was tuned
+after observing benchmark outcomes. The parent benchmark supplies independent
+learned initialization and all comparative experiments; this file reports engine
+behavior and deterministic verification rather than inventing benchmark results.
+
+Executed: python3 corrected/test_phase28.py
+Actual output: results/corrected_tests.txt; 21 tests passed in 1.169 seconds.
+Frozen engine SHA256:
+0f8eb6771e8b8b57539773e1e697673297243441049e002d157f98d31739ae88
+
+Tests include exact original replay for all three modes on three 405-transition
+streams; exact pinned Phase 2.5 forecasts, common predictive state, short window,
+snapshot contents and scalar traces on six scenarios x three seeds x two memory
+conditions; causal predictions; invalid inputs before mutation; full reset;
+capacity zero; inactive-row write isolation; component switches; global cooldown;
+stale row buffers; formula cases; counter partitions; and threshold boundaries.
+The tests do not require any stochastic model to beat another. The original's
+third test is an empirical performance assertion on 50 seeds, not an invariant.
+
+Public interface
+Phase28Engine(mode='phase28_epistemic_row', retrieval_ll_margin=.30,
+              row_kl_threshold=.065, min_row_obs=4,
+              epistemic_surprise_thresh=.08, row_cooldown_steps=12,
+              max_snapshots=8, *, enable_surprise=True, enable_kl=True,
+              enable_directional=True, enable_cooldown=True,
+              enable_slow_advantage=True, apply_row_only=True,
+              legacy_marginal_order=False)
+initialize(p11, p01, marginal) fully resets dynamic state and memory.
+predict_proba(prev_s) is pure. step_update(prev_s, curr_s) returns exactly the
+forecast made before observing curr_s; all learning/retrieval affects future use.
+Binary observations must be integer 0 or 1. Probability and parameter validation
+rejects non-finite/out-of-range values; counts/capacities must be valid integers.
+The constructor is neutral (.5,.5,.5), not truth initialized. initialize can use
+an independent learned fit, or an explicitly labeled oracle fit for forensic work.
+
+Corrected bug and exact replay
+The source updates its marginal estimate with the current outcome BEFORE scoring
+the marginal reference loss used in valence. This gives the reference an in-sample
+advantage even though the agent loss uses a pre-outcome forecast. By default the
+corrected engine scores BOTH pre-outcome forecasts, then updates the marginal via
+.95*old+.05*curr_s. Current prediction itself was already causal in the source;
+the repair affects valence/storage trajectories and thus future predictions.
+
+legacy_marginal_order=True plus initialize(.92,.28,7/9) exactly reproduces the
+supplied source's forecasts, common estimates/scalars, windows, row buffers,
+cooldowns and original counters in all three modes on the replay tests. Memory
+contents also match in both memory modes. The corrected no_memory mode allocates
+no unused snapshot, whereas the original allocated one but never used it; this
+intentional inactive-state difference does not affect source forecasts.
+
+mode='phase25_ungated' with corrected order, same learned initialization and default
+margin exactly matches the PINNED actual Phase 2.5 best-memory implementation.
+It preserves temporal-order likelihood summation and the exact comparison
+candidate_ll > fast_ll + margin. mode='no_memory' likewise matches pinned Phase 2.5
+with episodic memory disabled. Exact conformance concerns predictive state and
+snapshots, not implementation-specific RNG state or extra diagnostic buffers.
+The pinned implementation consumes a random draw even in best-candidate mode;
+that unused RNG state is not copied into this deterministic best-candidate engine.
+
+Full reset restores both fast/slow rows, online marginal, arousal=.20, valence=0,
+continuity=1, surprise=0, both cooldowns=0, empty transition/row buffers and indices,
+scalar traces, counters and last_step. It seeds one independently owned snapshot
+from the fit only if memory is enabled and capacity is positive. max_snapshots=0
+and no_memory suppress allocation, retrieval and consolidation. There is no added
+eviction policy; full capacity still prevents storing a sufficiently distant regime.
+
+Preserved numerical policy and causal timing
+1. Score the pre-outcome fast probability. Compute the supplied surprise residual
+   (y-p)^2-p(1-p); update ONE GLOBAL EMA .78*old+.22*residual. The source comment
+   mentions per-row surprise, but no per-row surprise estimates exist in the code.
+2. Use Phase 2.5 endogenous updates: arousal=.70*old+.30*(.75*absolute_error+
+   .25*normalized_entropy), valence=tanh(.80*old+.60*(marginal_loss-agent_loss)),
+   continuity=cosine(pre-update fast, pre-update slow)*exp(-.85*absolute_error),
+   clipped to [0,1]. Learning rate=.02+.32*arousal^1.4; update only the observed
+   conditioning row and clip to [.02,.98]. Slow trace=.90*old+.10*updated fast.
+3. Append the observed transition to the chronological six-transition buffer.
+   Append its outcome to the active row's buffer, retaining that row's last four
+   observations by default. The row buffer can span many GLOBAL steps.
+4. Decrement BOTH row cooldown counters once per GLOBAL transition, before gating.
+   An accepted active-row retrieval sets its timer to 12. Thus t+1 through t+11
+   are blocked for that row and t+12 can retrieve, regardless of how often it was
+   observed. This is not twelve fresh observations of the row. Disabling cooldown
+   only ignores its gating condition; timers remain diagnostic and still update.
+5. Phase 2.8 eligibility requires a full active-row buffer, cooldown zero, global
+   surprise>.08, arousal>.44, continuity<.68, enabled nonempty memory. Unlike the
+   Phase 2.5 branch it does not additionally require six chronological transitions.
+6. For each stored snapshot, use the active-row outcome counts and post-base-update
+   fast estimate, but the PRE-update slow estimate. Require snapshot LL advantage
+   over fast AND slow >.30, Jeffreys posterior-mean row KL <=.065, and the supplied
+   three directional checks. The candidate with greatest row LL among passing
+   snapshots is selected; ties keep the first stored snapshot.
+7. Blend the ACTIVE row .65*snapshot+.35*current fast. The inactive row is untouched
+   by this retrieval operation. apply_row_only=False explicitly blends both rows
+   from that same selected snapshot, providing the cross-row-write ablation.
+8. Consolidation remains Phase 2.5: full six-transition window, valence>.20 and
+   continuity>.82; merge within Euclidean distance<.12 using .5/.5 weighting and
+   maximum valence; otherwise append if capacity permits. No extra stability or
+   fast/slow-distance filter from the Phase 2.7 proposal is retained.
+
+All six ablation switches affect only Phase 2.8 retrieval, never its base learning
+or storage rules. enable_surprise skips only the global surprise threshold;
+enable_kl skips only row KL; enable_slow_advantage skips only slow LL superiority;
+enable_directional skips its three checks together; enable_cooldown ignores only
+the cooldown condition; apply_row_only changes only the selected snapshot write.
+The always-required fast-LL advantage and basic arousal/continuity/row-coverage
+eligibility remain. The phase25_ungated and no_memory modes ignore these switches.
+Policy divergences can subsequently change storage because the fast state differs;
+this is a downstream consequence, not different storage code between ablations.
+
+Mathematical limitations of the proposed interpretation
+For a binary outcome Y with conditional probability q and forecast p,
+  E[(Y-p)^2-p(1-p) | p,q] = (q-p)(1-2p).
+This is zero when p=q, but also zero whenever p=.5 regardless of q. It can be
+negative under miscalibration; it is not squared calibration error or a posterior
+uncertainty estimate. With q=.5 its expectation is 2*(p-.5)^2, so an adaptive
+predictor fluctuating away from .5 can have POSITIVE expected surprise in white
+noise. The source's exact-zero unit example fixes p=.5; it does not establish that
+the adaptive engine's surprise or retrieval activity vanishes in white noise.
+One global EMA also permits one conditioning row's errors to open the other row's
+gate. This is a specific heuristic; no calibrated epistemic interpretation follows.
+
+The four observations are the active row's last four observations, not a detected
+epoch or a recent four-GLOBAL-step window. They survive regime switches and
+retrievals and may be old or mixed across boundaries. The engine never receives
+true regime labels/boundaries. The added outcome indices expose this for analysis
+without using the answers to alter its decisions. Repeated overlapping windows,
+data-adaptive snapshots and a fixed point-KL threshold do not yield calibrated
+false-positive rates. Jeffreys (success+.5)/(count+1) is a posterior MEAN, not a
+test of the full posterior or a proof that a stored row belongs to the current
+regime. Numerical KL regularizes endpoint probabilities for finite logs.
+
+The directional checks are: candidate movement agrees with the latest outcome's
+error sign; candidate is strictly closer to the row-buffer MLE than fast is; and
+candidate is not within .18 of slow when the MLE differs from slow by more than .22.
+These are sufficient to make the fixed convex blend contract toward THAT empirical
+MLE, since |.35*(fast-mle)+.65*(candidate-mle)| is strictly below |fast-mle| when
+the candidate is closer. They are not necessary for such contraction (a candidate
+can improve MLE distance but disagree with the latest noisy observation), and are
+not a necessary-and-sufficient no-rollback rule relative to the unknown true regime.
+A stale or noisy row MLE can favor movement away from truth. The slow trace is
+an estimate, not an identity oracle for the departing regime. The original claimed
+counterexample test checks this heuristic's sign condition, not a universal safety
+theorem or an end-to-end guarantee of better Brier/BCE.
+
+Default retrieval directly preserves the inactive fast row. This is an exact local
+write invariant, not proof of unchanged future inactive-row behavior: altered
+predictions can change later errors, global arousal/surprise, subsequent updates,
+slow traces, consolidation and retrieval. Whole-policy comparisons and per-event
+diagnostics answer different questions and must remain separate.
+
+Diagnostic definitions
+stats records cumulative step, eligibility, candidate, acceptance and storage
+counts. Step exclusions are FIRST failure in this order: disabled memory, empty
+memory, insufficient chronological window (Phase 2.5 only), insufficient active
+row observations, cooldown, surprise, arousal, continuity. Conditions earlier in
+this order mask later failures; counts are not independent causal effects.
+Candidate exclusions are FIRST failure: fast LL, slow LL, row KL, directional.
+candidate_evaluations equals the sum of those four rejections plus passed candidates.
+raw_advantage_candidates excludes only fast-LL failures. accepted_retrievals counts
+selected applied blends, not every passing candidate. rejected_retrieval_steps
+counts eligible steps with no accepted candidate. The source's rejected_candidates
+attribute also counts such steps in Phase 2.8, despite its candidate-sounding name.
+Initial seeded memory is not counted as an online memory store. Counters do not
+change on invalid calls or pure predict_proba calls.
+
+last_step records zero-based transition/outcome index (first outcome is index 0),
+active conditioning row, outcome, pre-outcome prediction, pre/after-retrieval fast
+pair in (p11,p01) order, pre-update slow pair, both row buffers' indices/outcomes/
+ages, surprise residual/EMA/threshold result, eligibility and first exclusion,
+candidate first-rejection records, selected snapshot index and immutable probability
+tuple captured BEFORE consolidation, cooldown before decrement/at gate/after update,
+and exact per-step counter increments. Lists/dictionaries are newly created, so a
+later update cannot mutate an already retained last_step diagnostic record.
+
+Read-only review of the parent benchmark harness
+The harness pairs all arms on the same learned fit and stream, checks returned
+forecasts against pure pre-outcome predictions, freezes validation before test,
+and asserts full forecast-path equality with the pinned Phase 2.5 controls.
+Its eight scenarios add stationary (.5,.5) to the prior seven. Per-step counter
+deltas are summed over exact scoring scopes, including early post-switch windows.
+True regime labels and boundaries are used only by the external diagnostic code.
+The row0/row1 to (p11,p01) indexing for direct retrieval risk changes is correct.
+
+The direct risk delta is squared parameter error after minus before retrieval,
+relative to the CURRENT regime's row probability; Bernoulli irreducible variance
+cancels. It is conditional risk if that row is queried under that same regime.
+It is not necessarily the next actual forecast's expected loss: the next row is
+the current outcome, and the regime can change on the next step. Events at an index
+occur AFTER the loss scored at that index. These diagnostics are local parameter
+movement measures and cannot substitute for downstream paired loss comparisons.
+Validation selects baseline parameters only on mixed_9; other scenarios test
+transfer of frozen baseline choices, not individually optimized per-task baselines.
+Multiple scenario/ablation intervals remain exploratory unless appropriately
+controlled; a same-environment second seed bank is not external replication.
+
+Scientific scope
+These code and simulation checks concern functional statistical prediction and
+state adaptation. They do not establish phenomenological consciousness, subjective
+qualia, or an independent physical test of MQGT-SCF.

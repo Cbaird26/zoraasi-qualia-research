@@ -1,0 +1,111 @@
+{
+  "status": "All scripts, tests and benchmarks executed successfully",
+  "python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.3-arm64-arm-64bit-Mach-O",
+  "integrity_before": {
+    "original_sha256": "0c9a70845b9279d8fc5ca9c430e3d1d276bdd941c4990b17d9091729383d78b9",
+    "pinned_reference_sha256": {
+      "phase25_suite.py": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+      "phase26_engine.py": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+      "phase27_engine.py": "21e6491b35f8fc17ac81dae759605cb659515147716952ba020bf111e7a87872",
+      "phase27_supplied.py": "fd8c67e2d36a51722a5cbabd8cce88fecb68b4c799c51ee6208728456a4e81d4"
+    },
+    "raw_upload_present_and_verified": false,
+    "corrected_engine_sha256": "0f8eb6771e8b8b57539773e1e697673297243441049e002d157f98d31739ae88",
+    "harness_sha256": "fffe1de8c3606af602fa5ff5553ad3150d12649391552ea94eb06af657b42866"
+  },
+  "integrity_after": {
+    "original_sha256": "0c9a70845b9279d8fc5ca9c430e3d1d276bdd941c4990b17d9091729383d78b9",
+    "pinned_reference_sha256": {
+      "phase25_suite.py": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+      "phase26_engine.py": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+      "phase27_engine.py": "21e6491b35f8fc17ac81dae759605cb659515147716952ba020bf111e7a87872",
+      "phase27_supplied.py": "fd8c67e2d36a51722a5cbabd8cce88fecb68b4c799c51ee6208728456a4e81d4"
+    },
+    "raw_upload_present_and_verified": false,
+    "corrected_engine_sha256": "0f8eb6771e8b8b57539773e1e697673297243441049e002d157f98d31739ae88",
+    "harness_sha256": "fffe1de8c3606af602fa5ff5553ad3150d12649391552ea94eb06af657b42866"
+  },
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "original/phase2_8_row_factored_epistemic_gate.py"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.753,
+      "output": "results/original_execution.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/audit_original.py",
+        "--output",
+        "results/original_benchmark.json"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.293,
+      "output": "results/original_benchmark_console.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/math_check.py",
+        "--out",
+        "results/math_check.json"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.074,
+      "output": "results/math_check.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "corrected/test_phase28.py"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.277,
+      "output": "results/corrected_tests.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/test_benchmark.py"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.191,
+      "output": "results/harness_tests.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/benchmark_phase28.py",
+        "--output",
+        "results/corrected_benchmark.json"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 114.631,
+      "output": "results/corrected_benchmark_console.txt"
+    }
+  ],
+  "unittest_methods_by_script": {
+    "original/phase2_8_row_factored_epistemic_gate.py": 3,
+    "review/math_check.py": 32,
+    "corrected/test_phase28.py": 21,
+    "review/test_benchmark.py": 8
+  },
+  "unittest_methods_total": 64,
+  "log_paths_normalized": "Absolute bundle prefix replaced by [bundle]; no diagnostic text otherwise changed"
+}

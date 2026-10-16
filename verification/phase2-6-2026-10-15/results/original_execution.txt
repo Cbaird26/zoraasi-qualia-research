@@ -1,0 +1,4 @@
+  File "[bundle]/original/phase2_6_novelty_aware_gate.py", line 142
+    def _ candidate_passes_gate(
+          ^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: expected '('

@@ -1,0 +1,196 @@
+PHASE 2.6: INDEPENDENT MATHEMATICS AND INTERPRETATION AUDIT
+
+Execution and scope
+-------------------
+Executed review/math_check.py: 17 unittest methods passed (12 mathematics/path
+methods plus 5 checks against the explicitly syntax-repaired supplied source).
+Actual output: results/math_check.log. Exact data: results/math_check.json.
+No engine, original, prior-package, or reference file was modified by this audit.
+
+The supplied source has a syntax error in "def _ candidate_passes_gate". Actual
+contract checks use minimal_repair/phase2_6_novelty_aware_gate.py, whose repair is
+documented by the parent verification. A passing audit test may demonstrate a
+discrepancy or counterexample; it does not mean the proposal's claims passed.
+
+1. The Beta integral is right for an ordered path; its name is imprecise
+-----------------------------------------------------------------------
+For a binary Markov path x0,...,xT, condition on its initial state and hold each
+transition parameter fixed throughout the window. With independent Beta(1,1)
+priors over p11 and p01, the conditional likelihood is
+
+  L(path | p11,p01,x0) = p11^N11 (1-p11)^N10 p01^N01 (1-p01)^N00.
+
+Integrating gives
+
+  P(path | x0) = B(N11+1,N10+1) B(N01+1,N00+1).
+
+The supplied lgamma expression is exactly the logarithm of each Beta factor.
+Tests verified it against exact factorial fractions, verified equality with
+sequential Beta predictive probabilities for every seven-state binary path,
+and verified that integrated probabilities sum to one over all paths of up to
+eight transitions, conditional on either starting state.
+
+This is ordered-path evidence, not the Beta-binomial probability mass for an
+unordered count. For a single row with fixed n independent opportunities, the
+Beta-binomial count PMF includes choose(n,k); under Beta(1,1) it equals 1/(n+1).
+For complete Markov-path counts, feasible-path multiplicities depend on path
+constraints and the initial state; blindly multiplying row binomial factors is
+not generally the correct count-event construction.
+
+The same observation-specific multiplicity appears in numerator and denominator
+and cancels in a likelihood ratio when the same count event is modeled correctly.
+Do NOT "fix" the implementation by adding a combinatorial factor only to the
+novelty evidence. The actual ratio's ordered-path algebra is already correct.
+Its assumptions and interpretation need correction instead.
+
+The prior is fixed and its parameters are integrated out; the result is not
+assumption-free. Beta(1,1), independent rows, a single constant regime during
+the window, window length, and conditioning on x0 all matter. If a stationary
+initial-state law depending on the unknown parameters were used, that initial
+probability would also belong inside the integral. Here x0 is conditioned on.
+
+2. The proposal's illustrative transition counts cannot occur
+------------------------------------------------------------
+Any contiguous binary path satisfies
+
+  N01 - N10 = xT - x0, which is -1, 0, or 1.
+
+The proposed counts (N11,N10,N01,N00)=(4,0,2,0) give 2-0=2, so no six-transition
+binary path can produce them. Exhaustive enumeration confirms this. They could
+describe pooled separate segments, but the actual rolling buffer is contiguous.
+
+The arithmetic on that unrealizable count vector is:
+  stale B (.15,.85):       -7.913517798539
+  snapshot A (.92,.28):    -2.879457787382
+  A minus B:               5.034060011157 (not 5.033)
+  uniform-prior evidence: -2.708050201102
+  A minus evidence:       -0.171407586280
+
+A valid replacement is path 0,1,0,1,1,1,1, with counts (3,1,2,0):
+  stale B:                -6.178916743151
+  snapshot A:             -5.321804822751
+  A minus B:               0.857111920400 > .30
+  uniform-prior evidence: -4.094344562222
+  A minus evidence:       -1.227460260529.
+
+Thus a realizable example can illustrate relative preference for a bad snapshot
+and its rejection by the proposed evidence rule. It is still a likelihood
+illustration, not a replay proving the old full engine retrieves: old fast
+parameters already adapt, and arousal/continuity eligibility must also hold.
+
+3. Retrieval blends parameters, and squared bias is not total Brier loss
+-----------------------------------------------------------------------
+Phase 2.5 used 65% retrieved snapshot plus 35% current estimate. It did not fully
+overwrite p01 with .28. Taking the example's current p01=.85 and true q=.88:
+
+  p_after = .65*.28+.35*.85 = .4795
+  squared bias before = (.85-.88)^2 = .0009
+  squared bias after  = (.4795-.88)^2 = .16040025
+  expected Brier before = .1065
+  expected Brier after  = .26600025
+  increase in expected Brier = .15950025.
+
+The claimed .36 is the squared bias from COMPLETE replacement with .28. The
+general risk change for p'=(1-r)p+r s is
+
+  E[(p'-Y)^2]-E[(p-Y)^2] = 2r(p-q)(s-p)+r^2(s-p)^2.
+
+It is conditional on visiting the relevant previous state; total stream loss
+also weights how often that state occurs. Actual estimates evolve afterward.
+The new Phase 2.6 retrieval also blends, with r=.75 rather than full replacement.
+
+For p=.92 and true q=.15, (.92-.15)^2=.5929 is squared forecast bias, not Brier
+loss on every observation. Expected Brier is q(1-q)+(p-q)^2=.7204; realized losses
+are .8464 if Y=0 and .0064 if Y=1.
+
+A forecast exactly equal to .5 has realized Brier .25 for either outcome. That
+does not cap the CUSUM learner's loss: it issues the current prediction before
+resetting, then immediately updates the reset parameters with the current label.
+The actual-code test forced a reset and still scored prediction .92 against 0,
+for Brier .8464. Subsequent forecasts need not remain .5.
+
+4. The prior learning-rate diagnosis was numerically misidentified
+-----------------------------------------------------------------
+At an ASSUMED arousal .16, .02+.32*.16^1.4=.044599028408, so that arithmetic is
+right. The proposal does not establish a universal .16 plateau floor or show
+an empirical arousal/retrieval trace that identifies this as the root cause.
+The actual Phase 2.5 validation manifest selected EMA rate .32, not .14-.18.
+It selected error-CUSUM rate .2, threshold 1.0, reference .38. These refer to the
+previous verified benchmark, not settings newly selected by Phase 2.6.
+
+Prior early-window findings were Brier-specific: mean early Brier was worse
+than tuned baselines, while early BCE comparisons were inconclusive. Several
+new equations, thresholds, parameter blends, memory rules and plasticity terms
+change simultaneously, so a new aggregate improvement would not independently
+establish which proposed root cause was correct.
+
+5. Bayes-factor arithmetic does not verify regime familiarity
+------------------------------------------------------------
+For a genuinely fixed point snapshot and a fixed prior, the snapshot/path
+likelihood divided by integrated path evidence is a valid Bayes factor between
+those two specified models. It is not posterior familiarity probability: that
+requires prior model odds, appropriate model alternatives, and their uncertainty.
+
+Here fast parameters have already been updated using current-window outcomes;
+stored snapshots can also have been estimated or updated using overlapping
+observations. These are data-dependent point estimates, not generally fixed
+pre-window hypotheses. The algorithm chooses the best passing candidate among
+multiple snapshots on the same window, repeatedly across overlapping windows.
+Maximum likelihood over a memory bank is not Bayesian model evidence for the
+bank: a fixed-prior mixture would use sum_k w_k L_k, not max_k L_k. Thresholds
+are not calibrated false-familiarity rates or frequentist significance levels.
+This does not invalidate a predictive heuristic; it limits Bayesian claims.
+
+The continuous-prior model includes familiar and unfamiliar parameter values;
+winning or losing against it is not a logical partition into familiar/novel.
+The fixed novelty threshold .15 corresponds to only exp(.15)=1.162 times the
+integrated likelihood and is not by itself strong confirmation.
+
+Concrete counterexample: after initial state 1, six 1->1 transitions have
+probability .88^6=.464404086784 under novel Regime D. The candidate gate accepts
+stored A on that feasible count vector against stale B: log ratio to the uniform
+prior is 1.445620495421. Thus gate acceptance cannot certify that the environment
+is familiar. This candidate-level example does not assert that all full-engine
+arousal/continuity conditions also trigger at that point.
+
+Use "candidate passed the likelihood gate" and "fallback triggered" rather than
+"verified familiar regime" and "recognizes an unfamiliar regime shift". Those
+labels require external regime-ground-truth detection metrics, with false
+acceptance/rejection and timing measured on held-out streams.
+
+6. Prose/code gate-contract mismatches
+--------------------------------------
+The prose checks every observed transition row (N_i>0) with a strict ratio greater
+than the row floor. Code checks only rows with N_i>=2, and rejects only ratios
+STRICTLY BELOW the floor, so equality is accepted.
+
+Executed feasible singleton example: path 0,1,1,1,1,1,1 gives (5,0,1,0), with
+snapshot (.92,.30). Its row-0 log ratio is -.510825623766, below floor -.25, but
+its joint ratio is .864025800767 and the code accepts because row 0 is skipped.
+A separate actual-code test sets the floor equal to a two-observation row ratio
+and confirms that equality is accepted. These are explicit differences from
+the mathematical contract, not floating-point rounding speculation.
+
+Prose retrieval cooldown is 8; code assigns 6. Fallback assigns 5. Because the
+counter is decremented before checking eligibility, retrieval can recur six
+updates after the last retrieval (five intervening checks are suppressed).
+
+The claimed "post-surprise window" is actually a rolling buffer, default size 8,
+with gating permitted once it has 6 transitions. It is not cleared on a change
+or surprise and can straddle regimes. The evidence remains a coherent working
+single-regime model, but it does not automatically describe a clean new regime.
+
+7. Donor interpretation and scientific scope
+-------------------------------------------
+The proposal correctly distinguishes shared schedule information from current
+target leakage, but "common-clock volatility pulse at t=45k" is still too exact.
+Donor errors and scalar trajectories depend on random outcomes and estimates;
+they need not spike at every boundary. Independent timing or phase offsets
+create useful controls but do not by themselves isolate timing from differences
+in regime exposure and other transferred scalar information.
+
+This audit checks mathematical identities, code contracts and interpretation.
+It does not establish improvements on the requested forecasting benchmarks;
+those require the separately executed paired comparisons. Forecasting or gate
+success neither establishes nor rules out subjective experience and does not
+provide a theory-specific physical test of MQGT-SCF.

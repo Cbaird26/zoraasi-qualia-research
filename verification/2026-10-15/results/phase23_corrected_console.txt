@@ -1,0 +1,10 @@
+stateful_markov          Brier=0.131856 BCE=0.427343
+memoryless_marginal      Brier=0.196196 BCE=0.581419
+reset_each_trial         Brier=0.224087 BCE=0.672360
+deranged_memory          Brier=0.295251 BCE=0.840328
+same-value fraction: 0.5919540229885057 permutation: [11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+stateful_markov brier=0.105992 +/- 0.001976 | bce=0.358850 +/- 0.005511
+memoryless_marginal brier=0.183584 +/- 0.003429 | bce=0.554173 +/- 0.007672
+reset_each_trial brier=0.284972 +/- 0.005870 | bce=0.792696 +/- 0.013873
+deranged_memory brier=0.254527 +/- 0.005507 | bce=0.752638 +/- 0.014946
+

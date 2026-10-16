@@ -1,0 +1,25 @@
+test_component_flags_and_missing_rows (__main__.TestPhase27.test_component_flags_and_missing_rows) ... ok
+test_corrected_marginal_advantage_uses_pre_outcome_probabilities (__main__.TestPhase27.test_corrected_marginal_advantage_uses_pre_outcome_probabilities) ... ok
+test_counter_partition_bounds_and_capacity (__main__.TestPhase27.test_counter_partition_bounds_and_capacity) ... ok
+test_distance_boundary_is_inclusive_and_explicit_reference_wins (__main__.TestPhase27.test_distance_boundary_is_inclusive_and_explicit_reference_wins) ... ok
+test_every_six_transition_binary_path_obeys_flow (__main__.TestPhase27.test_every_six_transition_binary_path_obeys_flow) ... ok
+test_exact_original_forecasts_and_state_in_legacy_mode (__main__.TestPhase27.test_exact_original_forecasts_and_state_in_legacy_mode) ... ok
+test_exact_pinned_phase25_forecasts_and_predictive_state (__main__.TestPhase27.test_exact_pinned_phase25_forecasts_and_predictive_state) ... ok
+test_full_reset_learned_initialization (__main__.TestPhase27.test_full_reset_learned_initialization) ... ok
+test_future_outcomes_do_not_change_prefix_predictions (__main__.TestPhase27.test_future_outcomes_do_not_change_prefix_predictions) ... ok
+test_gate_inspection_does_not_mutate_stats (__main__.TestPhase27.test_gate_inspection_does_not_mutate_stats) ... ok
+test_invalid_inputs_reject_before_reset_or_update (__main__.TestPhase27.test_invalid_inputs_reject_before_reset_or_update) ... ok
+test_kl_and_jeffreys_known_cases (__main__.TestPhase27.test_kl_and_jeffreys_known_cases) ... ok
+test_metrics_known_values_and_shapes (__main__.TestPhase27.test_metrics_known_values_and_shapes) ... ok
+test_mutable_memory_and_histories_are_independent (__main__.TestPhase27.test_mutable_memory_and_histories_are_independent) ... ok
+test_neutral_defaults_no_memory_and_zero_capacity (__main__.TestPhase27.test_neutral_defaults_no_memory_and_zero_capacity) ... ok
+test_prediction_is_pure_and_precedes_outcome (__main__.TestPhase27.test_prediction_is_pure_and_precedes_outcome) ... ok
+test_proposal_and_phase25_storage_rules_are_explicitly_different (__main__.TestPhase27.test_proposal_and_phase25_storage_rules_are_explicitly_different) ... ok
+test_reachable_default_six_transition_gate_example (__main__.TestPhase27.test_reachable_default_six_transition_gate_example) ... ok
+test_relative_and_kl_threshold_boundaries (__main__.TestPhase27.test_relative_and_kl_threshold_boundaries) ... ok
+test_slow_likelihood_and_distance_use_identical_pre_step_reference (__main__.TestPhase27.test_slow_likelihood_and_distance_use_identical_pre_step_reference) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.200s
+
+OK

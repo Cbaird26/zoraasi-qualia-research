@@ -1,0 +1,108 @@
+{
+  "status": "all execution commands exited 0",
+  "python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.3-arm64-arm-64bit-Mach-O",
+  "integrity_before": {
+    "original_script_sha256": "14d7bae0e82bf79b0f94073ab18c7d0539fc42961a94020cce5e90f74a5dc756",
+    "pinned_phase24_sha256": "eafca48ee34b912bcf05cf3fdb9e23bed817bbb1a9272d7db54d9525b7b83de2",
+    "private_upload_verified_if_present": false
+  },
+  "integrity_after": {
+    "original_script_sha256": "14d7bae0e82bf79b0f94073ab18c7d0539fc42961a94020cce5e90f74a5dc756",
+    "pinned_phase24_sha256": "eafca48ee34b912bcf05cf3fdb9e23bed817bbb1a9272d7db54d9525b7b83de2",
+    "private_upload_verified_if_present": false
+  },
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "original/phase2_5_falsification_suite.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.076,
+      "output": "results/original_execution.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/audit_original.py",
+        "--seeds",
+        "200",
+        "--output",
+        "results/original_benchmark.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.415,
+      "output": "results/original_benchmark_console.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/math_check.py",
+        "--out",
+        "results/math_check.json",
+        "--phase24-source",
+        "reference/phase24_engine.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.099,
+      "output": "results/math_check.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "corrected/test_phase25.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.159,
+      "output": "results/corrected_tests.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "corrected/phase2_5_falsification_suite.py",
+        "--test-seeds",
+        "100",
+        "--validation-seeds",
+        "30",
+        "--followup-seeds",
+        "100",
+        "--output",
+        "results/corrected_benchmark.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 27.307,
+      "output": "results/corrected_benchmark_console.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/bridge_phase24.py",
+        "--benchmark",
+        "results/corrected_benchmark.json",
+        "--output",
+        "results/bridge_phase24.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.449,
+      "output": "results/bridge_phase24_console.txt"
+    }
+  ],
+  "unittest_methods": {
+    "original_performance_assertions": 2,
+    "corrected_invariants": 18,
+    "mathematical": 11
+  },
+  "additional_audits": {
+    "phase25_chronology": 2,
+    "phase24_stored_continuity": 1,
+    "bridge_exact_score_matches": 2400
+  },
+  "interpretation": "Passing unit tests does not require a method to outperform a comparator. Original performance assertions fail for some additional seeds; those failures are reported rather than suppressed."
+}

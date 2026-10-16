@@ -1,0 +1,465 @@
+--- original/phase2_3_protocol_reproduction.py
++++ corrected/phase2_3_protocol_reproduction.py
+@@ -1,64 +1,81 @@
+ #!/usr/bin/env python3
++"""Audited Phase 2.3 reproduction, standard library only.
++
++Default mode exactly follows source at e941c5fd17a49de71fcdbfbb60cb8d84e168877d:
++fair getrandbits initial states and seed+1 randomized cyclic derangement.
++The stationary mode preserves Gemini's alternative data generator and shift=1.
++No claim about subjective experience or MQGT-SCF is tested here.
+ """
+-phase2_3_protocol_reproduction.py
+-
+-Corrected ZoraASI Phase 2.3 baseline experiment implementing:
+-  - Correction A: Beta(1,1) / Laplace smoothing on transition & marginal estimators
+-  - Correction B: Fixed cross-trial, same-time-step derangement control
+-  - Correction C: Fourth experimental arm (reset-each-trial initial state X_{i,0})
+-  - Correction D: Separation of deterministic software invariants from
+-                  multi-seed stochastic performance distributions.
+-
+-Verification status: Unexecuted in chat session; ready for local execution.
+-"""
+-
+-from dataclasses import dataclass
++from dataclasses import asdict, dataclass, replace
++import argparse
++import json
+ import math
++from pathlib import Path
+ import random
+ import statistics
+-from typing import Dict, List, Tuple
+-import unittest
+-
++
++ARMS = ('stateful_markov', 'memoryless_marginal', 'reset_each_trial', 'deranged_memory')
+ 
+ @dataclass(frozen=True)
+ class Phase23Config:
+     seed: int = 20260921
+-    p11: float = 0.92
+-    p01: float = 0.28
++    p11: float = .92
++    p01: float = .28
+     n_train_trials: int = 24
+     n_test_trials: int = 12
+     seq_length: int = 30
+-    laplace_alpha: float = 1.0  # Beta(1,1) prior smoothing
++    laplace_alpha: float = 1.0
+     eps: float = 1e-12
+-
+-
+-def stationary_prob(p11: float, p01: float) -> float:
+-    return p01 / (p01 + (1.0 - p11))
+-
+-
+-def generate_trials(
+-    n_trials: int, seq_length: int, p11: float, p01: float, rng: random.Random
+-) -> List[List[int]]:
+-    pi_1 = stationary_prob(p11, p01)
+-    trials: List[List[int]] = []
++    mode: str = 'repository'
++
++    def __post_init__(self):
++        if type(self.seed) is not int:
++            raise ValueError('seed must be an integer')
++        for name, minimum in [('n_train_trials',1),('n_test_trials',2),('seq_length',2)]:
++            value = getattr(self,name)
++            if type(value) is not int or value < minimum:
++                raise ValueError(f'{name} must be an integer >= {minimum}')
++        if not all(math.isfinite(x) and 0 <= x <= 1 for x in (self.p11,self.p01)):
++            raise ValueError('transition probabilities must be finite and in [0,1]')
++        if not math.isfinite(self.laplace_alpha) or self.laplace_alpha <= 0:
++            raise ValueError('laplace_alpha must be positive and finite')
++        if not 0 < self.eps < .5:
++            raise ValueError('eps must be in (0,.5)')
++        if self.mode not in ('repository','stationary'):
++            raise ValueError('unknown mode')
++        if self.mode == 'stationary' and self.p01 + 1 - self.p11 == 0:
++            raise ValueError('stationary distribution is not unique')
++
++def validate_trials(trials, minimum=1):
++    if len(trials) < minimum or not trials or len(trials[0]) < 2:
++        raise ValueError('insufficient trials or transitions')
++    if any(len(s) != len(trials[0]) for s in trials):
++        raise ValueError('trials must have equal lengths')
++    if any(type(x) not in (int,bool) or x not in (0,1) for s in trials for x in s):
++        raise ValueError('observations must be binary')
++
++def generate_trials(n_trials, cfg, rng):
++    trials=[]
+     for _ in range(n_trials):
+-        x0 = 1 if rng.random() < pi_1 else 0
+-        seq = [x0]
+-        for _ in range(1, seq_length):
+-            p_next = p11 if seq[-1] == 1 else p01
+-            seq.append(1 if rng.random() < p_next else 0)
++        if cfg.mode == 'repository':
++            x=int(rng.getrandbits(1))
++        else:
++            x=int(rng.random() < cfg.p01/(cfg.p01+1-cfg.p11))
++        seq=[x]
++        for _ in range(cfg.seq_length-1):
++            seq.append(int(rng.random() < (cfg.p11 if seq[-1] else cfg.p01)))
+         trials.append(seq)
+     return trials
+ 
+-
+-def fixed_cyclic_derangement(n_trials: int) -> List[int]:
+-    """Returns a deterministic fixed-point-free permutation sigma(i) != i."""
+-    if n_trials < 2:
+-        raise ValueError("Derangement requires at least 2 trials.")
+-    return [(i + 1) % n_trials for i in range(n_trials)]
+-
+-
+-@dataclass
++def fixed_cyclic_derangement(n_trials, seed=20260921, mode='repository'):
++    if type(n_trials) is not int or n_trials < 2:
++        raise ValueError('derangement requires at least two trials')
++    if mode not in ('repository','stationary'):
++        raise ValueError('unknown mode')
++    shift=random.Random(seed+1).randrange(1,n_trials) if mode == 'repository' else 1
++    return [(i+shift)%n_trials for i in range(n_trials)]
++
++@dataclass(frozen=True)
+ class SmoothedMarkovEstimators:
+     p11_hat: float
+     p01_hat: float
+@@ -69,218 +86,122 @@
+     n0_total: int
+ 
+     @classmethod
+-    def fit(cls, trials: List[List[int]], alpha: float = 1.0) -> "SmoothedMarkovEstimators":
+-        n11 = n1_total = n01 = n0_total = 0
++    def fit(cls,trials,alpha=1.0):
++        validate_trials(trials)
++        if not math.isfinite(alpha) or alpha <= 0:
++            raise ValueError('alpha must be positive and finite')
++        counts=[[0,0],[0,0]]
+         for seq in trials:
+-            for t in range(1, len(seq)):
+-                prev_s, next_s = seq[t - 1], seq[t]
+-                if prev_s == 1:
+-                    n1_total += 1
+-                    if next_s == 1:
+-                        n11 += 1
+-                else:
+-                    n0_total += 1
+-                    if next_s == 1:
+-                        n01 += 1
+-
+-        total_transitions = n1_total + n0_total
+-        total_arrivals = n11 + n01
+-
+-        # Beta(alpha, alpha) Laplace-smoothed estimators
+-        p11_hat = (n11 + alpha) / (n1_total + 2.0 * alpha)
+-        p01_hat = (n01 + alpha) / (n0_total + 2.0 * alpha)
+-        p_marginal_hat = (total_arrivals + alpha) / (total_transitions + 2.0 * alpha)
+-
+-        return cls(
+-            p11_hat=p11_hat,
+-            p01_hat=p01_hat,
+-            p_marginal_hat=p_marginal_hat,
+-            n11=n11,
+-            n1_total=n1_total,
+-            n01=n01,
+-            n0_total=n0_total,
+-        )
+-
+-    def predict_from_state(self, state: int) -> float:
+-        return self.p11_hat if state == 1 else self.p01_hat
+-
+-
+-def brier_score(y_true: List[int], y_prob: List[float]) -> float:
+-    return sum((p - y) ** 2 for y, p in zip(y_true, y_prob)) / len(y_true)
+-
+-
+-def binary_cross_entropy(y_true: List[int], y_prob: List[float], eps: float = 1e-12) -> float:
+-    loss = 0.0
+-    for y, p in zip(y_true, y_prob):
+-        pc = min(max(p, eps), 1.0 - eps)
+-        loss -= y * math.log(pc) + (1 - y) * math.log(1.0 - pc)
+-    return loss / len(y_true)
+-
+-
+-def evaluate_four_arms(
+-    test_trials: List[List[int]], model: SmoothedMarkovEstimators, eps: float = 1e-12
+-) -> Dict[str, Dict[str, float]]:
+-    n_trials = len(test_trials)
+-    seq_len = len(test_trials[0])
+-    sigma = fixed_cyclic_derangement(n_trials)
+-
+-    y_true: List[int] = []
+-    preds_stateful: List[float] = []
+-    preds_memoryless: List[float] = []
+-    preds_reset_trial: List[float] = []
+-    preds_deranged: List[float] = []
+-
+-    for i in range(n_trials):
+-        initial_state = test_trials[i][0]
+-        deranged_trial_idx = sigma[i]
+-        for t in range(1, seq_len):
+-            y_true.append(test_trials[i][t])
+-
+-            # Arm 1: True prior state X_{i, t-1}
+-            preds_stateful.append(model.predict_from_state(test_trials[i][t - 1]))
+-
+-            # Arm 2: Memoryless marginal rate
+-            preds_memoryless.append(model.p_marginal_hat)
+-
+-            # Arm 3: Reset-each-trial comparator anchored to initial state X_{i, 0}
+-            preds_reset_trial.append(model.predict_from_state(initial_state))
+-
+-            # Arm 4: Cross-trial, same-time-step derangement X_{sigma(i), t-1}
+-            deranged_prev_state = test_trials[deranged_trial_idx][t - 1]
+-            preds_deranged.append(model.predict_from_state(deranged_prev_state))
+-
+-    arms = {
+-        "stateful_markov": preds_stateful,
+-        "memoryless_marginal": preds_memoryless,
+-        "reset_each_trial": preds_reset_trial,
+-        "deranged_memory": preds_deranged,
+-    }
+-    return {
+-        name: {
+-            "brier": brier_score(y_true, preds),
+-            "bce": binary_cross_entropy(y_true, preds, eps),
+-        }
+-        for name, preds in arms.items()
+-    }
+-
+-
+-def run_single_seed(cfg: Phase23Config = Phase23Config()) -> Dict[str, object]:
+-    rng = random.Random(cfg.seed)
+-    train_trials = generate_trials(cfg.n_train_trials, cfg.seq_length, cfg.p11, cfg.p01, rng)
+-    test_trials = generate_trials(cfg.n_test_trials, cfg.seq_length, cfg.p11, cfg.p01, rng)
+-    model = SmoothedMarkovEstimators.fit(train_trials, alpha=cfg.laplace_alpha)
+-    metrics = evaluate_four_arms(test_trials, model, eps=cfg.eps)
+-    return {"model": model, "metrics": metrics, "test_trials": test_trials}
+-
+-
+-def run_multi_seed_benchmark(
+-    n_seeds: int = 200, base_seed: int = 20260921
+-) -> Dict[str, Dict[str, float]]:
+-    """Evaluates mean, SD, and 95% CI across multiple seeds to separate stochastic noise."""
+-    arm_names = [
+-        "stateful_markov",
+-        "memoryless_marginal",
+-        "reset_each_trial",
+-        "deranged_memory",
+-    ]
+-    brier_samples: Dict[str, List[float]] = {k: [] for k in arm_names}
+-    bce_samples: Dict[str, List[float]] = {k: [] for k in arm_names}
+-
+-    for k in range(n_seeds):
+-        cfg = Phase23Config(seed=base_seed + k)
+-        out = run_single_seed(cfg)
+-        metrics = out["metrics"]  # type: ignore[assignment]
+-        for arm in arm_names:
+-            brier_samples[arm].append(metrics[arm]["brier"])
+-            bce_samples[arm].append(metrics[arm]["bce"])
+-
+-    summary: Dict[str, Dict[str, float]] = {}
+-    for arm in arm_names:
+-        bs_mean = statistics.mean(brier_samples[arm])
+-        bs_sd = statistics.stdev(brier_samples[arm])
+-        bce_mean = statistics.mean(bce_samples[arm])
+-        bce_sd = statistics.stdev(bce_samples[arm])
+-        summary[arm] = {
+-            "brier_mean": bs_mean,
+-            "brier_ci95": 1.96 * bs_sd / math.sqrt(n_seeds),
+-            "bce_mean": bce_mean,
+-            "bce_ci95": 1.96 * bce_sd / math.sqrt(n_seeds),
+-        }
+-    return summary
+-
+-
+-class TestPhase23DeterministicInvariants(unittest.TestCase):
+-    """Tests strict mathematical and software invariants independent of finite-sample luck."""
+-
+-    def setUp(self) -> None:
+-        self.cfg = Phase23Config()
+-        self.run_data = run_single_seed(self.cfg)
+-        self.model: SmoothedMarkovEstimators = self.run_data["model"]  # type: ignore[assignment]
+-
+-    def test_exact_laplace_smoothing_formula(self) -> None:
+-        expected_p11 = (self.model.n11 + 1.0) / (self.model.n1_total + 2.0)
+-        expected_p01 = (self.model.n01 + 1.0) / (self.model.n0_total + 2.0)
+-        self.assertAlmostEqual(self.model.p11_hat, expected_p11, places=12)
+-        self.assertAlmostEqual(self.model.p01_hat, expected_p01, places=12)
+-
+-    def test_derangement_has_no_fixed_points(self) -> None:
+-        sigma = fixed_cyclic_derangement(self.cfg.n_test_trials)
+-        self.assertEqual(len(sigma), self.cfg.n_test_trials)
+-        self.assertEqual(sorted(sigma), list(range(self.cfg.n_test_trials)))
+-        for i, mapped in enumerate(sigma):
+-            self.assertNotEqual(i, mapped)
+-
+-    def test_transition_counts_and_four_arms_present(self) -> None:
+-        self.assertEqual(self.model.n1_total + self.model.n0_total, 24 * 29)
+-        metrics: Dict[str, Dict[str, float]] = self.run_data["metrics"]  # type: ignore[assignment]
+-        self.assertEqual(
+-            set(metrics.keys()),
+-            {
+-                "stateful_markov",
+-                "memoryless_marginal",
+-                "reset_each_trial",
+-                "deranged_memory",
+-            },
+-        )
+-
+-    def test_deterministic_seed_reproducibility(self) -> None:
+-        repeat = run_single_seed(self.cfg)
+-        self.assertEqual(self.run_data["metrics"], repeat["metrics"])
+-
+-
+-if __name__ == "__main__":
+-    single = run_single_seed()
+-    m: SmoothedMarkovEstimators = single["model"]  # type: ignore[assignment]
+-    metrics: Dict[str, Dict[str, float]] = single["metrics"]  # type: ignore[assignment]
+-
+-    print("=== Phase 2.3 Protocol Reproduction (Seed: 20260921) ===")
+-    print(
+-        f"Laplace-Smoothed Estimators -> p11_hat: {m.p11_hat:.4f} "
+-        f"({m.n11}+1)/({m.n1_total}+2), "
+-        f"p01_hat: {m.p01_hat:.4f} ({m.n01}+1)/({m.n0_total}+2), "
+-        f"p_marginal_hat: {m.p_marginal_hat:.4f}\n"
+-    )
+-    print(f"{'Experimental Arm':<24} | {'Brier Score':<12} | {'BCE (nats)':<12}")
+-    print("-" * 54)
+-    for arm_key in [
+-        "stateful_markov",
+-        "memoryless_marginal",
+-        "reset_each_trial",
+-        "deranged_memory",
+-    ]:
+-        print(
+-            f"{arm_key:<24} | {metrics[arm_key]['brier']:<12.6f} | "
+-            f"{metrics[arm_key]['bce']:<12.6f}"
+-        )
+-
+-    print("\n=== Multi-Seed Benchmark (N=200 Seeds, Mean ± 95% CI) ===")
+-    multi = run_multi_seed_benchmark(n_seeds=200)
+-    for arm_key, stats in multi.items():
+-        print(
+-            f"{arm_key:<24} | Brier: {stats['brier_mean']:.4f} ± {stats['brier_ci95']:.4f} "
+-            f"| BCE: {stats['bce_mean']:.4f} ± {stats['bce_ci95']:.4f}"
+-        )
+-
+-    print("\nRunning deterministic software invariant unit tests...")
+-    unittest.main(verbosity=2)
+-
++            for prev,nxt in zip(seq,seq[1:]): counts[prev][nxt]+=1
++        n0,n1=map(sum,counts)
++        return cls((counts[1][1]+alpha)/(n1+2*alpha),
++                   (counts[0][1]+alpha)/(n0+2*alpha),
++                   (counts[0][1]+counts[1][1]+alpha)/(n0+n1+2*alpha),
++                   counts[1][1],n1,counts[0][1],n0)
++
++    def predict_from_state(self,state):
++        if type(state) not in (bool,int) or state not in (0,1):
++            raise ValueError('state must be binary')
++        return self.p11_hat if state else self.p01_hat
++
++def validate_scores(y_true,y_prob):
++    if not y_true or len(y_true) != len(y_prob):
++        raise ValueError('scores require nonempty equal-length inputs')
++    if any(type(y) not in (int,bool) or y not in (0,1) for y in y_true):
++        raise ValueError('targets must be binary')
++    if any(not math.isfinite(p) or not 0 <= p <= 1 for p in y_prob):
++        raise ValueError('probabilities must be finite and in [0,1]')
++
++def brier_score(y_true,y_prob):
++    validate_scores(y_true,y_prob)
++    return sum((p-y)**2 for y,p in zip(y_true,y_prob))/len(y_true)
++
++def binary_cross_entropy(y_true,y_prob,eps=1e-12):
++    validate_scores(y_true,y_prob)
++    if not 0 < eps < .5: raise ValueError('eps must be in (0,.5)')
++    ps=[min(max(p,eps),1-eps) for p in y_prob]
++    return -sum(y*math.log(p)+(1-y)*math.log1p(-p) for y,p in zip(y_true,ps))/len(y_true)
++
++def evaluate_four_arms(test_trials,model,cfg):
++    validate_trials(test_trials,2)
++    sigma=fixed_cyclic_derangement(len(test_trials),cfg.seed,cfg.mode)
++    y=[];preds={arm:[] for arm in ARMS};same=0
++    for i,seq in enumerate(test_trials):
++        for t in range(1,len(seq)):
++            y.append(seq[t]);previous=seq[t-1];unrelated=test_trials[sigma[i]][t-1]
++            same+=previous == unrelated
++            preds['stateful_markov'].append(model.predict_from_state(previous))
++            preds['memoryless_marginal'].append(model.p_marginal_hat)
++            preds['reset_each_trial'].append(model.predict_from_state(seq[0]))
++            preds['deranged_memory'].append(model.predict_from_state(unrelated))
++    return {'metrics':{arm:{'brier':brier_score(y,p),'bce':binary_cross_entropy(y,p,cfg.eps)}
++                       for arm,p in preds.items()},
++            'evaluation_transitions':len(y),'derangement':sigma,
++            'shuffled_same_value_fraction':same/len(y),
++            'targets':y,'predictions':preds}
++
++def run_single_seed(cfg=Phase23Config()):
++    rng=random.Random(cfg.seed)
++    train=generate_trials(cfg.n_train_trials,cfg,rng)
++    test=generate_trials(cfg.n_test_trials,cfg,rng)
++    model=SmoothedMarkovEstimators.fit(train,cfg.laplace_alpha)
++    result=evaluate_four_arms(test,model,cfg)
++    return {'config':asdict(cfg),'model':asdict(model),'train_trials':train,'test_trials':test,**result}
++
++def repository_report(result):
++    """Serialize in the frozen report's schema; use only default protocol parameters."""
++    cfg=result['config'];m=result['model']
++    expected=asdict(Phase23Config(seed=cfg['seed']))
++    if cfg != expected: raise ValueError('frozen schema requires default repository protocol')
++    names={'stateless':'memoryless_marginal','persistent':'stateful_markov',
++           'shuffled_memory':'deranged_memory','reset_each_trial':'reset_each_trial'}
++    return {'status':'software_connectivity_only_no_qualia_inference',
++            'experiment':'B1_B2_synthetic_connection_control_v1','seed':cfg['seed'],
++            'dataset':'fully_synthetic_markov_packet_arrival','train_trials':24,
++            'test_trials':12,'steps_per_trial':30,'evaluation_transitions':result['evaluation_transitions'],
++            'predeclared_generation':{'p_arrive_after_arrival':.92,'p_arrive_after_missing':.28},
++            'fit_from_training_only':{'p_arrive_given_prev':{'0':m['p01_hat'],'1':m['p11_hat']},
++                                      'marginal':m['p_marginal_hat']},
++            'arms':{name:{'brier':round(result['metrics'][arm]['brier'],6),
++                          'log_loss':round(result['metrics'][arm]['bce'],6)} for name,arm in names.items()},
++            'shuffled_index_derangement':True,
++            'shuffled_same_value_fraction':round(result['shuffled_same_value_fraction'],6),
++            'claims_not_supported':['AI emotion','AI qualia','human emotion recognition','Phi_c','E'],
++            'no_raw_human_data':True}
++
++def summarize(values):
++    mean=statistics.mean(values);sd=statistics.stdev(values);half=1.96*sd/math.sqrt(len(values))
++    return {'mean':mean,'sd_across_seeds':sd,'mc_mean_ci95':[mean-half,mean+half],
++            'ci_half_width':half,'n_seeds':len(values)}
++
++def run_multi_seed_benchmark(n_seeds=200,base_seed=20260921,mode='repository'):
++    if type(n_seeds) is not int or n_seeds<2: raise ValueError('need at least two seeds')
++    rows=[]
++    for seed in range(base_seed,base_seed+n_seeds):
++        out=run_single_seed(Phase23Config(seed=seed,mode=mode))
++        rows.append({'seed':seed,'metrics':out['metrics'],
++                     'shuffled_same_value_fraction':out['shuffled_same_value_fraction']})
++    summary={a:{s:summarize([r['metrics'][a][s] for r in rows]) for s in ('brier','bce')} for a in ARMS}
++    paired={a:{s:summarize([r['metrics'][a][s]-r['metrics']['stateful_markov'][s] for r in rows])
++               for s in ('brier','bce')} for a in ARMS if a!='stateful_markov'}
++    return {'mode':mode,'interval_interpretation':'Approximate normal 95% Monte Carlo CI for the mean over simulated independent runs; not a prediction interval or human inference.',
++            'summary':summary,'paired_difference_comparator_minus_stateful':paired,'per_seed':rows}
++
++def main():
++    ap=argparse.ArgumentParser(description=__doc__)
++    ap.add_argument('--mode',choices=['repository','stationary'],default='repository')
++    ap.add_argument('--seeds',type=int,default=200)
++    ap.add_argument('--seed',type=int,default=20260921)
++    ap.add_argument('--output',type=Path)
++    args=ap.parse_args();single=run_single_seed(Phase23Config(seed=args.seed,mode=args.mode))
++    result={'single_seed':single,'benchmark':run_multi_seed_benchmark(args.seeds,args.seed,args.mode)}
++    if args.mode=='repository':result['repository_rounded_report']=repository_report(single)
++    for arm,scores in single['metrics'].items():print(f'{arm:24} Brier={scores["brier"]:.6f} BCE={scores["bce"]:.6f}')
++    print('same-value fraction:',single['shuffled_same_value_fraction'],'permutation:',single['derangement'])
++    for arm,metrics in result['benchmark']['summary'].items():
++        print(arm, ' | '.join(f'{s}={v["mean"]:.6f} +/- {v["ci_half_width"]:.6f}' for s,v in metrics.items()))
++    if args.output:
++        args.output.parent.mkdir(parents=True,exist_ok=True)
++        args.output.write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
++
++if __name__=='__main__':main()

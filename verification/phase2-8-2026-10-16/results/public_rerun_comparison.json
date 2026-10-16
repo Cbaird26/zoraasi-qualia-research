@@ -1,0 +1,27 @@
+{
+  "status": "Complete public rerun:64 passing methods and four numerical outputs byte-identical",
+  "numerical_outputs": {
+    "original_benchmark.json": {
+      "identical_bytes": true,
+      "sha256": "68864678f8db0a0d6d5b5983fbbdae5f8b208104e06f70a9e288f70b6905abdd",
+      "bytes": 1410468
+    },
+    "validation_manifest.json": {
+      "identical_bytes": true,
+      "sha256": "c03147fa4d420d2a909c18ea4d8226cc30666f2194599d03e260da69a41c53d6",
+      "bytes": 1867593
+    },
+    "corrected_benchmark.json": {
+      "identical_bytes": true,
+      "sha256": "a5525c1c8b5e4dd5e1c5f98b9166f9bea14c0011736bb9a04630d1e07cc4249e",
+      "bytes": 146117250
+    },
+    "math_check.json": {
+      "identical_bytes": true,
+      "sha256": "bd14fcacfbf7940aa87a5d21b6d133d5689412ffd081de1dd3629ff72cd70544",
+      "bytes": 50377
+    }
+  },
+  "public_raw_upload_absent": true,
+  "frozen_predecessor_commit": "669037fdbfb4fd9ff33148e3c109f7c58406d9ee"
+}

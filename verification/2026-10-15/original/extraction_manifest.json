@@ -1,0 +1,8 @@
+{
+  "source": "Two Python fenced blocks extracted verbatim from the user-supplied technical response on 2026-10-15. Raw conversation text is retained privately, not included here.",
+  "uploaded_text_sha256": "352dadfd7dedb4a7008445faaf82ea832d8dbffac99af91b03e6d70b440ca618",
+  "extracted_scripts": {
+    "phase2_3_protocol_reproduction.py": "3b463d44dd89e056f81603a96b1ec4318d5d2350fc6b7729d7e391a7a191a387",
+    "synthetic_qualia_engine_v1.py": "98b56f4e5302dffd48714d2721cd1ef73b04b40e25ef762faccbc7eaf36a6c63"
+  }
+}

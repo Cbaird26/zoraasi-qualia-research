@@ -1,0 +1,27 @@
+{
+  "phase25_suite.py": {
+    "commit": "669037fdbfb4fd9ff33148e3c109f7c58406d9ee",
+    "source_path": "verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py",
+    "sha256": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+    "url": "https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py"
+  },
+  "phase26_engine.py": {
+    "commit": "669037fdbfb4fd9ff33148e3c109f7c58406d9ee",
+    "source_path": "verification/phase2-6-2026-10-15/corrected/phase2_6_novelty_aware_gate.py",
+    "sha256": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+    "url": "https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-6-2026-10-15/corrected/phase2_6_novelty_aware_gate.py"
+  },
+  "phase27_engine.py": {
+    "commit": "669037fdbfb4fd9ff33148e3c109f7c58406d9ee",
+    "source_path": "verification/phase2-7-2026-10-16/corrected/phase2_7_kl_antirollback_gate.py",
+    "sha256": "21e6491b35f8fc17ac81dae759605cb659515147716952ba020bf111e7a87872",
+    "url": "https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-7-2026-10-16/corrected/phase2_7_kl_antirollback_gate.py"
+  },
+  "phase27_supplied.py": {
+    "commit": "669037fdbfb4fd9ff33148e3c109f7c58406d9ee",
+    "source_path": "verification/phase2-7-2026-10-16/original/phase2_7_kl_antirollback_gate.py",
+    "sha256": "fd8c67e2d36a51722a5cbabd8cce88fecb68b4c799c51ee6208728456a4e81d4",
+    "url": "https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-7-2026-10-16/original/phase2_7_kl_antirollback_gate.py",
+    "use": "unchanged EMA/CUSUM baseline classes for direct continuity with prior audit"
+  }
+}

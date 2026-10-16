@@ -1,0 +1,23 @@
+test_bounded_states_through_switches (__main__.TestPhase25.test_bounded_states_through_switches) ... ok
+test_capacity_and_consolidation_event_counters (__main__.TestPhase25.test_capacity_and_consolidation_event_counters) ... ok
+test_current_and_future_target_donor_outcomes_cannot_change_earlier_predictions (__main__.TestPhase25.test_current_and_future_target_donor_outcomes_cannot_change_earlier_predictions) ... ok
+test_donor_current_observation_affects_only_following_prediction (__main__.TestPhase25.test_donor_current_observation_affects_only_following_prediction) ... ok
+test_fixed_offset_and_independent_dwell_schedules (__main__.TestPhase25.test_fixed_offset_and_independent_dwell_schedules) ... ok
+test_initial_state_distribution_controls_and_scope_slices (__main__.TestPhase25.test_initial_state_distribution_controls_and_scope_slices) ... ok
+test_invalid_input_validation (__main__.TestPhase25.test_invalid_input_validation) ... ok
+test_legacy_mode_exactly_reproduces_original_equations (__main__.TestPhase25.test_legacy_mode_exactly_reproduces_original_equations) ... ok
+test_marginal_advantage_uses_two_pre_observation_predictions (__main__.TestPhase25.test_marginal_advantage_uses_two_pre_observation_predictions) ... ok
+test_memory_instance_isolation_and_zero_capacity (__main__.TestPhase25.test_memory_instance_isolation_and_zero_capacity) ... ok
+test_metrics_and_paired_interval_arithmetic (__main__.TestPhase25.test_metrics_and_paired_interval_arithmetic) ... ok
+test_no_update_preserves_extreme_probabilities (__main__.TestPhase25.test_no_update_preserves_extreme_probabilities) ... ok
+test_online_donor_matches_same_time_post_observation_replay (__main__.TestPhase25.test_online_donor_matches_same_time_post_observation_replay) ... ok
+test_random_snapshot_control_chooses_random_candidate_and_keeps_gate (__main__.TestPhase25.test_random_snapshot_control_chooses_random_candidate_and_keeps_gate) ... ok
+test_reinitialization_resets_states_memory_trace_and_rng (__main__.TestPhase25.test_reinitialization_resets_states_memory_trace_and_rng) ... ok
+test_returned_predictions_precede_outcomes (__main__.TestPhase25.test_returned_predictions_precede_outcomes) ... ok
+test_training_counts_and_disjoint_rng_domains (__main__.TestPhase25.test_training_counts_and_disjoint_rng_domains) ... ok
+test_validation_grid_endpoints_and_test_independence (__main__.TestPhase25.test_validation_grid_endpoints_and_test_independence) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.079s
+
+OK

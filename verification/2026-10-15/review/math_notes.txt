@@ -1,0 +1,122 @@
+PHASE 2.3 INDEPENDENT MATHEMATICS AUDIT
+
+Execution
+---------
+Executed review/math_verify.py with Python 3. All 8 tests passed. Tests include
+exhaustive binary path enumeration and independent donor/target path pairs for
+three short-horizon processes, including a negative eigenvalue; compact versus
+general stationary formulas at every t=1,...,29; forward recursion; t=1 identity;
+and general Brier variance identities. The script imports no experiment code.
+Full output: results/math_verification_execution.txt.
+Machine-readable H=29 values, including every time step:
+results/math_verification.json.
+
+Meaning of the reference
+------------------------
+These are exact expected losses with known transition parameters, at a FIXED
+29-transition horizon. They are also the fitted estimator's limit as the number
+of independent training trials tends to infinity at that horizon. They are not
+the exact expected scores after only 24 training trials, and not a prediction of
+the one-seed realization. The reset and deranged controls deliberately misuse a
+one-step transition forecast, so a "known-parameter reference" for these controls
+does not mean a Bayes-optimal predictor for their available information. Finite
+training noise and Laplace shrinkage can affect their risk in either direction.
+
+Notation
+--------
+a=p01=0.28, b=p11=0.92, lambda=b-a=0.64, pi=a/(1-b+a)=7/9,
+H=29. BCE uses natural logarithms, in nats.
+Define B(q,p)=q(1-p)^2+(1-q)p^2 and
+C(q,p)=-q log(p)-(1-q)log(1-p).
+Let h(p)=C(p,p), v=pi(1-pi), and
+D=logit(b)-logit(a)=3.3868086442100553.
+
+Stationary initialization used by Gemini's reproduction
+-------------------------------------------------------
+If P(X0=1)=pi, every Xt has marginal pi. With t starting at 1:
+
+  stateful Brier = v(1-lambda^2)
+  stateful BCE   = (1-pi)h(a)+pi h(b)
+  memoryless Brier = v; BCE = h(pi)
+  deranged Brier = v(1+lambda^2)
+  deranged BCE   = C_D = (1-pi)C(pi,a)+pi C(pi,b)
+  reset Brier(t) = v[1+lambda^2-2 lambda^(t+1)]
+  reset BCE(t)   = C_D-v lambda^t D.
+
+For g_H=(1-lambda^H)/[H(1-lambda)]=0.09578521125246335:
+
+  mean reset Brier = v(1+lambda^2)-2v lambda^2 g_H
+  mean reset BCE   = C_D-v lambda D g_H
+                   = C_D-(C_D-C_stateful)g_H.
+
+Exact expected losses, t=1,...,29 equally weighted:
+
+  Arm                    Brier             BCE (nats)
+  stateful_markov         0.102044444444     0.348588026364
+  memoryless_marginal     0.172839506173     0.529706199058
+  reset_each_trial        0.230072328015     0.687342669157
+  deranged_memory        0.243634567901     0.723227599847
+
+Gemini's stationary reset Brier derivation and rounded value 0.2301 are correct.
+Its stationary reset BCE 0.6869 is incorrect: the value rounds to 0.6873, with
+absolute discrepancy 0.0004426691572835. The other three stationary rows round
+correctly in the pasted table. At t=1 reset equals stateful, in both scores;
+as t tends to infinity it converges to deranged under stationary initialization.
+
+Actual public source has a different initial distribution
+--------------------------------------------------------
+reference/repository/zora_lab/connection_study.py initializes each sequence with
+bool(rng.getrandbits(1)), giving P(X0=1)=mu0=0.5. That differs from pi=7/9 used in
+the supplied reproduction. Same-time donor marginals are mu_(t-1), not pi, for
+these nonstationary finite trials. Their independence from the target still
+holds when the source trial is different.
+
+For arbitrary mu0, define:
+
+  mu_t = pi+(mu0-pi)lambda^t
+  r_j(t) = P(Xt=1 | X0=j) = pi+(j-pi)lambda^t
+  qbar = (1/H) sum_(t=1)^H mu_t.
+
+The pooled target-marginal estimator converges to qbar, not pi, at this fixed
+horizon. Here qbar=0.760749295777340. The per-step exact risks for either
+L=B (Brier) or L=C (BCE) are:
+
+  stateful(t) = (1-mu_(t-1))L(a,a)+mu_(t-1)L(b,b)
+  memoryless(t) = L(mu_t,qbar)
+  reset(t) = (1-mu0)L(r_0(t),a)+mu0 L(r_1(t),b)
+  deranged(t) = (1-mu_(t-1))L(mu_t,a)+mu_(t-1)L(mu_t,b).
+
+Useful equivalent Brier expressions, v0=mu0(1-mu0):
+
+  deranged(t) = mu_t(1-mu_t)+lambda^2 mu_(t-1)(1-mu_(t-1))
+  reset(t) = mu_t(1-mu_t)+lambda^2 v0+(mu_1-mu_t)^2
+             -2 v0 lambda^(t+1).
+
+These use Cov(Xt,X0)=v0 lambda^t. The stationary covariance v lambda^t is not
+valid when mu0=0.5. Averaged memoryless Brier=qbar(1-qbar); BCE=h(qbar).
+
+Exact public-generator known-parameter references at H=29:
+
+  Arm                    Brier             BCE (nats)
+  stateful_markov         0.105450140845     0.356947519589
+  memoryless_marginal     0.182009804752     0.550214690053
+  reset_each_trial        0.290633329580     0.805453724914
+  deranged_memory        0.255457586401     0.753858858110
+
+The ranking changes: reset is WORSE than deranged for both scores. Its forecasts
+remain tied to a balanced initial state, so their mean stays mu_1=0.6, even as
+the target's mean approaches 7/9. Deranged forecasts reflect the changing donor
+marginals. Therefore Gemini's stationary reset < deranged ranking must not be
+used as a deterministic invariant or a benchmark for the public generator.
+
+If one instead forces the memoryless prediction to pi under the public
+generator, its expected Brier is 0.182299773951 and BCE is 0.551038850717. That is
+a distinct comparison, not the training-limit pooled marginal used above.
+
+Interpretation
+--------------
+Autocorrelation was explicitly built into the generator, so improvement from
+using the actual previous packet is expected. The reset control is intentionally
+weak: an initial-state-aware, time-aware predictor would use r_j(t), rather than
+reuse a one-step prediction indefinitely. None of these calculations tests
+subjective experience, synthetic qualia, or a physical theory of consciousness.

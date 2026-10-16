@@ -1,0 +1,215 @@
+
+ZoraASI Phase 2.3 / 2.4 — executed verification
+===============================================
+15 October 2026 · America/New_York · Local verification of the supplied Gemini text, pinned public source, and separately corrected research scripts.
+
+Outcome: both uploaded scripts execute and their six supplied tests pass. Phase 2.3 is not an exact reproduction as uploaded: initialization and the derangement differ from the public source. The corrected local version matches the frozen report and source output across 200 seeds. Phase 2.4 demonstrates useful adaptive prediction in the tested switching environments, but the full architecture is not consistently best. No result measures subjective experience or validates MQGT-SCF.
+
+
+What was actually checked
+=========================
+Item | Verification
+Uploaded text | Two Python fences extracted exactly from the supplied technical response. The raw conversational text is excluded from this public supplement; script hashes are recorded in original/extraction_manifest.json.
+Attachment SHA-256 | 352dadfd7dedb4a7008445faaf82ea832d8dbffac99af91b03e6d70b440ca618
+Pinned GitHub commit | e941c5fd17a49de71fcdbfbb60cb8d84e168877d
+Reference integrity | 13 Git blob hashes verified; all 7 published SHA-256 checksums pass; snapshot contents unchanged after execution.
+Runtime | 3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]; macOS-26.3-arm64-arm-64bit-Mach-O
+Execution | Every command in results/execution_manifest.json exited 0. Standard library only; no packages installed.
+Review provenance | Primary Codex execution plus two Codex subagent reviews of mathematics and Phase 2.4. No independent Gemini, Grok, or Claude execution is claimed.
+
+Pinned public protocol: https://github.com/Cbaird26/zoraasi-qualia-research/blob/e941c5fd17a49de71fcdbfbb60cb8d84e168877d/PROTOCOL.md
+
+Pinned public implementation: https://github.com/Cbaird26/zoraasi-qualia-research/blob/e941c5fd17a49de71fcdbfbb60cb8d84e168877d/zora_lab/connection_study.py
+
+Test suite | Tests | Result
+Uploaded Phase 2.3 | 4 | PASS
+Uploaded Phase 2.4 | 2 | PASS
+Public repository | 6 | PASS
+Corrected scripts | 24 | PASS
+Independent mathematics | 8 | PASS
+
+44 test cases passed in the packaged end-to-end run. The corrected suite includes source conformance over 200 seeds, causal prefix perturbations, reset/memory isolation, and invalid-input checks. These are software checks; a passing test suite is not independent empirical confirmation of the research claims.
+
+
+Phase 2.3 — exact source comparison
+===================================
+Feature | Uploaded implementation | Public source / correction
+Training/test size | 24 / 12 trials, 30 observations each | Matches: 696 training and 348 test transitions.
+Parameter fit | Training-only Beta(1,1) smoothing | Matches transition and pooled target-marginal estimators.
+Trial initialization | random() < 7/9; stationary | getrandbits(1); fair coin. Both distribution and random-number consumption differ.
+Derangement | Fixed shift of 1 | Random(seed+1).randrange(1,12), fixed across time. Shift is 11 for seed 20260921.
+Four prediction arms | Previous state, marginal, X0, other-trial prior state | All four information conditions correctly implemented; reset is deliberately weak.
+Same-value fraction | Omitted | Required by protocol; corrected result is 206/348 = 0.591954. Index derangement does not imply unequal binary values.
+Telemetry B1 checks | Not implemented in uploaded standalone script | All original public telemetry tests run separately and pass; corrected standalone script reproduces the forecasting component.
+Input validation | Scores silently zip unequal lengths; empty/invalid inputs not consistently rejected | Corrected lengths, binary values, finite probabilities, dimensions, smoothing, and seed-count checks.
+Reproducibility output | Console metrics only; SD promised but omitted in returned summary | Corrected JSON includes raw data, predictions, parameters, permutation, per-seed scores, SDs and paired intervals.
+
+The source protocol’s wording does not fully specify the initialization distribution or cyclic shift. Source inspection resolves both. Gemini’s version remains a valid stationary variant; it must not be labeled an exact reproduction. The corrected script defaults to repository mode and retains the stationary variant as --mode stationary. Neither the public repository nor the extracted original scripts was edited.
+
+
+Phase 2.3 — actual seed 20260921 results
+========================================
+Arm | Uploaded Brier | Uploaded BCE | Corrected/public Brier | Corrected/public BCE
+stateful_markov | 0.134950 | 0.440997 | 0.131856 | 0.427343
+memoryless_marginal | 0.206449 | 0.604907 | 0.196196 | 0.581419
+reset_each_trial | 0.262522 | 0.801256 | 0.224087 | 0.672360
+deranged_memory | 0.309645 | 0.907023 | 0.295251 | 0.840328
+
+BCE uses natural logarithms (nats). Lower is better. Corrected fitted values are p11=0.8987854251012146, p01=0.2669902912621359 and marginal=0.7134670487106017. The corrected report equals the public frozen JSON structurally, including six-decimal scores. The source and corrected generator streams, estimates and rounded reports also match for seeds 20260921 through 20261120.
+
+Arm | Public-generator 200-seed mean Brier ± CI half-width | Mean BCE ± CI half-width
+stateful_markov | 0.105992 ± 0.001976 | 0.358850 ± 0.005511
+memoryless_marginal | 0.183584 ± 0.003429 | 0.554173 ± 0.007672
+reset_each_trial | 0.284972 ± 0.005870 | 0.792696 ± 0.013873
+deranged_memory | 0.254527 ± 0.005507 | 0.752638 ± 0.014946
+
+
+Phase 2.3 — reset mathematics
+=============================
+The stationary reset Brier derivation is correct. The stated reset BCE 0.6869 is numerically incorrect; the correct value is 0.6873426691572835, rounding to 0.6873. These are known-parameter expected losses at a fixed 29-transition horizon, not the exact finite-training expected scores and not promised one-seed outcomes.
+
+a = p01 = 0.28; b = p11 = 0.92; λ = b − a = 0.64
+π = a / (1 − b + a) = 7/9; v = π(1 − π); H = 29
+C(q,p) = −q ln(p) − (1−q) ln(1−p)
+C_D = (1−π)C(π,a) + π C(π,b)
+D = logit(b) − logit(a); g_H = (1−λ^H) / [H(1−λ)]
+
+Stationary reset Brier(t) = v[1 + λ² − 2λ^(t+1)]
+Stationary reset BCE(t)   = C_D − v λ^t D
+Mean reset Brier = v(1+λ²) − 2vλ²g_H = 0.23007232801466346
+Mean reset BCE   = C_D − vλDg_H      = 0.6873426691572835
+
+At t=1 the reset and stateful predictions coincide. Under stationary initialization, their reset score approaches the deranged score as the initial state loses predictive information. The source starts instead with μ0=0.5, so the stationary covariance and stationary table do not apply unchanged.
+
+For the actual source, μ_t = π + (μ0−π)λ^t, with μ0=0.5.
+r_j(t) = P(X_t=1 | X_0=j) = π + (j−π)λ^t
+q̄ = (1/H) Σ[t=1..H] μ_t = 0.760749295777340
+
+For either loss L = Brier risk or BCE risk:
+Reset(t)    = (1−μ0)L(r_0(t),a) + μ0 L(r_1(t),b)
+Deranged(t) = (1−μ_(t−1))L(μ_t,a) + μ_(t−1)L(μ_t,b)
+
+Arm | Stationary Brier | Stationary BCE | Source μ0=.5 Brier | Source μ0=.5 BCE
+stateful_markov | 0.102044 | 0.348588 | 0.105450 | 0.356948
+memoryless_marginal | 0.172840 | 0.529706 | 0.182010 | 0.550215
+reset_each_trial | 0.230072 | 0.687343 | 0.290633 | 0.805454
+deranged_memory | 0.243635 | 0.723228 | 0.255458 | 0.753859
+
+Under the public source, reset is worse than deranged in these expected losses. Its mean one-step forecast stays at 0.6 because it keeps using a balanced initial state, while the target probability approaches 7/9. The fitted pooled marginal converges to q̄ rather than 7/9 as training trials increase at fixed horizon. Finite-sample estimation and smoothing can change risk in either direction for the deliberately misspecified controls. The independent verification enumerates short binary paths and donor/target path pairs, and checks the stationary formulas at every t=1,…,29.
+
+Full mathematical derivation and limitations: review/math_notes.txt
+
+
+Phase 2.4 — what the uploaded code actually achieves
+====================================================
+Uploaded arm | Brier, supplied seed | BCE, supplied seed
+full_phase24_engine | 0.181513 | 0.545597
+ablate_episodic_mem | 0.190614 | 0.564639
+ablate_affective_lr | 0.187975 | 0.561474
+ablate_self_model | 0.167539 | 0.516916
+frozen_phase23_markov | 0.336556 | 0.976984
+
+All five arms begin at the true Regime-A parameters (0.92,0.28,7/9). That is privileged oracle initialization, not a fitted Phase 2.3 learner. The original full engine beats the frozen Regime-A forecast on this changing environment, but the no-self-model arm beats the full engine. Original 200-seed scores and paired comparisons are also included in phase24_original_benchmark.json.
+
+Finding | Correction or remaining implication
+Reinitialization retains state and recent transitions | Reset now clears all run-dependent state and history; reuse is equivalent to a fresh engine.
+Zero learning rate can still clip extreme parameters | No-update behavior now preserves a frozen transition estimate exactly. Default original predictions are unchanged.
+Missing simple baselines and advertised shuffled control | Added plain two-parameter fixed EMA, fixed/adaptive memoryless predictors, and causal cross-stream scalar-state derangement.
+Ablation mislabeled parameter-matched baseline | The original fixed-rate arm retains memory and confidence arbitration; corrected label states this. No full model-capacity or optimization-budget matching is claimed.
+Oracle initialization mislabeled learned Phase 2.3 | All corrected arms share estimates from independent 24×30 training trials. Phase 2.4 training uses stationary Regime-A initialization; it is explicitly an extension, not the exact public Phase 2.3 generator.
+Single-seed superiority asserted as unit test | Corrected tests check invariants and causal ordering; performance is reported across seeds and settings rather than enforced as universal ordering.
+Equation/code mismatch | Prose arousal weights 0.65/0.35 differ from code 0.70/0.30; prose linear learning rate differs from code 0.02+0.28 a^1.5. Corrected code preserves the supplied code dynamics and documents them.
+Memory schema differs from prose | Snapshots store p11, p01 and valence, not continuity; the valence field is not a retrieval score. This is parameter-snapshot memory, not demonstrated autobiographical memory.
+“Self-confidence” called calibration | An EMA of 1−Brier is a performance tracker. It does not separately measure probability calibration; prevalence and resolution affect it.
+Continuity and memory claims unvalidated | Cosine similarity is insensitive to proportional scale; no validated changepoint detector is established. A full memory bank has no eviction for novel contexts.
+No valence-only or continuity-only ablation | Results cannot isolate all proposed components. Arousal, memory gating and confidence interact; fixed thresholds remain heuristic.
+
+The original step_update computes the prediction before using the current outcome. Its use of that outcome for subsequent updates is valid online learning, not target leakage into the scored forecast. The corrected causal-prefix tests cover both the target stream and donor control. The corrected engine reproduces the original five arms’ normal-path predictions exactly when initialized identically; changes address reset, invalid inputs and boundary behavior.
+
+
+Phase 2.4 — stronger exploratory benchmark
+==========================================
+Executed 200 primary seeds (20260921–20261120) and 100 additional disjoint seeds (30260921–30261020), with 2 independent streams per seed and 360 scored transitions per stream. Tested stationary Regime A and alternating A/B blocks of 15, 45 and 90 transitions. Nine ordinary arms share data and learned initialization; two explicitly privileged oracle references bring the total to eleven. Hyperparameters were not tuned in this audit; the separate seed range is an exploratory robustness check, not a prospective preregistration.
+
+The fixed EMA rate is the supplied 0.08, not a rate optimized on a validation set. The comparison therefore supports superiority to that specific simple baseline under these settings, not superiority over the EMA family or modern adaptive estimators. The original Regime B (0.18,0.82) is an alternating process with stationary probability 0.5; “sparse” is a misleading description.
+
+Arm | 45-step switching: primary Brier | Primary BCE | Additional-seed Brier | Additional-seed BCE
+full_engine | 0.185283 | 0.553850 | 0.184611 | 0.552174
+no_episodic_memory | 0.194263 | 0.573349 | 0.193641 | 0.571789
+fixed_rate_with_memory | 0.197704 | 0.582584 | 0.196693 | 0.580258
+no_self_model | 0.172124 | 0.528045 | 0.171171 | 0.525671
+deranged_state_vector | 0.182773 | 0.547100 | 0.181771 | 0.544710
+plain_fixed_ema | 0.206251 | 0.603743 | 0.206269 | 0.603720
+frozen_learned_markov | 0.335655 | 0.976591 | 0.335562 | 0.975109
+fixed_memoryless | 0.253630 | 0.713994 | 0.253471 | 0.713363
+adaptive_memoryless | 0.224691 | 0.640808 | 0.224521 | 0.640101
+oracle_current_regime | 0.126216 | 0.413553 | 0.125404 | 0.411554
+oracle_frozen_regime_a | 0.336144 | 0.976078 | 0.336123 | 0.976090
+
+Seeds | Environment | Full − plain EMA Brier [95% mean CI] | Full − plain EMA BCE [95% mean CI]
+primary | stationary_a | 0.011088 [0.010556, 0.011620] | 0.019447 [0.018434, 0.020459]
+primary | periodic_45 | -0.020969 [-0.021599, -0.020338] | -0.049893 [-0.051327, -0.048458]
+primary | periodic_15 | -0.006667 [-0.007378, -0.005957] | -0.014359 [-0.015998, -0.012719]
+primary | periodic_90 | -0.005437 [-0.006008, -0.004866] | -0.016989 [-0.018239, -0.015739]
+holdout | stationary_a | 0.011275 [0.010586, 0.011964] | 0.020169 [0.018825, 0.021514]
+holdout | periodic_45 | -0.021658 [-0.022538, -0.020778] | -0.051546 [-0.053484, -0.049608]
+holdout | periodic_15 | -0.006768 [-0.007695, -0.005841] | -0.014834 [-0.016945, -0.012723]
+holdout | periodic_90 | -0.005357 [-0.006093, -0.004621] | -0.016883 [-0.018490, -0.015276]
+
+Negative differences favor the full engine. It improves over the specified plain EMA in all three switching settings, but degrades performance in stationary A. Removing the self-model lowers mean Brier and BCE in every setting in both seed ranges; for some close comparisons the uncertainty interval still includes zero. Memory removal increases mean loss in these settings, especially 45-step switching, supporting a conditional predictive contribution from that mechanism. The full combination is not the best tested variant.
+
+The scalar-state derangement also lowers average losses relative to the full engine in every tested setting. This does not establish a benefit from properly aligned scalar states. The control copies only valence, arousal, confidence and continuity from another full-engine replica before any current-step outcome is revealed; fast/slow estimates, snapshots and recent history remain with the target. Donor streams have independent observations but the same regime schedule, so the donor can retain relevant regime information. It is not an unconditional independence null or a shuffle of all engine memory.
+
+
+How to interpret the uncertainty
+================================
+Intervals are approximate normal Monte Carlo confidence intervals for a mean over simulated runs: mean ± 1.96×SD/√N. For Phase 2.4, first average the two streams within each seed, then use seeds as the replicate unit. Paired comparisons subtract scores within the same seed; transitions and shared-donor streams are not treated as independent samples. Scenarios share common random numbers and are not independent replications of one another. These intervals are not individual-run prediction intervals, human-population inference, or multiplicity-adjusted confirmatory tests. Raw per-seed and per-stream outputs are supplied for alternative analyses.
+
+
+Scientific scope and remaining work
+===================================
+The terms valence, arousal, self-model and continuity label numerical controller variables. Episodic memory here means stored transition-parameter snapshots. Neither predictive success nor model agreement establishes feelings, qualia, consciousness, or the MQGT-SCF fields Φc and E. This audit contains synthetic binary streams only, no human subjects, sensor measurements or phenomenological ground truth.
+
+A stronger next forecasting study would select baseline learning rates on independent validation data, add discounted-count/sliding-window and change-detection or latent-regime baselines, score recovery around changes, test randomized or asynchronous regime durations and novel regimes, instrument snapshot retrieval, and include separate valence/continuity ablations. These investigations are not represented as completed by this report. The included current-regime oracle already supplies a known-parameter reference with privileged access to the true regime; the frozen Regime-A oracle makes the uploaded baseline explicit. Neither oracle is an information-matched learned model.
+
+What the findings mean and the next falsifiable experiments: INTERPRETATION.txt
+
+
+Reproduce and inspect
+=====================
+python3 -B run_all.py
+
+# Individual corrected scripts:
+python3 -B corrected/phase2_3_protocol_reproduction.py --seeds 200 \
+  --output results/phase23_corrected_benchmark.json
+python3 -B corrected/phase2_4_functional_state_engine.py --seeds 200 \
+  --holdout-seeds 100 --output results/phase24_corrected_benchmark.json
+python3 -B -m unittest discover -s corrected -p "test_*.py" -v
+python3 -B review/math_verify.py
+
+Run from the extracted bundle directory with Python 3.10 or newer. The audit was actually executed on the runtime listed above; identical cross-version floating-point bytes are not promised. The runner needs no network access, reuses the pinned reference snapshot, fails on a nonzero command exit, and verifies original/reference integrity before and after. Output files in results/ are refreshed. Rebuilding this presentation is optional: python3 build_report.py.
+
+Corrected Phase 2.3 script: corrected/phase2_3_protocol_reproduction.py
+
+Corrected Phase 2.4 script: corrected/phase2_4_functional_state_engine.py
+
+One-command reproduction runner: run_all.py
+
+Execution manifest: results/execution_manifest.json
+
+Original Phase 2.3 actual console output: results/original_phase23.txt
+
+Original Phase 2.4 actual console output: results/original_phase24.txt
+
+Corrected test output: results/corrected_tests.txt
+
+Corrected Phase 2.3 data: results/phase23_corrected_benchmark.json
+
+Corrected Phase 2.4 raw results and paired intervals: results/phase24_corrected_benchmark.json
+
+Corrected Phase 2.4 readable output: results/phase24_corrected_console.txt
+
+Independent mathematics JSON: results/math_verification.json
+
+Detailed Phase 2.4 audit: review/phase24_notes.txt
+

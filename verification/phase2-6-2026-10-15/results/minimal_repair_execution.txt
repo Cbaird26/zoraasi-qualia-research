@@ -1,0 +1,18 @@
+test_beta_binomial_evidence_rejects_mismatched_snapshot_on_novel_regime (__main__.TestPhase26NoveltyGate.test_beta_binomial_evidence_rejects_mismatched_snapshot_on_novel_regime)
+Verifies analytically that on Novel Regime D counts (n11=4, n10=0, n01=2, n00=0), ... ok
+test_novelty_gate_improves_novel_blocks_without_losing_familiar_gains (__main__.TestPhase26NoveltyGate.test_novelty_gate_improves_novel_blocks_without_losing_familiar_gains) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.194s
+
+OK
+=== Phase 2.6 Multi-Seed Benchmark (100 Test Seeds, Out-of-Sample Tuned Baselines) ===
+Model Variant            | Overall BS | Overall BCE | Familiar BS | Novel BS   | First-10 BS
+--------------------------------------------------------------------------------------------
+phase26_novelty_gated    | 0.173038   | 0.528512    | 0.163816    | 0.200504   | 0.261008   
+phase25_ungated_memory   | 0.173501   | 0.529818    | 0.164133    | 0.201353   | 0.262434   
+no_memory_adaptive       | 0.172448   | 0.526806    | 0.165542    | 0.198326   | 0.249214   
+val_tuned_ema            | 0.175907   | 0.618402    | 0.168746    | 0.205487   | 0.278052   
+val_tuned_cusum          | 0.173898   | 0.556892    | 0.169023    | 0.196040   | 0.269084   
+
+Running deterministic Phase 2.6 verification tests...

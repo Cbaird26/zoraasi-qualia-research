@@ -1,0 +1,114 @@
+{
+  "status": "All expected checks reproduced; original syntax error preserved and explicitly expected",
+  "python": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.3-arm64-arm-64bit-Mach-O",
+  "integrity_before": {
+    "original_sha256": "f5053feec7c803307cff08a8fec068974a9fb9ac2c82bc1f3112c62fb02e836d",
+    "minimal_repair_sha256": "1ac775bd515ef6bf0dce1b1133e849e37351bbfcb11d7616551d5fdd287199ad",
+    "pinned_reference_sha256": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+    "raw_upload_present_and_verified": false,
+    "corrected_engine_sha256": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+    "harness_sha256": "95f60864a3ba17a54ebf9f148cef55340613cc877473595ac00e0dc71dfae92a"
+  },
+  "integrity_after": {
+    "original_sha256": "f5053feec7c803307cff08a8fec068974a9fb9ac2c82bc1f3112c62fb02e836d",
+    "minimal_repair_sha256": "1ac775bd515ef6bf0dce1b1133e849e37351bbfcb11d7616551d5fdd287199ad",
+    "pinned_reference_sha256": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+    "raw_upload_present_and_verified": false,
+    "corrected_engine_sha256": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+    "harness_sha256": "95f60864a3ba17a54ebf9f148cef55340613cc877473595ac00e0dc71dfae92a"
+  },
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "original/phase2_6_novelty_aware_gate.py"
+      ],
+      "expected_exit_code": 1,
+      "actual_exit_code": 1,
+      "elapsed_seconds": 0.033,
+      "output": "results/original_execution.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "minimal_repair/phase2_6_novelty_aware_gate.py"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.711,
+      "output": "results/minimal_repair_execution.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/audit_minimal_repair.py",
+        "--output",
+        "results/minimal_benchmark.json"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.426,
+      "output": "results/minimal_benchmark_console.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/math_check.py",
+        "--out",
+        "results/math_check.json"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.055,
+      "output": "results/math_check.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "corrected/test_phase26.py"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.071,
+      "output": "results/corrected_tests.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/test_benchmark.py"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.183,
+      "output": "results/harness_tests.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "review/benchmark_phase26.py",
+        "--output",
+        "results/corrected_benchmark.json"
+      ],
+      "expected_exit_code": 0,
+      "actual_exit_code": 0,
+      "elapsed_seconds": 44.907,
+      "output": "results/corrected_benchmark_console.txt"
+    }
+  ],
+  "unittest_methods_by_script": {
+    "minimal_repair/phase2_6_novelty_aware_gate.py": 2,
+    "review/math_check.py": 17,
+    "corrected/test_phase26.py": 20,
+    "review/test_benchmark.py": 5
+  },
+  "unittest_methods_total": 44,
+  "log_paths_normalized": "Absolute bundle prefix replaced by [bundle]; no diagnostic text otherwise changed"
+}

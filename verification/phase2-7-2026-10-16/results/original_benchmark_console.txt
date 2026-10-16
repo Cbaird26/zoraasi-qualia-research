@@ -1,0 +1,83 @@
+Identity counts: {'test': {'identical_overall_brier_within_source_tolerance': 3, 'identical_predictions': 3}, 'followup': {'identical_overall_brier_within_source_tolerance': 5, 'identical_predictions': 5}}
+test
+overall
+phase27_full brier=0.176587 bce=0.537273
+proposal_ungated_mislabeled_phase25 brier=0.175552 bce=0.534839
+no_memory brier=0.178308 bce=0.541218
+fixed_ema_mislabeled_tuned brier=0.182663 bce=0.571617
+fixed_cusum_mislabeled_tuned brier=0.176254 bce=0.549599
+full minus proposal_ungated_mislabeled_phase25 0.001035530089758135 [0.0006146441056259625, 0.0014564160738903074]
+full minus no_memory -0.0017204099062884171 [-0.0020969016009410864, -0.001343918211635748]
+full minus fixed_ema_mislabeled_tuned -0.006076179366073069 [-0.006585372502049285, -0.0055669862300968525]
+full minus fixed_cusum_mislabeled_tuned 0.00033268685511157194 [-0.000437010648610411, 0.001102384358833555]
+novel
+phase27_full brier=0.200831 bce=0.592878
+proposal_ungated_mislabeled_phase25 brier=0.202433 bce=0.596998
+no_memory brier=0.200152 bce=0.590893
+fixed_ema_mislabeled_tuned brier=0.204295 bce=0.617115
+fixed_cusum_mislabeled_tuned brier=0.196431 bce=0.591396
+full minus proposal_ungated_mislabeled_phase25 -0.001602844571585075 [-0.0023353007280206587, -0.0008703884151494913]
+full minus no_memory 0.0006785299523022517 [0.00022665352315923056, 0.0011304063814452728]
+full minus fixed_ema_mislabeled_tuned -0.0034639217661468495 [-0.004096262079399733, -0.002831581452893966]
+full minus fixed_cusum_mislabeled_tuned 0.004399840449810875 [0.003198920351074123, 0.005600760548547626]
+familiar_return
+phase27_full brier=0.171813 bce=0.527431
+proposal_ungated_mislabeled_phase25 brier=0.168223 bce=0.518738
+no_memory brier=0.176210 bce=0.537839
+fixed_ema_mislabeled_tuned brier=0.181896 bce=0.570207
+fixed_cusum_mislabeled_tuned brier=0.173412 bce=0.543163
+full minus proposal_ungated_mislabeled_phase25 0.0035897893754101022 [0.00276559550486579, 0.004413983245954415]
+full minus no_memory -0.0043972578494936194 [-0.005207019134793651, -0.0035874965641935876]
+full minus fixed_ema_mislabeled_tuned -0.010083700001337717 [-0.011126676876162336, -0.009040723126513099]
+full minus fixed_cusum_mislabeled_tuned -0.0015988195273793674 [-0.002860277801770974, -0.00033736125298776116]
+early_10
+phase27_full brier=0.300941 bce=0.837618
+proposal_ungated_mislabeled_phase25 brier=0.298268 bce=0.831259
+no_memory brier=0.304108 bce=0.844750
+fixed_ema_mislabeled_tuned brier=0.317420 bce=0.912538
+fixed_cusum_mislabeled_tuned brier=0.283783 bce=0.822709
+full minus proposal_ungated_mislabeled_phase25 0.0026726545279693883 [0.001271824400538096, 0.00407348465540068]
+full minus no_memory -0.003167681703875761 [-0.004189764139011778, -0.002145599268739744]
+full minus fixed_ema_mislabeled_tuned -0.016479139744580203 [-0.01804697996128475, -0.014911299527875658]
+full minus fixed_cusum_mislabeled_tuned 0.017157786073292918 [0.014715627850636114, 0.019599944295949724]
+followup
+overall
+phase27_full brier=0.176945 bce=0.538611
+proposal_ungated_mislabeled_phase25 brier=0.174739 bce=0.533542
+no_memory brier=0.178767 bce=0.542696
+fixed_ema_mislabeled_tuned brier=0.183252 bce=0.572803
+fixed_cusum_mislabeled_tuned brier=0.175694 bce=0.548267
+full minus proposal_ungated_mislabeled_phase25 0.002205278180851254 [0.0017344239946795038, 0.002676132367023004]
+full minus no_memory -0.0018224608447887152 [-0.002200580090855257, -0.0014443415987221734]
+full minus fixed_ema_mislabeled_tuned -0.00630712309872568 [-0.006818982425194995, -0.005795263772256365]
+full minus fixed_cusum_mislabeled_tuned 0.001250869631136297 [0.0005440596509971827, 0.0019576796112754113]
+novel
+phase27_full brier=0.201674 bce=0.595049
+proposal_ungated_mislabeled_phase25 brier=0.201929 bce=0.596393
+no_memory brier=0.200740 bce=0.592032
+fixed_ema_mislabeled_tuned brier=0.204974 bce=0.618844
+fixed_cusum_mislabeled_tuned brier=0.196298 bce=0.591901
+full minus proposal_ungated_mislabeled_phase25 -0.00025493403468110245 [-0.0008353296815800568, 0.0003254616122178519]
+full minus no_memory 0.0009338440711817156 [0.0005000248271194343, 0.0013676633152439968]
+full minus fixed_ema_mislabeled_tuned -0.003299907416611783 [-0.003851333778621137, -0.0027484810546024294]
+full minus fixed_cusum_mislabeled_tuned 0.0053761037206427505 [0.004059598604548107, 0.006692608836737394]
+familiar_return
+phase27_full brier=0.171760 bce=0.527706
+proposal_ungated_mislabeled_phase25 brier=0.166577 bce=0.515224
+no_memory brier=0.176561 bce=0.539161
+fixed_ema_mislabeled_tuned brier=0.182167 bce=0.571203
+fixed_cusum_mislabeled_tuned brier=0.172994 bce=0.541886
+full minus proposal_ungated_mislabeled_phase25 0.00518338525248869 [0.004199110794704303, 0.006167659710273077]
+full minus no_memory -0.004800919954160896 [-0.005602273055338855, -0.003999566852982937]
+full minus fixed_ema_mislabeled_tuned -0.010407445718493055 [-0.01147926799510429, -0.009335623441881819]
+full minus fixed_cusum_mislabeled_tuned -0.0012334741298494292 [-0.0023321699142735018, -0.0001347783454253564]
+early_10
+phase27_full brier=0.298931 bce=0.832219
+proposal_ungated_mislabeled_phase25 brier=0.294494 bce=0.822452
+no_memory brier=0.302372 bce=0.839573
+fixed_ema_mislabeled_tuned brier=0.315733 bce=0.906694
+fixed_cusum_mislabeled_tuned brier=0.283273 bce=0.821423
+full minus proposal_ungated_mislabeled_phase25 0.004437112180156241 [0.003007563459746781, 0.0058666609005657]
+full minus no_memory -0.003441278340924164 [-0.004500524304910471, -0.0023820323769378573]
+full minus fixed_ema_mislabeled_tuned -0.016802350952393182 [-0.018271890518891658, -0.015332811385894705]
+full minus fixed_cusum_mislabeled_tuned 0.01565800700201441 [0.01339910820514946, 0.017916905798879362]
