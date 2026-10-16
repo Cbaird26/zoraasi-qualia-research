@@ -1,0 +1,111 @@
+test_arousal_rate_numerical_claim_is_conditional_arithmetic_only (__main__.MathematicalTests.test_arousal_rate_numerical_claim_is_conditional_arithmetic_only) ... ok
+test_beta_binomial_count_mass_includes_combinations (__main__.MathematicalTests.test_beta_binomial_count_mass_includes_combinations) ... ok
+test_blending_penalty_includes_cross_term (__main__.MathematicalTests.test_blending_penalty_includes_cross_term) ... ok
+test_brier_is_noise_plus_squared_bias (__main__.MathematicalTests.test_brier_is_noise_plus_squared_bias) ... ok
+test_integral_matches_sequential_predictive_for_every_short_path (__main__.MathematicalTests.test_integral_matches_sequential_predictive_for_every_short_path) ... ok
+test_integrated_markov_paths_normalize_conditional_on_start (__main__.MathematicalTests.test_integrated_markov_paths_normalize_conditional_on_start) ... ok
+test_model_mixture_evidence_is_not_maximum (__main__.MathematicalTests.test_model_mixture_evidence_is_not_maximum) ... ok
+test_realisable_replacement_preserves_likelihood_example (__main__.MathematicalTests.test_realisable_replacement_preserves_likelihood_example) ... ok
+test_row_beta_formula_matches_independent_factorials (__main__.MathematicalTests.test_row_beta_formula_matches_independent_factorials) ... ok
+test_supplied_counts_are_unrealizable (__main__.MathematicalTests.test_supplied_counts_are_unrealizable) ... ok
+test_transition_flow_identity (__main__.MathematicalTests.test_transition_flow_identity) ... ok
+test_weighted_retrieval_is_not_full_replacement (__main__.MathematicalTests.test_weighted_retrieval_is_not_full_replacement) ... ok
+test_cusum_reset_does_not_cap_scored_brier_at_quarter (__main__.ActualGateContractTests.test_cusum_reset_does_not_cap_scored_brier_at_quarter) ... ok
+test_gate_can_accept_feasible_window_generated_by_novel_regime (__main__.ActualGateContractTests.test_gate_can_accept_feasible_window_generated_by_novel_regime) ... ok
+test_repaired_source_evidence_matches_ordered_path_formula (__main__.ActualGateContractTests.test_repaired_source_evidence_matches_ordered_path_formula) ... ok
+test_row_floor_equality_is_accepted_despite_strict_prose (__main__.ActualGateContractTests.test_row_floor_equality_is_accepted_despite_strict_prose) ... ok
+test_single_observed_row_is_skipped_despite_prose (__main__.ActualGateContractTests.test_single_observed_row_is_skipped_despite_prose) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.004s
+
+OK
+{
+  "tests": {
+    "total": 17,
+    "mathematical_methods": 12,
+    "actual_gate_contract_methods": 5,
+    "failures": 0,
+    "errors": 0
+  },
+  "supplied_example": {
+    "counts_n11_n10_n01_n00": [
+      4,
+      0,
+      2,
+      0
+    ],
+    "stale_B_log_likelihood": -7.913517798539075,
+    "snapshot_A_log_likelihood": -2.8794577873819787,
+    "A_minus_B": 5.034060011157097,
+    "uniform_prior_log_evidence": -2.70805020110221,
+    "A_minus_uniform_prior": -0.1714075862797686,
+    "flow_difference_n01_minus_n10": 2,
+    "admissible_endpoint_differences": [
+      -1,
+      0,
+      1
+    ]
+  },
+  "valid_example": {
+    "counts_n11_n10_n01_n00": [
+      3,
+      1,
+      2,
+      0
+    ],
+    "stale_B_log_likelihood": -6.178916743150969,
+    "snapshot_A_log_likelihood": -5.321804822751184,
+    "A_minus_B": 0.8571119203997855,
+    "uniform_prior_log_evidence": -4.0943445622221,
+    "A_minus_uniform_prior": -1.2274602605290834,
+    "witness_path": [
+      0,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "weighted_retrieval": {
+    "q": 0.88,
+    "before": 0.85,
+    "snapshot": 0.28,
+    "snapshot_weight": 0.65,
+    "after": 0.47950000000000004,
+    "squared_bias_after": 0.16040024999999997,
+    "expected_brier_before": 0.10649999999999998,
+    "expected_brier_after": 0.26600025,
+    "brier_risk_increase": 0.15950025
+  },
+  "singleton_row": {
+    "passed": true,
+    "snapshot_log_likelihood": -1.6208808490211912,
+    "row1_log_ratio": 1.3748514245327994,
+    "row0_log_ratio": -0.5108256237659912,
+    "joint_log_ratio": 0.8640258007668082,
+    "advantage_over_stale_B": 8.02723800490599
+  },
+  "novel_window_accepted": {
+    "passed": true,
+    "snapshot_log_likelihood": -0.5002896536343061,
+    "row1_log_ratio": 1.4456204954210072,
+    "row0_log_ratio": -0.0,
+    "joint_log_ratio": 1.4456204954210072,
+    "advantage_over_stale_B": 10.882430255680982,
+    "probability_under_novel_D_given_initial_one": 0.464404086784
+  },
+  "cooldowns": [
+    {
+      "line": 252,
+      "value": 6
+    },
+    {
+      "line": 264,
+      "value": 5
+    }
+  ]
+}
+Wrote results/math_check.json

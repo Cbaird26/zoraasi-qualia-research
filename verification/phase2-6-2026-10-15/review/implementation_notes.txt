@@ -1,0 +1,152 @@
+PHASE 2.6 ENGINE IMPLEMENTATION NOTES
+
+Completed artifact and execution
+corrected/phase2_6_novelty_aware_gate.py is a standalone standard-library ENGINE
+module. Benchmark selection/execution belongs to the separate verification harness.
+The exact upload/extracted script and the minimal syntax repair remain separate.
+No original, frozen prior engine, or remote artifact was changed by this work.
+
+All 20 tests in corrected/test_phase26.py passed; actual output is saved in
+results/corrected_tests.txt. Tests cover causal predictions, reset/validation,
+known evidence values, gate thresholds, a reachable mismatch example, cooldown,
+independent component flags, counters, memory bounds/isolation, and exact legacy
+reproduction. They never require a stochastic model to win a comparison.
+
+Final engine SHA256:
+4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca
+
+Stable API
+NoveltyAwareEngineV1_2(existing supplied constructor arguments,
+    legacy_marginal_order=False, enable_prediction_damping=None,
+    enable_surprise_boost=True)
+initialize(p11, p01, marginal) resets all dynamic fields, history, memory and counts.
+predict_proba(prev) is pure; it does not update data or diagnostic counts.
+step_update(prev, current) returns the pre-observation prediction, then updates.
+_candidate_passes_gate(...) retains the supplied (bool, log_likelihood) interface
+and is pure. Instrumentation runs only in the actual update path.
+
+Constructor default transition/marginal estimates are neutral .5. A caller must
+provide its learned estimates through initialize(), or explicitly label simulator
+truth as an oracle. Initial arousal .18, continuity 1, stable_steps 10, and a seeded
+memory's valence .5/maturity 30 are retained hand-set priors, not learned evidence.
+The parent benchmark supplies independent learned Phase 2.5-format estimates.
+
+Corrections, with numerical proposal otherwise preserved
+1. Comparative marginal scoring regressed to the Phase 2.5 in-sample-reference bug:
+   the supplied code updates the marginal with current y before computing its loss,
+   but scores the agent's pre-y forecast. Corrected code computes both losses from
+   pre-y forecasts, then updates the marginal by .94*old + .06*y. This makes the
+   valence comparison fair; it does not guarantee a target-score improvement.
+2. initialize() resets fast/slow estimates, marginal, arousal, valence, continuity,
+   stability, cooldown, memory, window, legacy counters, added counters, and the
+   last-learning-rate diagnostic. Constructor defaults no longer inject true A.
+3. Disabled memory and max_snapshots=0 allocate no seeded snapshot and cannot
+   consolidate snapshots. They retain other enabled adaptive mechanisms, including
+   OOD fallback/damping, matching the intended memory-only ablation scope.
+4. Public inputs reject nonfinite/out-of-range probabilities, invalid observations,
+   malformed metric vectors, invalid counts/capacities/flags, nonfinite thresholds
+   and invalid epsilon. Invalid initialize/step calls fail before state mutation.
+   window_size must be positive; values below 6 deliberately never reach the
+   supplied retrieval/fallback minimum. No unrequested threshold redesign occurs.
+5. Diagnostic counters expose actual gate operations. Existing familiar_retrievals,
+   novelty_rejections, and ood_fallbacks attributes remain for compatibility.
+6. The OOD flag previously enabled both fallback AND prediction damping. A separate
+   enable_prediction_damping option defaults to the constructor's OOD flag, so old
+   configurations retain exactly the supplied behavior while new ablations can
+   isolate the two mechanisms. Changing the flag later does not relink defaults.
+7. enable_surprise_boost=False removes only the instantaneous .22*squared_error
+   term from the learning-rate formula. Default True reproduces the proposal.
+8. legacy_marginal_order=True recreates the marginal-order bug for forensic replay.
+   With truth initialization (.92,.28,7/9), tests verify EXACT per-step predictions
+   and numerical state fields against the minimally repaired source over its
+   405-transition mixed stream, in full, gate-disabled, fallback-disabled and
+   memory-disabled configurations. This is not an endorsement of the bug.
+
+Preserved rules / source-prose discrepancies
+- Row consistency is checked only with at least TWO observations from that row,
+  whereas prose says every observed row. The code rejects when row log factor is
+  strictly BELOW -.25; equality is accepted, unlike a strict prose greater-than.
+- Retrieval sets cooldown=6, not the prose's 8. Because countdown happens before
+  eligibility checking, the next FIVE updates are blocked and the sixth may
+  retrieve. OOD fallback sets cooldown=5, similarly blocking four subsequent
+  updates. These exact semantics have deterministic regression tests.
+- Window capacity defaults to 8, but evaluation begins at 6 observations. Windows
+  can straddle a regime change; eligibility does not certify a clean new regime.
+- Relative margin .35 and global novelty margin .15 remain strict > gates.
+- Retrieval requires arousal>.38, continuity<.72 and cooldown zero; its blend is
+  .75*snapshot + .25*current fast estimate. Fallback requires no accepted memory
+  and novelty-minus-fast log likelihood>.45, blending .65*local posterior +.35*fast.
+- Plasticity remains clip(.025+.24*arousal^1.3+.22*squared_error,.02,.42).
+  Arousal remains .65*old+.35*(.80*absolute_error+.20*entropy).
+- Damping uses only previous-window data and previous continuity at prediction
+  time: blend=clip((.62-continuity)*.85,0,.35), local Laplace posterior, window>=2.
+- Continuity uses the post-fast-update vector and prior slow trace, exp(-.90*error),
+  then slow trace uses .88/.12. Retrieval/fallback can subsequently alter fast
+  estimates without recomputing continuity. The scalar is not a validated detector.
+- Consolidation needs stability>=14 and valence>.10; stable steps increase only
+  with continuity>.78 and error<.35, otherwise decrease toward zero. Nearby memory
+  distance threshold .14 and .6/.4 merge weights are retained. No eviction occurs.
+  Snapshot maturity_steps is metadata; it is not consulted by the retrieval gate.
+- The supplied phase25_ungated_memory arm is another Phase 2.6 configuration with
+  two mechanisms disabled, NOT the actual Phase 2.5 algorithm. Parent verification
+  imports the pinned actual Phase 2.5 source and separates Phase 2.6 components.
+- Original validation/test seeds are disjoint, but the prose's seed_base+10000
+  description does not match default numeric offsets. Its CUSUM grid also excludes
+  the previously selected rate .20 / threshold1.0 / reference .38. Parent harness
+  preserves those prior choices and performs a separate declared wider search.
+
+Diagnostic counter definitions
+steps: completed valid updates.
+retrieval_eligible: time steps meeting window/cooldown/arousal/continuity conditions,
+  including steps where memory is disabled or empty.
+candidate_evaluations: number of stored snapshots examined at eligible steps.
+raw_advantage_candidates: snapshots beating fast likelihood by adv_margin.
+rejected_advantage, rejected_global_novelty, rejected_row1, rejected_row0: FIRST
+  failed condition for a candidate, in source evaluation order; a candidate is
+  never double-counted across these rejection categories.
+gate_passed_candidates: snapshots passing all enabled conditions.
+accepted_retrievals: one chosen accepted snapshot actually blended into parameters.
+novelty_rejection_steps: no snapshot accepted despite at least one raw advantage,
+  with novelty gate enabled; preserves the supplied step-level counter meaning.
+ood_checks / ood_fallbacks: enabled fallback comparisons / actual fallback blends.
+damping_activations: valid update steps whose emitted prediction used the damping
+  condition. Repeated external predict_proba calls do not inflate this counter.
+cooldown_blocked_steps: updates remaining positive after countdown, not a count of
+  suppressed retrievals that would definitely have occurred.
+consolidation_calls, memory_stores, memory_merges, capacity_rejections: actual
+  consolidation operations; initial seeded memory is not counted as an online store.
+The identity sum(rejection categories)+gate_passed_candidates=candidate_evaluations
+is tested. No counter labels a retrieval's ground-truth regime identity as verified.
+
+Mathematical and experimental limits
+The Beta integral implemented is correct for fixed observed transition-path
+likelihood with independent Beta(1,1) priors on the two rows, conditioned on the
+initial state. It is not an unordered-count probability without a multiplicity
+factor. Independent Bernoulli-row counts use binomial coefficients; aggregated
+Markov counts require valid-path multiplicity, not generally a product of row
+binomial coefficients. Shared multiplicity cancels in the relevant ratios. The
+numerical formula was NOT changed. Point probabilities at 0/1 are clipped for
+finite logs, so 'exact' endpoint likelihood claims require qualification.
+
+The supplied illustrative counts (4,0,2,0) are impossible in one contiguous binary
+transition window: N01-N10=2 violates X_end-X_start in {-1,0,1}. Their likelihood
+arithmetic is still meaningful algebra on hypothetical counts. The local tests
+also verify rejection on a reachable 8-transition path with counts (5,1,2,0).
+
+Calling a passing memory a 'verified familiar regime' or a fallback 'novelty
+recognized' overstates these thresholds. Snapshot estimates are data-adaptive,
+fast estimates have just fitted current data, a maximum is selected across stored
+snapshots, and windows overlap. The likelihood ratios do not by themselves yield
+calibrated posterior regime identity, a false-positive guarantee, or a validated
+novelty detector. Local posterior adaptation can help or harm finite predictions.
+
+Current surprise is observed only after the current prediction. It can change
+subsequent predictions, not retroactively fix the first unannounced shift outcome.
+A first-10-step improvement, absence of novel-regime harm, and retained familiar
+benefit must each be measured against appropriate controls; none is a unit-test
+invariant. The supplied repaired tests omit full-versus-no-memory novel protection
+and do not compare their adaptation claims against the actual tuned baselines.
+Parent benchmarking/report supplies those missing empirical comparisons.
+
+No favorable metric, Bayesian-looking expression, or named scalar state is evidence
+of subjective experience, phenomenal consciousness, or validation of MQGT-SCF.

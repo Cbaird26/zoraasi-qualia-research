@@ -1,0 +1,10 @@
+test_actual_phase25_matches_pinned_suite_on_all_prior_scenarios (__main__.HarnessTests.test_actual_phase25_matches_pinned_suite_on_all_prior_scenarios) ... ok
+test_all_learners_receive_same_initial_estimates (__main__.HarnessTests.test_all_learners_receive_same_initial_estimates) ... ok
+test_grids_include_source_and_prior_candidates (__main__.HarnessTests.test_grids_include_source_and_prior_candidates) ... ok
+test_scope_masks_and_known_new_regime (__main__.HarnessTests.test_scope_masks_and_known_new_regime) ... ok
+test_training_validation_primary_followup_rng_independence (__main__.HarnessTests.test_training_validation_primary_followup_rng_independence) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.123s
+
+OK

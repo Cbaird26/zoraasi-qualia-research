@@ -1,0 +1,188 @@
+
+Phase 2.6 verification: faster switching, unresolved novelty harm
+=================================================================
+
+Executed October 15, 2026. This audit preserves the supplied script, isolates its syntax repair, corrects software defects in a separate engine, and tests the proposed novelty-aware retrieval gate against actual pinned Phase 2.5 code. Lower Brier and binary cross-entropy (BCE, natural-log nats) are better. All earlier public artifacts remain unchanged.
+
+Conclusion: the proposed package improves the first ten predictions after switches against the specified validation-tuned baselines, and retains a familiar-return advantage over its own no-memory arm. It does not eliminate harmful memory reuse on the novel blocks. The Bayesian gate itself has little measured incremental effect at these settings. Faster plasticity and prediction damping are more strongly supported components. Phase 2.6 is not uniformly better than Phase 2.5.
+
+
+1. Execution, provenance, and reproducibility
+=============================================
+
+The byte-exact original fails to parse: “def _ candidate_passes_gate” contains an invalid space. A separate minimal-repair copy deletes that single space and changes nothing else. Its two supplied tests pass. They do not test novel-block noninferiority to the no-memory arm, and their purported Phase 2.5 comparator is another Phase 2.6 configuration. Both distinctions matter.
+
+Actual checks: 44 passing unittest methods—2 minimally repaired submission tests, 20 corrected-engine invariants, 17 independent mathematical/source-contract checks, and 5 benchmark-integrity tests. The original SyntaxError is an expected failure recorded separately, not a passing original program. Four legacy configurations match repaired-source predictions and state on the 405-transition seed 20260921 trace; pinned Phase 2.5 score equality is checked at seed 51000000 across all six earlier scenarios. The 17 mathematics checks comprise 12 mathematical methods and 5 actual-code contract checks.
+
+Reference source: commit 7be77aaf65a14bfe462139c4455d4471129faf8e, verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py. Original, minimal-repair, and pinned-reference checksums are verified before and after execution. The corrected-engine and harness hashes are frozen before validation and rechecked after testing. Pushing a commit to PR #1 does not mean it has been merged.
+
+The minimally repaired proposal is evaluated on 100 default primary seeds (20260921–20261020) and 100 follow-up seeds (20261921–20262020), retaining its true-parameter initialization and narrow baseline grids. The corrected matched-data audit uses fresh primary seeds 71000000–71000099, follow-up seeds 81000000–81000099, and validation seeds 91000000–91000029. Across seven scenarios this makes 1,400 scenario/seed evaluations, with 200 unique evaluation seeds; scenarios sharing a seed are not counted as independent replicates.
+
+
+2. What the minimally repaired submission actually produces
+===========================================================
+
+Supplied algorithm, syntax repaired | Overall Brier | Overall BCE | Novel Brier | Familiar Brier | Early-10 Brier | Early-10 BCE
+phase26_full | 0.173038 | 0.528512 | 0.200504 | 0.163816 | 0.261008 | 0.742991
+phase26_gate_and_fallback_off_mislabeled_phase25 | 0.173501 | 0.529818 | 0.201353 | 0.164133 | 0.262434 | 0.747051
+no_memory | 0.172448 | 0.526806 | 0.198326 | 0.165542 | 0.249214 | 0.709879
+validation_ema | 0.175907 | 0.618402 | 0.205487 | 0.168746 | 0.278052 | 0.912623
+validation_cusum | 0.173898 | 0.556892 | 0.196040 | 0.169023 | 0.269084 | 0.806060
+
+These primary means exactly reproduce all 30 aggregate values returned by the supplied benchmark. The audit additionally retains per-seed results and BCE for the familiar/novel subsets. The source selects EMA rate .28 and CUSUM rate .18, drift .36, threshold 1.25 on its validation bank. Both selected CUSUM rate and threshold lie at boundaries of that narrow search. Separate validation prevents selecting on test outcomes, but does not make a restricted search exhaustive.
+
+Novel protection already fails in the minimally repaired code: full-minus-no-memory Brier is +0.002178 on the primary seeds and +0.001816 on follow-up, with both paired intervals entirely above zero. Its two tests can pass because they compare novelty loss to a bundled gate-and-fallback-off arm, not to no memory. The source’s arm called phase25_ungated_memory is Phase 2.6 with two features disabled; it retains Phase 2.6 update rates, window, memory rules, cooldown and other changes. It is not an implementation of the earlier engine.
+
+
+3. Mathematics: correct evidence, unsupported certainty
+=======================================================
+
+The implemented integral is correct for an ordered Markov path conditional on its starting state, under independent Beta(1,1) priors for p11 and p01: log evidence = log B(N11+1,N10+1) + log B(N01+1,N00+1). Tests verify exact factorial values, equality with sequential Beta predictive probabilities, and normalization over feasible paths. It is not the raw Beta-binomial count probability mass. Do not add combinatorial factors only to the novelty denominator. Valid count-event multiplicities must be included consistently and cancel in the corresponding likelihood ratio; whole Markov paths do not generally have multiplicity equal to the product of row binomial coefficients.
+
+The proposed six-transition example (N11,N10,N01,N00)=(4,0,2,0) is impossible for one contiguous binary path: N01−N10 equals the end state minus the start state, and therefore must be −1, 0, or 1. A realizable replacement is 0,1,0,1,1,1,1, giving counts (3,1,2,0). It still illustrates a snapshot that beats a stale point estimate but loses to the integrated prior. This is a likelihood illustration, not a replay proving the old full engine would retrieve: fast adaptation and the arousal/continuity eligibility conditions also matter.
+
+Valid replacement: quantity | Value
+Stale B log likelihood | −6.178916743151
+Snapshot A log likelihood | −5.321804822751
+A minus B | +0.857111920400
+Uniform-prior integrated log evidence | −4.094344562222
+A minus evidence | −1.227460260529
+
+The stated retrieval penalty also treats blending as complete replacement. Phase 2.5 uses 65% snapshot plus 35% current estimate. With current p01=.85, snapshot .28, and true probability .88, the updated estimate is .4795; expected Brier increases by .15950025, not .36. That is conditional on visiting previous state 0, before subsequent adaptation. Likewise, (.92−.15)^2=.5929 is squared bias, while expected Brier is .7204 and realized losses are .8464 or .0064. A forecast exactly equal to .5 has Brier .25, but the supplied CUSUM emits its forecast before resetting and immediately updates afterward; there is no system-wide .25 cap.
+
+The earlier Phase 2.5 validation-selected EMA rate was .32, not the proposed .14–.18 range. The claimed arousal plateau near .16 was not measured in the proposal. Its rolling buffer is not cleared on surprise and therefore is not guaranteed to contain only post-switch observations.
+
+Passing this gate does not verify familiarity. A feasible six-transition run of ones passes snapshot A’s gate, yet has probability .88^6 = .464404086784 under novel D conditional on initial state 1. Unobserved or weakly observed transition rows remain ambiguous. The code checks rows only when their count is at least 2, whereas the prose says every observed row; it accepts equality at the row floor and uses retrieval cooldown 6, not the prose’s 8. A singleton-row counterexample passes the joint gate despite violating the stated per-row floor.
+
+The prior, independent-row assumption, constant-regime assumption within the window, thresholds and window length are modeling choices. Fast parameters are adapted using data from the scored window, stored snapshots may overlap it, and the best snapshot is selected among candidates. The resulting adaptive selection rule is not a calibrated posterior probability of novelty or familiarity. A Bayes-style score can be a useful predictive heuristic without supplying that stronger interpretation.
+
+
+4. Corrections and controlled comparisons
+=========================================
+
+The corrected engine preserves the proposed numerical defaults, including the code’s row minimum 2 and cooldown 6. It repairs the repeated valence-ordering bug by scoring the online marginal before updating it with the current outcome. It also validates inputs, resets all state, uses learned initialization, and honors disabled or zero-capacity memory. A diagnostic legacy_marginal_order flag isolates the original biased comparison. Predictions remain causal: current outcomes change subsequent forecasts, not the current scored forecast.
+
+Nine Phase 2.6 arms separate full behavior, gate-off, fallback-and-damping-off, both gate/fallback-off, no-memory, no-memory/no-fallback, surprise-boost-off, prediction-damping-off, and legacy marginal ordering. Additional arms include actual Phase 2.5 with and without memory, newly tuned EMA/CUSUM, the earlier fixed .32 EMA and .20/1.0/.38 CUSUM, a frozen learned model, and a privileged true-regime oracle. The fallback-off switch disables both the local reset and forecast damping; damping-off independently removes only damping. No pure reset-only intervention is claimed.
+
+All deployable arms receive the same learned estimates from 24 independent stationary-A trials of 30 states each, using Beta(1,1) smoothing, and the same target observations. Training and observation RNG domains are distinct. The supplied nine-block schedule is A/B/A/B/C/D/E/B/A, with E=(.08,.12). The six prior scenarios are unchanged. Novel masks cover C/D/E first-visit blocks; familiar-return masks cover repeated blocks. An initially trained A and a first test visit to B are not equivalent forms of familiarity.
+
+Baseline selection uses only mean validation Brier on the nine-block mixed schedule: 50 EMA candidates and 384 CUSUM candidates. This includes every supplied grid point and the earlier selected CUSUM setting. Selected EMA rate is 0.27; selected CUSUM rate=0.18, drift=0.4, threshold=1.0. The original unclipped EMA/CUSUM families are retained with learned initial estimates. The saved manifest includes all candidate results and is written before evaluation. These choices are applied unchanged to all seven scenarios. Engine thresholds were not tuned after these results.
+
+
+5. Corrected verification table: supplied nine-block task
+=========================================================
+
+
+Primary 100 seeds
+=================
+
+Arm | Overall Brier | Overall BCE | Novel Brier | Familiar Brier | Early-10 Brier | Early-10 BCE
+phase26_full | 0.172764 | 0.528084 | 0.197432 | 0.164134 | 0.255183 | 0.730096
+actual_phase25 | 0.173834 | 0.532001 | 0.202113 | 0.163259 | 0.282112 | 0.797660
+phase26_no_memory | 0.172770 | 0.527827 | 0.195023 | 0.166998 | 0.244771 | 0.700256
+validation_ema | 0.176292 | 0.611612 | 0.202090 | 0.170528 | 0.273391 | 0.895030
+validation_cusum | 0.172583 | 0.554220 | 0.192255 | 0.169018 | 0.266664 | 0.805856
+
+
+Follow-up 100 seeds
+===================
+
+Arm | Overall Brier | Overall BCE | Novel Brier | Familiar Brier | Early-10 Brier | Early-10 BCE
+phase26_full | 0.169523 | 0.521006 | 0.193215 | 0.159395 | 0.259760 | 0.741329
+actual_phase25 | 0.169633 | 0.522406 | 0.196601 | 0.157332 | 0.286035 | 0.807295
+phase26_no_memory | 0.169416 | 0.520404 | 0.191827 | 0.161101 | 0.248853 | 0.709968
+validation_ema | 0.172356 | 0.605082 | 0.198349 | 0.163630 | 0.278937 | 0.913310
+validation_cusum | 0.168690 | 0.546995 | 0.187970 | 0.162615 | 0.271428 | 0.821096
+
+The overall primary difference versus actual Phase 2.5 favors Phase 2.6, but that difference is inconclusive on follow-up seeds. The full engine’s overall Brier advantage over its own no-memory arm is also inconclusive. Newly tuned CUSUM has lower mean overall Brier in both cohorts, while Phase 2.6 has lower BCE. This metric distinction should not be hidden by a single winner label.
+
+
+6. The three requested falsification criteria
+=============================================
+
+Scope | Comparator | Primary ΔBrier [95% MC interval] | Follow-up ΔBrier [95% MC interval]
+novel | phase26_no_memory | +0.002409 [+0.001344, +0.003473] | +0.001388 [+0.000429, +0.002347]
+novel | actual_phase25 | -0.004681 [-0.006218, -0.003143] | -0.003386 [-0.004825, -0.001946]
+familiar_return | phase26_no_memory | -0.002865 [-0.003782, -0.001947] | -0.001706 [-0.002517, -0.000895]
+familiar_return | validation_ema | -0.006395 [-0.007526, -0.005263] | -0.004235 [-0.005312, -0.003157]
+familiar_return | validation_cusum | -0.004884 [-0.006196, -0.003572] | -0.003220 [-0.004504, -0.001935]
+familiar_return | actual_phase25 | +0.000875 [-0.000521, +0.002271] | +0.002063 [+0.000872, +0.003254]
+early_10 | validation_ema | -0.018208 [-0.020657, -0.015759] | -0.019177 [-0.021600, -0.016755]
+early_10 | validation_cusum | -0.011481 [-0.013932, -0.009030] | -0.011668 [-0.013757, -0.009580]
+early_10 | prior_fixed_ema | -0.006521 [-0.009227, -0.003815] | -0.007761 [-0.010270, -0.005252]
+early_10 | prior_fixed_cusum | -0.002783 [-0.005291, -0.000276] | -0.002565 [-0.004901, -0.000228]
+early_10 | phase26_no_memory | +0.010412 [+0.008675, +0.012149] | +0.010907 [+0.009328, +0.012486]
+
+Positive differences mean the full engine is worse. Criterion 1—novel-block protection relative to no memory—fails in both cohorts, for Brier and BCE. Phase 2.6 reduces novel loss versus actual Phase 2.5, but does not eliminate the cost of memory. Reduction is not elimination.
+
+Criterion 2—familiar-return advantage over the proposed no-memory arm and tuned EMA/CUSUM—holds on this task in both cohorts for both scores. That does not mean all prior familiarity gains are preserved: actual Phase 2.5 has lower familiar-return mean Brier, with a clearly positive Phase2.6-minus-Phase2.5 interval on follow-up.
+
+Criterion 3—the early-switch gap against the tuned baselines—closes in this benchmark for both Brier and BCE, including comparison with the earlier fixed selected EMA/CUSUM. However, the Phase 2.6 no-memory arm is better still in that early window. The full memory package is not the fastest-adapting arm.
+
+
+7. Which component accounts for improvement?
+============================================
+
+Scope | Component removed | Primary ΔBrier [95% MC interval] | Follow-up ΔBrier [95% MC interval]
+overall | phase26_gate_off | -0.000029 [-0.000064, +0.000006] | -0.000002 [-0.000037, +0.000032]
+overall | phase26_fallback_off | -0.000591 [-0.000748, -0.000434] | -0.000429 [-0.000577, -0.000281]
+overall | phase26_no_prediction_damping | -0.000537 [-0.000679, -0.000395] | -0.000434 [-0.000558, -0.000309]
+overall | phase26_no_surprise_boost | -0.001867 [-0.002617, -0.001118] | -0.001858 [-0.002466, -0.001249]
+novel | phase26_gate_off | -0.000072 [-0.000174, +0.000030] | +0.000013 [-0.000013, +0.000039]
+novel | phase26_fallback_off | -0.001066 [-0.001435, -0.000698] | -0.000904 [-0.001238, -0.000571]
+novel | phase26_no_prediction_damping | -0.000932 [-0.001178, -0.000685] | -0.000717 [-0.000993, -0.000440]
+novel | phase26_no_surprise_boost | -0.000539 [-0.001911, +0.000833] | -0.000508 [-0.001795, +0.000780]
+early_10 | phase26_gate_off | -0.000083 [-0.000202, +0.000037] | -0.000073 [-0.000219, +0.000074]
+early_10 | phase26_fallback_off | -0.001334 [-0.001759, -0.000909] | -0.001246 [-0.001753, -0.000738]
+early_10 | phase26_no_prediction_damping | -0.001103 [-0.001475, -0.000730] | -0.001071 [-0.001539, -0.000603]
+early_10 | phase26_no_surprise_boost | -0.034379 [-0.036875, -0.031883] | -0.033699 [-0.035787, -0.031611]
+
+Cohort | Exactly same overall scores with gate off | All-memory rejection steps, total | Accepted retrievals per run | Local OOD resets per run
+test | 97/100 | 3 | 13.110000 | 0.130000
+followup | 94/100 | 7 | 13.210000 | 0.120000
+
+Gate-off scores are identical on 97/100 primary and 94/100 follow-up runs. The gate blocks every otherwise advantageous candidate on only 3 primary and 7 follow-up steps in total across those 100-run cohorts. Individual candidate rejections are a different counter and can occur while another candidate is accepted. The measured full-versus-gate-off difference intervals include zero across the displayed scopes. Thus the data do not establish useful incremental novelty protection from this gate at these settings.
+
+The instantaneous squared-error boost has a much larger early-window effect: removing it raises Brier by about .034 on the mixed task in both cohorts. Removing prediction damping also worsens early and novel-block scores, though by a smaller amount. Local OOD resets occur only .13 and .12 times per 405-transition run on average. These controlled ablations support the contribution of update responsiveness and damping in this configuration; they do not prove a unique mechanism or assign additive percentages to interacting components.
+
+Retrieval still occurs during first-visit novel blocks. Such an event is not automatically a false identification: a snapshot may have been stored earlier within that same block. The recorded block-level events permit analysis without equating a code counter named familiar_retrievals with ground-truth recognition.
+
+
+8. Cross-scenario costs and limits
+==================================
+
+Scenario | Primary P2.6 | Primary P2.5 | Primary frozen | Follow-up P2.6 | Follow-up P2.5 | Follow-up frozen
+mixed_9 | 0.172764 | 0.173834 | 0.310390 | 0.169523 | 0.169633 | 0.308897
+recurrent_45 | 0.161233 | 0.159677 | 0.346089 | 0.160760 | 0.158994 | 0.346140
+familiar_novel | 0.173633 | 0.173311 | 0.322234 | 0.171161 | 0.170967 | 0.322166
+unseen_random | 0.208542 | 0.211904 | 0.320890 | 0.204428 | 0.207820 | 0.316238
+stationary_a | 0.112760 | 0.106792 | 0.100930 | 0.112809 | 0.106491 | 0.100756
+recurrent_q0_zero | 0.161806 | 0.160482 | 0.346809 | 0.161524 | 0.160070 | 0.346971
+recurrent_q0_half | 0.161516 | 0.160003 | 0.346354 | 0.161136 | 0.159397 | 0.346556
+
+On recurring A/B regimes, Phase 2.6 is worse overall by Brier than actual Phase 2.5 despite better early-switch performance. It is also worse on stationary A, where the frozen learned model remains strongest among these three. It improves the tested unseen-random scenario. This pattern supports a responsiveness-versus-stability tradeoff, not a general upgrade. Validation baselines were selected on one mixed task and are not individually optimized for every scenario.
+
+Intervals are pointwise normal Monte Carlo intervals across independent seed replicates, calculated on paired differences. They do not account for multiplicity, prior architectural exploration, or model-selection uncertainty. No equivalence/noninferiority margin was prespecified, so an interval spanning zero does not establish matching performance. Follow-up seeds are fresh but use the same generators, not external replication or preregistration. Fixed novel matrices, fixed block order, one training regime, and endogenously accumulated snapshots limit generality.
+
+The proposal’s donor discussion is directionally useful but remains too strong about exact timing pulses. Shared schedules can confound interpretation without leaking the current target into a prior forecast; donor errors and scalar responses are stochastic. Independent donor schedules can change regime exposure as well as timing. No new donor-transfer experiment was implemented in this focused Phase 2.6 audit, and no isolation claim beyond the prior measured controls is made.
+
+
+9. What it means and the next justified experiment
+==================================================
+
+The work now separates two research claims that the supplied proposal bundled together: faster response is supported on the tested switching task, while novelty-safe retrieval is not. The next experiment should target the latter directly. Develop and freeze a rule on a separate development bank, then test whether it reduces novel-block excess loss without losing familiar-return gains. Include no-memory and gate-off controls, log support for each transition row, and distinguish old-regime snapshots from snapshots formed inside a newly encountered block.
+
+The gate should be evaluated as a calibrated decision rule under explicit prior and observation assumptions, with counterbalanced regime orders, more transition matrices and variable dwell times. A useful test should show that the gate actually changes enough retrieval decisions to explain improved prediction. These are proposed next steps, not claimed results or silent modifications to this audited design.
+
+Arousal, valence, continuity and novelty are names for computable internal variables and decisions here. Predictive improvements, Beta evidence, and retrieval counters do not establish phenomenological experience or empirical support for MQGT-SCF. The concrete achievement is a reproducible statistical learning experiment whose failure modes remain visible.
+
+
+10. Files and rerun instructions
+================================
+
+Use Python 3.10+ standard library: python3 -B run_all.py. No external dependencies, network, GPU or API credentials are required. The runner expects the original syntax failure and requires every repaired/corrected execution stage to succeed. Actual exit codes, elapsed times, Python version and integrity checks are in results/reproducibility_run.json.
+
+The complete evidence includes original and minimally repaired source; corrected/phase2_6_novelty_aware_gate.py; corrected/test_phase26.py; review/benchmark_phase26.py; review/test_benchmark.py; review/math_check.py and notes; source diffs; validation_manifest.json; minimal_benchmark.json; corrected_benchmark.json; and console outputs. The large corrected result includes all per-seed/scope/block scores and retrieval diagnostics. The public copy stores it losslessly as corrected_benchmark.json.gz, which this renderer reads directly. SHA256SUMS.txt inventories delivered files. The raw pasted conversation stays out of the public repository.
+
+Pinned source: https://github.com/Cbaird26/zoraasi-qualia-research/blob/7be77aaf65a14bfe462139c4455d4471129faf8e/verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py
+Review: https://github.com/Cbaird26/zoraasi-qualia-research/pull/1

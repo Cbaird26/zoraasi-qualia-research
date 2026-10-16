@@ -1,0 +1,105 @@
+{
+  "cooldown_constant_assignments": [
+    {
+      "line": 252,
+      "value": 6
+    },
+    {
+      "line": 264,
+      "value": 5
+    }
+  ],
+  "interpretation": "The numeric gate is a predictive selection heuristic. Its acceptance is not proof of familiarity, novelty rejection is not calibrated OOD detection, and no phenomenological conclusion follows.",
+  "learning_rate_claim": {
+    "actual_phase25_validation_selected_ema_rate": 0.32,
+    "note": "The assumed arousal=.16 plateau floor was not established by the proposal.",
+    "rate_at_assumed_arousal_0_16": 0.04459902840793972
+  },
+  "likelihood_interpretation": "Exact ordered Markov-path evidence conditional on start under independent Beta(1,1) row priors; not a raw count PMF.",
+  "novel_window_gate_acceptance": {
+    "advantage_over_stale_B": 10.882430255680982,
+    "joint_log_ratio": 1.4456204954210072,
+    "passed": true,
+    "probability_under_novel_D_given_initial_one": 0.464404086784,
+    "row0_log_ratio": -0.0,
+    "row1_log_ratio": 1.4456204954210072,
+    "snapshot_log_likelihood": -0.5002896536343061
+  },
+  "realisable_replacement_example": {
+    "A_minus_B": 0.8571119203997855,
+    "A_minus_uniform_prior": -1.2274602605290834,
+    "counts_n11_n10_n01_n00": [
+      3,
+      1,
+      2,
+      0
+    ],
+    "snapshot_A_log_likelihood": -5.321804822751184,
+    "stale_B_log_likelihood": -6.178916743150969,
+    "uniform_prior_log_evidence": -4.0943445622221,
+    "witness_path": [
+      0,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "singleton_row_counterexample": {
+    "advantage_over_stale_B": 8.02723800490599,
+    "joint_log_ratio": 0.8640258007668082,
+    "passed": true,
+    "row0_log_ratio": -0.5108256237659912,
+    "row1_log_ratio": 1.3748514245327994,
+    "snapshot_log_likelihood": -1.6208808490211912
+  },
+  "source_under_contract_test": "minimal_repair/phase2_6_novelty_aware_gate.py",
+  "stale_prediction": {
+    "expected_brier": 0.7204,
+    "p": 0.92,
+    "q": 0.15,
+    "realized_brier_y0": 0.8464,
+    "realized_brier_y1": 0.0064,
+    "squared_bias": 0.5929
+  },
+  "status": "executed",
+  "supplied_unrealisable_example": {
+    "A_minus_B": 5.034060011157097,
+    "A_minus_uniform_prior": -0.1714075862797686,
+    "admissible_endpoint_differences": [
+      -1,
+      0,
+      1
+    ],
+    "counts_n11_n10_n01_n00": [
+      4,
+      0,
+      2,
+      0
+    ],
+    "flow_difference_n01_minus_n10": 2,
+    "snapshot_A_log_likelihood": -2.8794577873819787,
+    "stale_B_log_likelihood": -7.913517798539075,
+    "uniform_prior_log_evidence": -2.70805020110221
+  },
+  "tests": {
+    "actual_gate_contract_methods": 5,
+    "errors": 0,
+    "failures": 0,
+    "mathematical_methods": 12,
+    "total": 17
+  },
+  "weighted_phase25_retrieval": {
+    "after": 0.47950000000000004,
+    "before": 0.85,
+    "brier_risk_increase": 0.15950025,
+    "expected_brier_after": 0.26600025,
+    "expected_brier_before": 0.10649999999999998,
+    "q": 0.88,
+    "snapshot": 0.28,
+    "snapshot_weight": 0.65,
+    "squared_bias_after": 0.16040024999999997
+  }
+}
