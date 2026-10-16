@@ -1,0 +1,484 @@
+Phase 2.8 executed verification — 16 October 2026
+=================================================
+
+Audit of the supplied row-factored retrieval and surprise proposal. The original Python script is preserved separately from corrected code. All new public material is additive; the baseline and earlier audits remain frozen. Results concern functional prediction, not subjective experience or an independent physical test of MQGT-SCF.
+
+
+Answer to the proposed audit questions
+--------------------------------------
+Phase 2.8 produces a real but uneven improvement over no-memory: pooled novel Brier and BCE are lower in both fresh seed banks, driven chiefly by regime E. It does not eliminate white-noise retrieval or harm: C losses are higher than no-memory in both banks, and D losses are higher on follow-up seeds (primary D is inconclusive). The row-specific write property holds exactly, while the broad guarantees about epistemic surprise, clean regime windows and necessary-and-sufficient non-rollback do not.
+
+On mixed_9, the complete policy improves overall Brier and BCE over the Phase 2.7 proposal but remains worse than actual Phase 2.5 and Phase 2.6 on both overall scores. Selected CUSUM has lower overall Brier, while Phase 2.8 has lower overall BCE. It retains familiar-return gains over no-memory but loses recall performance relative to actual Phase 2.5.
+
+Primary full minus no-memory | Brier difference [95% CI]        | BCE difference [95% CI]
+-----------------------------+----------------------------------+---------------------------------
+overall                      | -0.003280 [-0.003577, -0.002983] | -0.007214 [-0.007891, -0.006537]
+novel                        | -0.000945 [-0.001384, -0.000505] | -0.001593 [-0.002586, -0.000600]
+white_noise                  | +0.002647 [+0.001743, +0.003550] | +0.007165 [+0.005159, +0.009171]
+novel_d                      | +0.000172 [-0.000645, +0.000989] | +0.000418 [-0.001467, +0.002303]
+novel_e                      | -0.005653 [-0.006827, -0.004479] | -0.012363 [-0.015030, -0.009696]
+familiar_return              | -0.006811 [-0.007474, -0.006147] | -0.015325 [-0.016879, -0.013770]
+early_10                     | -0.010032 [-0.011374, -0.008689] | -0.021645 [-0.024742, -0.018548]
+
+Primary: pooled novel Brier is lower relative to no-memory under the pointwise interval; white-noise Brier is higher. The full policy makes 1.13 retrievals per 45-step noise block on average, so retrieval is not eliminated there.
+
+Follow-up full minus no-memory | Brier difference [95% CI]        | BCE difference [95% CI]
+-------------------------------+----------------------------------+---------------------------------
+overall                        | -0.003288 [-0.003581, -0.002995] | -0.007250 [-0.007939, -0.006562]
+novel                          | -0.000934 [-0.001453, -0.000415] | -0.001586 [-0.002766, -0.000407]
+white_noise                    | +0.002333 [+0.001483, +0.003183] | +0.006166 [+0.004291, +0.008042]
+novel_d                        | +0.001453 [+0.000563, +0.002343] | +0.003251 [+0.001278, +0.005224]
+novel_e                        | -0.006589 [-0.007951, -0.005227] | -0.014176 [-0.017249, -0.011104]
+familiar_return                | -0.006872 [-0.007489, -0.006255] | -0.015493 [-0.016998, -0.013988]
+early_10                       | -0.009635 [-0.010714, -0.008555] | -0.020967 [-0.023481, -0.018452]
+
+Follow-up: pooled novel Brier is lower relative to no-memory under the pointwise interval; white-noise Brier is higher. The full policy makes 1.00 retrievals per 45-step noise block on average, so retrieval is not eliminated there.
+
+Row-specific retrieval guarantees a narrower implementation property: the retrieval operation leaves the inactive fast row unchanged. It does not isolate every pathway between rows: surprise, arousal, continuity, valence, storage and future observations remain coupled. Direct write protection is tested separately from total prediction losses and from the diagnostic change in expected row loss.
+
+Positive score differences mean worse prediction; negative means better. A pointwise interval crossing zero is inconclusive, not proof of equality. These are exploratory Monte Carlo intervals without multiplicity adjustment, preregistration or a predefined equivalence/noninferiority margin.
+
+
+Executed checks and source fidelity
+-----------------------------------
+Check                                            | Recorded result
+-------------------------------------------------+-----------------------------------------------------------------------
+original/phase2_8_row_factored_epistemic_gate.py | 3 passing methods
+review/math_check.py                             | 32 passing methods
+corrected/test_phase28.py                        | 21 passing methods
+review/test_benchmark.py                         | 8 passing methods
+Total                                            | 64 passing unittest methods
+Original source aggregates                       | 48 exact matches to the supplied two-bank evaluator
+Corrected evaluation                             | 30 validation +100 primary +100 follow-up seeds across eight scenarios
+Pinned Phase 2.5 forecast-array checks           | 3200 complete exact matches
+
+The original three tests pass, but one is a performance assertion on 50 fixed source seeds rather than an implementation invariant. Passing it demonstrates those particular inequalities, not general novelty protection. The corrected tests make no requirement that the proposed model outperform a comparator. All actual logs, interpreter details, exit codes and frozen hashes are retained in results/.
+
+
+Unchanged supplied-code benchmark
+---------------------------------
+Original primary arm  | Overall Brier | Novel Brier | Noise Brier | Familiar Brier | Early-10 Brier
+----------------------+---------------+-------------+-------------+----------------+---------------
+phase28_epistemic_row | 0.174944      | 0.198853    | 0.283783    | 0.169451       | 0.294204
+phase25_ungated       | 0.173078      | 0.203594    | 0.290938    | 0.161575       | 0.288271
+no_memory             | 0.178308      | 0.200152    | 0.282468    | 0.176210       | 0.304108
+
+Original primary full minus no-memory | Brier difference [95% CI]        | BCE difference [95% CI]
+--------------------------------------+----------------------------------+---------------------------------
+novel                                 | -0.001299 [-0.001820, -0.000778] | -0.002488 [-0.003643, -0.001333]
+white_noise                           | +0.001315 [+0.000544, +0.002087] | +0.003865 [+0.002184, +0.005545]
+novel_d                               | +0.000414 [-0.000254, +0.001083] | +0.000836 [-0.000662, +0.002335]
+novel_e                               | -0.005626 [-0.006881, -0.004371] | -0.012165 [-0.014930, -0.009400]
+
+Original follow-up arm | Overall Brier | Novel Brier | Noise Brier | Familiar Brier | Early-10 Brier
+-----------------------+---------------+-------------+-------------+----------------+---------------
+phase28_epistemic_row  | 0.172711      | 0.196909    | 0.288201    | 0.168624       | 0.292979
+phase25_ungated        | 0.170457      | 0.201545    | 0.294978    | 0.159999       | 0.283473
+no_memory              | 0.176189      | 0.197984    | 0.286086    | 0.175767       | 0.303296
+
+Original follow-up full minus no-memory | Brier difference [95% CI]        | BCE difference [95% CI]
+----------------------------------------+----------------------------------+---------------------------------
+novel                                   | -0.001075 [-0.001529, -0.000621] | -0.001863 [-0.002892, -0.000833]
+white_noise                             | +0.002115 [+0.001196, +0.003035] | +0.006109 [+0.004030, +0.008187]
+novel_d                                 | +0.000094 [-0.000501, +0.000689] | -0.000015 [-0.001510, +0.001480]
+novel_e                                 | -0.005435 [-0.006743, -0.004126] | -0.011683 [-0.014621, -0.008744]
+
+Original banks are reproduced exactly: 20260921–20261020 and 20261021–20261120. Generator-truth initialization (.92,.28,7/9), q0=1 and all supplied retrieval constants are retained in this reproduction. These are already part of the iterative development context; the corrected evaluation uses fresh banks.
+
+
+What changed in the corrected implementation
+--------------------------------------------
+The source now really does restore the Phase 2.5 storage rule (valence>.20, continuity>.82, merge radius .12). Its gated and ungated arms share the same base formulas and storage rule, so their within-source comparison isolates the retrieval policy and its downstream effects. However, it again scores the marginal after updating it on the current outcome. That changes valence, subsequent storage, and forecasts, so phase25_ungated is not exact pinned Phase 2.5. One source-versus-pinned replay differs on 298 of 405 forecasts, first at index 107.
+
+The default correction scores both forecasts before observing the outcome, adds learned initialization with complete reset, input/probability/capacity validation and diagnostic records, and preserves source replay through legacy_marginal_order=True. With mode="phase25_ungated", corrected code exactly reproduces the pinned Phase 2.5 predictive states and forecast arrays; mode="no_memory" reproduces its memory-disabled variant.
+
+The proposed retrieval defaults are retained, not retuned: global surprise EMA .78/.22; last four outcomes per conditioning row; KL cutoff .065; surprise threshold .08; fast and slow row log-likelihood margins .30; the three-part directional heuristic; a .65 snapshot/.35 current blend; per-row cooldown counters decremented every global step. The prose says .75/.25, but the executable code says .78/.22. No regime labels or true probabilities enter the learner.
+
+The source calls its buffers epoch sufficient statistics and boundary-clean windows. They are actually rolling histories of each row’s last four observations, without a change detector or reset at regime boundaries. They can include observations from an earlier regime and can span many global steps when a row is rare. Cooldown=12 permits checking again twelve global updates after retrieval, suppressing eleven intervening checks when conditions would otherwise allow them.
+
+
+Matched-data experiment and controls
+------------------------------------
+Every arm receives the same independent learned fit from 24 stationary-A trials of 30 states: 696 within-trial transitions, Beta(1,1) row estimates and a learned marginal. Training uses a separate RNG namespace and seed offset. Forecasts are recorded before each outcome is used. The oracle-regime arm is explicitly privileged and is not a deployable learner.
+
+Fresh banks: validation 161000000–161000029; primary 141000000–141000099; follow-up 151000000–151000099. The validation manifest freezes source hashes, thresholds, arms and baseline choices before the aggregate test evaluation. This is internal reproducibility discipline, not an external preregistration.
+
+The benchmark retains the seven previous generators unchanged and adds a 405-transition stationary C=(.5,.5) scenario initialized with q0=.5. Every learner still starts from the same learned A fit, so stationary_c includes an initial adaptation transient; its later_than_10 score removes only the first ten transitions. mixed_9 is A/B/A/B/C/D/E/B/A, 45 transitions per block, with 135 novel, 45 white-noise, 180 familiar-return and 80 early post-switch observations.
+
+Baselines use the unchanged prior EMA/CUSUM classes and the same 50/384 candidate grids, now selected on fresh mixed_9 validation Brier only. Other scenarios measure transfer of those settings, not independently optimized baselines. Earlier .27 EMA and .18/.40/1 CUSUM settings remain fixed controls. New selected parameters: {"cusum": {"drift": 0.4, "lr": 0.18, "threshold": 1.0}, "ema": {"lr": 0.28}}.
+
+Actual Phase 2.5, Phase 2.6, and both corrected Phase 2.7 storage modes are pinned unchanged to commit 669037fdbfb4fd9ff33148e3c109f7c58406d9ee. The new arms remove surprise, KL, directional checks, cooldown, or slow-likelihood advantage one at a time. two_row_update keeps the active-row candidate selection identical but applies the selected snapshot blend to both fast rows, directly testing the additional write. It is not a Bayesian-mixture comparator; no Bayesian-mixture experiment was performed.
+
+Ablations identify whole-policy effects including feedback through future forecasts and storage. The directional flag removes its three tests together; no_directional does not isolate each test. Per-step counters are summed over the same score masks, including early_10, to avoid inferring early-event rates from whole blocks. The same seeds are reused across scenarios for paired comparisons; eight scenarios do not multiply the number of independent seed replicates per estimate.
+
+
+Corrected mixed-task scores
+---------------------------
+Primary arm            | Overall Brier | Overall BCE | Novel Brier | Noise Brier | Familiar Brier | Early-10 Brier
+-----------------------+---------------+-------------+-------------+-------------+----------------+---------------
+phase28_full           | 0.175451      | 0.535841    | 0.197540    | 0.285348    | 0.170223       | 0.289794
+actual_phase25         | 0.173250      | 0.531463    | 0.201712    | 0.292142    | 0.162198       | 0.280187
+actual_phase26         | 0.173314      | 0.530282    | 0.198268    | 0.277742    | 0.164662       | 0.255011
+phase27_proposal       | 0.177064      | 0.539283    | 0.198915    | 0.284318    | 0.172960       | 0.296655
+phase27_retrieval_only | 0.174380      | 0.534071    | 0.200735    | 0.290511    | 0.165475       | 0.285955
+no_memory              | 0.178731      | 0.543054    | 0.198485    | 0.282701    | 0.177033       | 0.299825
+validation_ema         | 0.176102      | 0.619013    | 0.203184    | 0.300006    | 0.168995       | 0.271034
+validation_cusum       | 0.172524      | 0.555210    | 0.193849    | 0.280041    | 0.167871       | 0.266405
+oracle_regime          | 0.127565      | 0.415254    | 0.152428    | 0.250000    | 0.115264       | 0.126100
+
+Primary full minus / overall | Brier difference [95% CI]        | BCE difference [95% CI]
+-----------------------------+----------------------------------+---------------------------------
+actual_phase25               | +0.002200 [+0.001594, +0.002806] | +0.004377 [+0.002970, +0.005784]
+actual_phase26               | +0.002137 [+0.001394, +0.002880] | +0.005558 [+0.003878, +0.007239]
+phase27_proposal             | -0.001613 [-0.002060, -0.001167] | -0.003442 [-0.004468, -0.002417]
+no_memory                    | -0.003280 [-0.003577, -0.002983] | -0.007214 [-0.007891, -0.006537]
+validation_ema               | -0.000651 [-0.001181, -0.000121] | -0.083173 [-0.084544, -0.081801]
+validation_cusum             | +0.002926 [+0.002127, +0.003725] | -0.019369 [-0.021144, -0.017595]
+
+Primary full minus / novel | Brier difference [95% CI]        | BCE difference [95% CI]
+---------------------------+----------------------------------+---------------------------------
+actual_phase25             | -0.004172 [-0.005334, -0.003010] | -0.010510 [-0.013202, -0.007818]
+actual_phase26             | -0.000728 [-0.001961, +0.000505] | -0.000916 [-0.003699, +0.001868]
+phase27_proposal           | -0.001375 [-0.001941, -0.000808] | -0.003014 [-0.004320, -0.001708]
+no_memory                  | -0.000945 [-0.001384, -0.000505] | -0.001593 [-0.002586, -0.000600]
+validation_ema             | -0.005644 [-0.006380, -0.004909] | -0.085369 [-0.088887, -0.081852]
+validation_cusum           | +0.003691 [+0.002460, +0.004923] | -0.013021 [-0.015739, -0.010303]
+
+Primary full minus / white_noise | Brier difference [95% CI]        | BCE difference [95% CI]
+---------------------------------+----------------------------------+---------------------------------
+actual_phase25                   | -0.006794 [-0.008947, -0.004640] | -0.018729 [-0.023835, -0.013623]
+actual_phase26                   | +0.007606 [+0.005856, +0.009356] | +0.019884 [+0.015873, +0.023895]
+phase27_proposal                 | +0.001030 [-0.000161, +0.002221] | +0.002153 [-0.000580, +0.004885]
+no_memory                        | +0.002647 [+0.001743, +0.003550] | +0.007165 [+0.005159, +0.009171]
+validation_ema                   | -0.014658 [-0.016038, -0.013279] | -0.090487 [-0.097948, -0.083026]
+validation_cusum                 | +0.005306 [+0.002832, +0.007781] | +0.003210 [-0.003070, +0.009490]
+
+Primary full minus / novel_d | Brier difference [95% CI]        | BCE difference [95% CI]
+-----------------------------+----------------------------------+---------------------------------
+actual_phase25               | -0.002450 [-0.004102, -0.000797] | -0.005161 [-0.008970, -0.001352]
+actual_phase26               | -0.011930 [-0.014411, -0.009449] | -0.026764 [-0.032867, -0.020660]
+phase27_proposal             | +0.000436 [-0.000460, +0.001332] | +0.001155 [-0.001000, +0.003310]
+no_memory                    | +0.000172 [-0.000645, +0.000989] | +0.000418 [-0.001467, +0.002303]
+validation_ema               | -0.002408 [-0.003746, -0.001069] | -0.079471 [-0.086321, -0.072620]
+validation_cusum             | -0.005045 [-0.007227, -0.002862] | -0.036845 [-0.041831, -0.031860]
+
+Primary full minus / novel_e | Brier difference [95% CI]        | BCE difference [95% CI]
+-----------------------------+----------------------------------+---------------------------------
+actual_phase25               | -0.003273 [-0.005769, -0.000776] | -0.007640 [-0.013416, -0.001863]
+actual_phase26               | +0.002140 [-0.000784, +0.005064] | +0.004133 [-0.002662, +0.010928]
+phase27_proposal             | -0.005590 [-0.006829, -0.004351] | -0.012350 [-0.015186, -0.009514]
+no_memory                    | -0.005653 [-0.006827, -0.004479] | -0.012363 [-0.015030, -0.009696]
+validation_ema               | +0.000133 [-0.001199, +0.001466] | -0.086150 [-0.094888, -0.077413]
+validation_cusum             | +0.010812 [+0.008970, +0.012655] | -0.005428 [-0.010913, +0.000056]
+
+Primary full minus / familiar_return | Brier difference [95% CI]        | BCE difference [95% CI]
+-------------------------------------+----------------------------------+---------------------------------
+actual_phase25                       | +0.008025 [+0.006829, +0.009221] | +0.017618 [+0.014745, +0.020492]
+actual_phase26                       | +0.005561 [+0.004400, +0.006722] | +0.014210 [+0.011481, +0.016939]
+phase27_proposal                     | -0.002738 [-0.003673, -0.001802] | -0.005773 [-0.007988, -0.003559]
+no_memory                            | -0.006811 [-0.007474, -0.006147] | -0.015325 [-0.016879, -0.013770]
+validation_ema                       | +0.001228 [+0.000384, +0.002072] | -0.083361 [-0.087153, -0.079569]
+validation_cusum                     | +0.002352 [+0.001164, +0.003539] | -0.019692 [-0.022931, -0.016453]
+
+Primary full minus / early_10 | Brier difference [95% CI]        | BCE difference [95% CI]
+------------------------------+----------------------------------+---------------------------------
+actual_phase25                | +0.009607 [+0.007210, +0.012003] | +0.020247 [+0.014737, +0.025757]
+actual_phase26                | +0.034783 [+0.032530, +0.037035] | +0.083339 [+0.077845, +0.088833]
+phase27_proposal              | -0.006861 [-0.008387, -0.005336] | -0.014595 [-0.018038, -0.011152]
+no_memory                     | -0.010032 [-0.011374, -0.008689] | -0.021645 [-0.024742, -0.018548]
+validation_ema                | +0.018759 [+0.016964, +0.020554] | -0.081029 [-0.093918, -0.068141]
+validation_cusum              | +0.023389 [+0.020433, +0.026344] | +0.009323 [+0.001477, +0.017169]
+
+Follow-up arm          | Overall Brier | Overall BCE | Novel Brier | Noise Brier | Familiar Brier | Early-10 Brier
+-----------------------+---------------+-------------+-------------+-------------+----------------+---------------
+phase28_full           | 0.174731      | 0.533572    | 0.199149    | 0.287977    | 0.169735       | 0.296025
+actual_phase25         | 0.172567      | 0.529191    | 0.202292    | 0.294924    | 0.162563       | 0.288786
+actual_phase26         | 0.172116      | 0.527037    | 0.199095    | 0.280973    | 0.163496       | 0.260874
+phase27_proposal       | 0.176404      | 0.537129    | 0.200888    | 0.288572    | 0.172371       | 0.302846
+phase27_retrieval_only | 0.174216      | 0.533002    | 0.202475    | 0.293975    | 0.166257       | 0.294667
+no_memory              | 0.178019      | 0.540822    | 0.200083    | 0.285644    | 0.176607       | 0.305659
+validation_ema         | 0.175338      | 0.617236    | 0.204558    | 0.303673    | 0.168798       | 0.279317
+validation_cusum       | 0.171469      | 0.552549    | 0.194553    | 0.282753    | 0.167549       | 0.272115
+oracle_regime          | 0.126946      | 0.413605    | 0.152924    | 0.250000    | 0.115786       | 0.133093
+
+Follow-up full minus / overall | Brier difference [95% CI]        | BCE difference [95% CI]
+-------------------------------+----------------------------------+---------------------------------
+actual_phase25                 | +0.002163 [+0.001542, +0.002785] | +0.004381 [+0.002933, +0.005828]
+actual_phase26                 | +0.002614 [+0.001856, +0.003373] | +0.006534 [+0.004774, +0.008295]
+phase27_proposal               | -0.001674 [-0.002075, -0.001272] | -0.003557 [-0.004506, -0.002608]
+no_memory                      | -0.003288 [-0.003581, -0.002995] | -0.007250 [-0.007939, -0.006562]
+validation_ema                 | -0.000607 [-0.001206, -0.000008] | -0.083665 [-0.085363, -0.081966]
+validation_cusum               | +0.003262 [+0.002560, +0.003963] | -0.018977 [-0.020444, -0.017511]
+
+Follow-up full minus / novel | Brier difference [95% CI]        | BCE difference [95% CI]
+-----------------------------+----------------------------------+---------------------------------
+actual_phase25               | -0.003143 [-0.004235, -0.002051] | -0.008359 [-0.010872, -0.005847]
+actual_phase26               | +0.000054 [-0.001276, +0.001383] | +0.001012 [-0.002160, +0.004185]
+phase27_proposal             | -0.001739 [-0.002411, -0.001068] | -0.003794 [-0.005377, -0.002211]
+no_memory                    | -0.000934 [-0.001453, -0.000415] | -0.001586 [-0.002766, -0.000407]
+validation_ema               | -0.005409 [-0.006316, -0.004501] | -0.082523 [-0.085998, -0.079048]
+validation_cusum             | +0.004596 [+0.003533, +0.005660] | -0.011550 [-0.014181, -0.008918]
+
+Follow-up full minus / white_noise | Brier difference [95% CI]        | BCE difference [95% CI]
+-----------------------------------+----------------------------------+---------------------------------
+actual_phase25                     | -0.006947 [-0.009476, -0.004417] | -0.019846 [-0.025701, -0.013990]
+actual_phase26                     | +0.007005 [+0.005163, +0.008847] | +0.018653 [+0.014442, +0.022864]
+phase27_proposal                   | -0.000595 [-0.002071, +0.000882] | -0.001815 [-0.005183, +0.001553]
+no_memory                          | +0.002333 [+0.001483, +0.003183] | +0.006166 [+0.004291, +0.008042]
+validation_ema                     | -0.015695 [-0.017004, -0.014386] | -0.086493 [-0.093867, -0.079119]
+validation_cusum                   | +0.005224 [+0.002927, +0.007521] | +0.001539 [-0.004657, +0.007734]
+
+Follow-up full minus / novel_d | Brier difference [95% CI]        | BCE difference [95% CI]
+-------------------------------+----------------------------------+---------------------------------
+actual_phase25                 | -0.000731 [-0.002644, +0.001182] | -0.000824 [-0.005126, +0.003479]
+actual_phase26                 | -0.007030 [-0.009206, -0.004854] | -0.015848 [-0.021067, -0.010628]
+phase27_proposal               | +0.001765 [+0.000853, +0.002676] | +0.004267 [+0.002168, +0.006367]
+no_memory                      | +0.001453 [+0.000563, +0.002343] | +0.003251 [+0.001278, +0.005224]
+validation_ema                 | -0.000966 [-0.002351, +0.000418] | -0.067444 [-0.076054, -0.058834]
+validation_cusum               | -0.001492 [-0.003846, +0.000862] | -0.025376 [-0.031685, -0.019068]
+
+Follow-up full minus / novel_e | Brier difference [95% CI]        | BCE difference [95% CI]
+-------------------------------+----------------------------------+---------------------------------
+actual_phase25                 | -0.001752 [-0.003826, +0.000321] | -0.004409 [-0.009233, +0.000416]
+actual_phase26                 | +0.000187 [-0.002886, +0.003259] | +0.000232 [-0.006939, +0.007402]
+phase27_proposal               | -0.006388 [-0.007797, -0.004980] | -0.013834 [-0.017058, -0.010610]
+no_memory                      | -0.006589 [-0.007951, -0.005227] | -0.014176 [-0.017249, -0.011104]
+validation_ema                 | +0.000436 [-0.001311, +0.002183] | -0.093633 [-0.104021, -0.083244]
+validation_cusum               | +0.010057 [+0.008076, +0.012038] | -0.010812 [-0.016293, -0.005331]
+
+Follow-up full minus / familiar_return | Brier difference [95% CI]        | BCE difference [95% CI]
+---------------------------------------+----------------------------------+---------------------------------
+actual_phase25                         | +0.007172 [+0.006065, +0.008279] | +0.016045 [+0.013381, +0.018709]
+actual_phase26                         | +0.006239 [+0.005051, +0.007427] | +0.015482 [+0.012588, +0.018377]
+phase27_proposal                       | -0.002635 [-0.003500, -0.001771] | -0.005528 [-0.007623, -0.003433]
+no_memory                              | -0.006872 [-0.007489, -0.006255] | -0.015493 [-0.016998, -0.013988]
+validation_ema                         | +0.000937 [+0.000143, +0.001731] | -0.086908 [-0.091401, -0.082416]
+validation_cusum                       | +0.002186 [+0.001111, +0.003262] | -0.020239 [-0.023023, -0.017454]
+
+Follow-up full minus / early_10 | Brier difference [95% CI]        | BCE difference [95% CI]
+--------------------------------+----------------------------------+---------------------------------
+actual_phase25                  | +0.007239 [+0.005248, +0.009229] | +0.013985 [+0.009325, +0.018645]
+actual_phase26                  | +0.035151 [+0.033050, +0.037252] | +0.083779 [+0.078660, +0.088898]
+phase27_proposal                | -0.006821 [-0.008101, -0.005541] | -0.015231 [-0.018224, -0.012237]
+no_memory                       | -0.009635 [-0.010714, -0.008555] | -0.020967 [-0.023481, -0.018452]
+validation_ema                  | +0.016707 [+0.014748, +0.018667] | -0.098535 [-0.111883, -0.085186]
+validation_cusum                | +0.023910 [+0.021648, +0.026171] | +0.004376 [-0.003261, +0.012013]
+
+
+Retrieval-component ablations
+-----------------------------
+The surprise threshold reduces C losses relative to removing it, but slightly worsens overall Brier and BCE in both banks. Row-only updates substantially improve pooled novel losses versus writing both rows, especially in E, while sacrificing familiar-return gains; their overall difference is inconclusive under the pointwise intervals. Removing slow-likelihood advantage leaves every forecast identical on all 100 primary and 100 follow-up mixed_9 runs. That is observed inactivity on these banks, not a proof of mathematical redundancy in every state.
+
+Primary arm           | Overall Brier | Novel Brier | Noise Brier | Familiar Brier | Early-10 Brier
+----------------------+---------------+-------------+-------------+----------------+---------------
+phase28_full          | 0.175451      | 0.197540    | 0.285348    | 0.170223       | 0.289794
+no_surprise           | 0.175253      | 0.197899    | 0.286159    | 0.169444       | 0.289116
+no_kl                 | 0.174850      | 0.197185    | 0.285359    | 0.169112       | 0.287681
+no_directional        | 0.175427      | 0.197558    | 0.285679    | 0.170135       | 0.289756
+no_cooldown           | 0.175221      | 0.197555    | 0.285564    | 0.169695       | 0.289267
+no_slow_advantage     | 0.175451      | 0.197540    | 0.285348    | 0.170223       | 0.289794
+two_row_update        | 0.175129      | 0.203040    | 0.284005    | 0.165120       | 0.282576
+legacy_marginal_order | 0.175539      | 0.197447    | 0.285290    | 0.170490       | 0.290463
+
+Primary full minus ablation | Overall Brier [95% CI]           | Noise Brier [95% CI]             | Novel BCE [95% CI]
+----------------------------+----------------------------------+----------------------------------+---------------------------------
+no_surprise                 | +0.000198 [+0.000047, +0.000349] | -0.000811 [-0.001378, -0.000244] | -0.000887 [-0.001538, -0.000236]
+no_kl                       | +0.000601 [+0.000410, +0.000792] | -0.000012 [-0.000521, +0.000497] | +0.000703 [+0.000010, +0.001396]
+no_directional              | +0.000024 [-0.000069, +0.000117] | -0.000332 [-0.000724, +0.000061] | -0.000029 [-0.000534, +0.000477]
+no_cooldown                 | +0.000230 [+0.000117, +0.000342] | -0.000216 [-0.000505, +0.000073] | -0.000053 [-0.000390, +0.000284]
+no_slow_advantage           | +0.000000 [+0.000000, +0.000000] | +0.000000 [+0.000000, +0.000000] | +0.000000 [+0.000000, +0.000000]
+two_row_update              | +0.000321 [-0.000343, +0.000985] | +0.001343 [-0.000627, +0.003313] | -0.011654 [-0.014471, -0.008838]
+legacy_marginal_order       | -0.000088 [-0.000183, +0.000007] | +0.000058 [-0.000395, +0.000511] | +0.000223 [-0.000183, +0.000629]
+
+Primary exact forecast-array equality | Runs / 100
+--------------------------------------+-----------
+no_surprise                           | 25
+no_kl                                 | 31
+no_directional                        | 57
+no_cooldown                           | 32
+no_slow_advantage                     | 100
+two_row_update                        | 0
+no_memory                             | 0
+
+Follow-up arm         | Overall Brier | Novel Brier | Noise Brier | Familiar Brier | Early-10 Brier
+----------------------+---------------+-------------+-------------+----------------+---------------
+phase28_full          | 0.174731      | 0.199149    | 0.287977    | 0.169735       | 0.296025
+no_surprise           | 0.174541      | 0.199446    | 0.289206    | 0.169058       | 0.295369
+no_kl                 | 0.174276      | 0.199054    | 0.288076    | 0.168742       | 0.293989
+no_directional        | 0.174796      | 0.199352    | 0.288749    | 0.169731       | 0.296145
+no_cooldown           | 0.174521      | 0.199251    | 0.288101    | 0.169187       | 0.295613
+no_slow_advantage     | 0.174731      | 0.199149    | 0.287977    | 0.169735       | 0.296025
+two_row_update        | 0.174516      | 0.205272    | 0.287501    | 0.164384       | 0.288905
+legacy_marginal_order | 0.174834      | 0.199161    | 0.288031    | 0.169975       | 0.296500
+
+Follow-up full minus ablation | Overall Brier [95% CI]           | Noise Brier [95% CI]             | Novel BCE [95% CI]
+------------------------------+----------------------------------+----------------------------------+---------------------------------
+no_surprise                   | +0.000190 [+0.000038, +0.000342] | -0.001229 [-0.001879, -0.000579] | -0.000829 [-0.001550, -0.000107]
+no_kl                         | +0.000455 [+0.000272, +0.000637] | -0.000098 [-0.000473, +0.000276] | +0.000098 [-0.000383, +0.000579]
+no_directional                | -0.000066 [-0.000184, +0.000053] | -0.000772 [-0.001320, -0.000224] | -0.000404 [-0.000897, +0.000089]
+no_cooldown                   | +0.000210 [+0.000099, +0.000320] | -0.000124 [-0.000263, +0.000015] | -0.000290 [-0.000610, +0.000030]
+no_slow_advantage             | +0.000000 [+0.000000, +0.000000] | +0.000000 [+0.000000, +0.000000] | +0.000000 [+0.000000, +0.000000]
+two_row_update                | +0.000215 [-0.000405, +0.000835] | +0.000476 [-0.001236, +0.002188] | -0.013786 [-0.016156, -0.011415]
+legacy_marginal_order         | -0.000104 [-0.000186, -0.000021] | -0.000054 [-0.000293, +0.000185] | -0.000050 [-0.000322, +0.000222]
+
+Follow-up exact forecast-array equality | Runs / 100
+----------------------------------------+-----------
+no_surprise                             | 10
+no_kl                                   | 36
+no_directional                          | 45
+no_cooldown                             | 39
+no_slow_advantage                       | 100
+two_row_update                          | 0
+no_memory                               | 0
+
+
+What retrieval actually did
+---------------------------
+Primary mean per scope | Full checks | Full retrievals | No-surprise retrievals | Two-row retrievals | Pinned P25 checks | Pinned P25 retrievals
+-----------------------+-------------+-----------------+------------------------+--------------------+-------------------+----------------------
+overall                | 59.280000   | 8.100000        | 9.610000               | 7.510000           | 108.940000        | 13.640000
+white_noise            | 12.050000   | 1.130000        | 1.480000               | 1.190000           | 27.640000         | 2.730000
+novel_d                | 2.660000    | 0.260000        | 0.350000               | 0.260000           | 7.640000          | 0.770000
+novel_e                | 7.060000    | 1.470000        | 1.550000               | 1.660000           | 11.190000         | 1.560000
+early_10               | 29.570000   | 4.960000        | 5.720000               | 4.570000           | 44.790000         | 7.740000
+
+Primary full diagnostic / mean per run | Overall   | Noise C  | Novel D  | Novel E
+---------------------------------------+-----------+----------+----------+----------
+row0_retrievals                        | 4.260000  | 0.650000 | 0.120000 | 0.660000
+row1_retrievals                        | 3.840000  | 0.480000 | 0.140000 | 0.810000
+eligible_with_preboundary_observation  | 25.280000 | 2.080000 | 1.090000 | 4.300000
+accepted_with_preboundary_observation  | 3.950000  | 0.230000 | 0.140000 | 0.800000
+active_expected_brier_worsened         | 2.020000  | 1.070000 | 0.100000 | 0.220000
+inactive_expected_brier_worsened       | 0.000000  | 0.000000 | 0.000000 | 0.000000
+active_expected_brier_change           | -0.443276 | 0.030971 | 0.002997 | -0.118092
+inactive_expected_brier_change         | 0.000000  | 0.000000 | 0.000000 | 0.000000
+
+Primary inactive-row direct risk / two-row ablation | Worsening count | Sum of expected Brier changes
+----------------------------------------------------+-----------------+------------------------------
+overall                                             | 3.480000        | 0.042327
+white_noise                                         | 0.580000        | -0.021145
+novel_d                                             | 0.120000        | 0.023741
+novel_e                                             | 1.590000        | 0.351793
+
+Follow-up mean per scope | Full checks | Full retrievals | No-surprise retrievals | Two-row retrievals | Pinned P25 checks | Pinned P25 retrievals
+-------------------------+-------------+-----------------+------------------------+--------------------+-------------------+----------------------
+overall                  | 59.950000   | 7.730000        | 9.430000               | 7.270000           | 107.930000        | 13.180000
+white_noise              | 12.690000   | 1.000000        | 1.360000               | 1.080000           | 27.700000         | 2.480000
+novel_d                  | 2.830000    | 0.200000        | 0.310000               | 0.190000           | 7.810000          | 0.910000
+novel_e                  | 7.130000    | 1.550000        | 1.710000               | 1.760000           | 10.820000         | 1.220000
+early_10                 | 30.270000   | 4.710000        | 5.510000               | 4.430000           | 45.780000         | 7.540000
+
+Follow-up full diagnostic / mean per run | Overall   | Noise C  | Novel D  | Novel E
+-----------------------------------------+-----------+----------+----------+----------
+row0_retrievals                          | 4.020000  | 0.600000 | 0.060000 | 0.680000
+row1_retrievals                          | 3.710000  | 0.400000 | 0.140000 | 0.870000
+eligible_with_preboundary_observation    | 25.240000 | 2.360000 | 1.130000 | 4.300000
+accepted_with_preboundary_observation    | 3.830000  | 0.220000 | 0.030000 | 0.890000
+active_expected_brier_worsened           | 2.030000  | 0.930000 | 0.150000 | 0.260000
+inactive_expected_brier_worsened         | 0.000000  | 0.000000 | 0.000000 | 0.000000
+active_expected_brier_change             | -0.426155 | 0.028602 | 0.013132 | -0.139822
+inactive_expected_brier_change           | 0.000000  | 0.000000 | 0.000000 | 0.000000
+
+Follow-up inactive-row direct risk / two-row ablation | Worsening count | Sum of expected Brier changes
+------------------------------------------------------+-----------------+------------------------------
+overall                                               | 3.470000        | 0.094047
+white_noise                                           | 0.510000        | -0.010619
+novel_d                                               | 0.080000        | 0.010701
+novel_e                                               | 1.680000        | 0.379837
+
+Expected-Brier-change diagnostics use (p_after-q_current)^2 - (p_before-q_current)^2, holding the conditioning row and current true regime fixed immediately before/after the retrieval blend. The irreducible q(1-q) term cancels. They describe a hypothetical next query of that row under the same regime, not necessarily the actual next transition, whose row/regime may differ. They are not total downstream causal effects. Gate events occur after the already-scored outcome at that step. Full event records for phase28_full and two_row_update are in the raw JSON.
+
+Candidate rejection counters record the first failing test, in code order, rather than all tests that would reject. An observation preceding the current block proves buffer contamination for that decision; it does not alone prove the selected snapshot is from the old regime. Initial learned snapshots and later merged snapshots are not assigned true-regime identities from approximate parameter proximity.
+
+
+Transfer across all eight scenarios
+-----------------------------------
+Primary scenario / overall Brier | P28      | P25      | P26      | P27 proposal | No memory | EMA      | CUSUM
+---------------------------------+----------+----------+----------+--------------+-----------+----------+---------
+mixed_9                          | 0.175451 | 0.173250 | 0.173314 | 0.177064     | 0.178731  | 0.176102 | 0.172524
+recurrent_45                     | 0.169068 | 0.161608 | 0.163821 | 0.170788     | 0.174419  | 0.167401 | 0.164851
+familiar_novel                   | 0.176516 | 0.173349 | 0.174194 | 0.177291     | 0.179022  | 0.177284 | 0.174629
+unseen_random                    | 0.210667 | 0.207093 | 0.203569 | 0.210750     | 0.213238  | 0.215161 | 0.208715
+stationary_a                     | 0.110690 | 0.110529 | 0.116202 | 0.110510     | 0.110537  | 0.120259 | 0.120669
+recurrent_q0_zero                | 0.169892 | 0.162600 | 0.164544 | 0.171442     | 0.175168  | 0.168177 | 0.165745
+recurrent_q0_half                | 0.169394 | 0.162049 | 0.163909 | 0.171048     | 0.174703  | 0.167687 | 0.165191
+stationary_c                     | 0.274988 | 0.280747 | 0.274521 | 0.276760     | 0.274448  | 0.291381 | 0.271447
+
+Primary stationary C full minus | Overall Brier [95% CI]           | After first 10 Brier [95% CI]    | Overall BCE [95% CI]
+--------------------------------+----------------------------------+----------------------------------+---------------------------------
+actual_phase25                  | -0.005759 [-0.006342, -0.005176] | -0.005905 [-0.006503, -0.005307] | -0.014846 [-0.016139, -0.013553]
+no_memory                       | +0.000541 [+0.000398, +0.000683] | +0.000554 [+0.000408, +0.000701] | +0.001309 [+0.000986, +0.001631]
+no_surprise                     | -0.000350 [-0.000467, -0.000234] | -0.000359 [-0.000479, -0.000239] | -0.000863 [-0.001112, -0.000613]
+validation_ema                  | -0.016393 [-0.016761, -0.016024] | -0.016993 [-0.017358, -0.016629] | -0.053516 [-0.054071, -0.052960]
+validation_cusum                | +0.003541 [+0.002989, +0.004094] | +0.003259 [+0.002714, +0.003805] | +0.006990 [+0.005924, +0.008055]
+
+Follow-up scenario / overall Brier | P28      | P25      | P26      | P27 proposal | No memory | EMA      | CUSUM
+-----------------------------------+----------+----------+----------+--------------+-----------+----------+---------
+mixed_9                            | 0.174731 | 0.172567 | 0.172116 | 0.176404     | 0.178019  | 0.175338 | 0.171469
+recurrent_45                       | 0.167246 | 0.159960 | 0.161736 | 0.168861     | 0.172521  | 0.165277 | 0.163136
+familiar_novel                     | 0.175396 | 0.172864 | 0.172962 | 0.176582     | 0.178059  | 0.176137 | 0.173500
+unseen_random                      | 0.215021 | 0.211965 | 0.208994 | 0.215203     | 0.217231  | 0.220376 | 0.213310
+stationary_a                       | 0.109598 | 0.109389 | 0.116003 | 0.109481     | 0.109527  | 0.119276 | 0.119395
+recurrent_q0_zero                  | 0.168183 | 0.161075 | 0.162685 | 0.169811     | 0.173506  | 0.166365 | 0.164312
+recurrent_q0_half                  | 0.167543 | 0.160418 | 0.162151 | 0.169255     | 0.172927  | 0.165734 | 0.163623
+stationary_c                       | 0.275005 | 0.280153 | 0.274755 | 0.276806     | 0.274481  | 0.291711 | 0.271972
+
+Follow-up stationary C full minus | Overall Brier [95% CI]           | After first 10 Brier [95% CI]    | Overall BCE [95% CI]
+----------------------------------+----------------------------------+----------------------------------+---------------------------------
+actual_phase25                    | -0.005148 [-0.005723, -0.004573] | -0.005278 [-0.005868, -0.004688] | -0.013578 [-0.014894, -0.012261]
+no_memory                         | +0.000524 [+0.000370, +0.000678] | +0.000537 [+0.000380, +0.000695] | +0.001265 [+0.000930, +0.001600]
+no_surprise                       | -0.000487 [-0.000615, -0.000359] | -0.000499 [-0.000631, -0.000368] | -0.001175 [-0.001454, -0.000896]
+validation_ema                    | -0.016706 [-0.017106, -0.016305] | -0.017199 [-0.017594, -0.016804] | -0.053901 [-0.054534, -0.053269]
+validation_cusum                  | +0.003033 [+0.002464, +0.003602] | +0.002939 [+0.002372, +0.003506] | +0.006094 [+0.004917, +0.007272]
+
+Every scope includes both Brier and BCE in the numerical output. Rankings may differ between proper scoring rules; a lower Brier average does not establish lower BCE or superiority in every regime. Persistent noise losses also include the unchanged adaptive base learner, so eliminating episodic writes would not imply Bayes-optimal .25 Brier in white noise.
+
+
+Mathematics: surprise is not a calibrated epistemic error
+---------------------------------------------------------
+For binary Y, delta=(Y-p)^2-p(1-p)=(Y-p)(1-2p). With Y~Bernoulli(q) and fixed issued p, E[delta]=(q-p)(1-2p), and Var(delta)=q(1-q)(1-2p)^2. The equality E[delta]=0 when p=q is correct, but its converse is false: p=.5 makes delta identically zero for every q and outcome. Miscalibration can also produce a negative mean, e.g. p=.6,q=.92 gives -.064. Therefore a positive threshold is neither a general calibration detector nor a guarantee that an opened gate reflects epistemic rather than sampling error.
+
+At calibrated p=q=.92, outcome zero has probability .08 and yields delta=.7728. Starting from zero, the code's .22 EMA increment is .170016, above .08. An executed constructed state triggers a complete retrieval check on that calibrated forecast; candidates are rejected afterward. Mean-zero noise does not imply a zero sample path or no threshold crossing. Conversely, under q=.5, E[delta]=2(p-.5)^2; the adaptive learner moves away from .5 after each outcome, so the fixed-p=.5 unit test cannot establish a closed gate for its actual trajectory.
+
+The surprise state is one global scalar, despite the source comment claiming per-row and global tracking. A constructed two-step intervention produces surprise on row 0, then a row-1 forecast of .5 contributes zero local surprise yet retrieves using the retained row-0 signal. Resetting only the global surprise between those steps prevents retrieval. This demonstrates remaining cross-row control coupling, while the opposite row still receives no direct retrieval write.
+
+
+Mathematics: contraction, row counts and boundary claims
+--------------------------------------------------------
+For fast value f, candidate c, empirical target m and blend w, f_new=f+w(c-f). The exact squared-distance change is w(c-f)[2(f-m)+w(c-f)]. Strict contraction toward that empirical target occurs if and only if this expression is negative. Candidate closeness |c-m|<|f-m| is sufficient for 0<w<=1 but not necessary when w<1: f=.4,m=.5,c=.65,w=.65 moves to .5625 and reduces error from .1 to .0625 although the candidate is .15 from m. Current-outcome alignment and the extra slow-neighborhood rejection are additional heuristic restrictions, not the necessary-and-sufficient condition.
+
+The claimed two-condition invariant also does not guarantee motion away from the slow trace: f=.4,m=.75,c=slow=.7 passes the direction/closeness conditions and the supplied helper, yet its blend moves closer to slow. Empirical-window contraction does not imply lower true-regime risk. A full-update example with three old row-1 successes and one new success accepts A, reduces empirical squared error by .125726625, but increases current true-B conditional expected Brier by .232152372. This is a legal constructed state, not a frequency or reachability claim about default initialization.
+
+The proposed Phase 2.7 count-gate example mostly has the stated numerical values: distance .230867928, candidate LL -1.934996179, slow LL -2.907304816, fast LL -3.644772238, row KLs .002533339 and .107587691. But counts (4,0,1,1) have only one realizable six-transition path, 0011111, which ends in one. They cannot include the asserted current 1→0 discordance. The source unit test changes row counts to (3,1), so it does not replay the same counterexample.
+
+For a six-transition window beginning at state 1, row-0 absence depends on the six previous states X0..X5; the final outcome is unrestricted. Its probability under A is .92^5=.6590815232, not .92^6=.606355001344. The latter is only the all-six-success subset. These are row-coverage events, not measured lost-recall rates.
+
+For stationary B=(.15,.85), exhaustive enumeration gives probability .660885625 of balanced row exposures n1=n0=3. The all-alternating compatible subset has unconditional mass .85^6=.377149515625, hence conditional acceptance among balanced windows is .570672899150. Across all windows, both-row KL compatibility is .576816906250, not .377149515625. Row-exposure conditioning changes the path distribution; it cannot be replaced by independent Binomial(3,.15) trials. The quoted KL(.375||.15) is approximately .151431087, so that individual mismatch calculation is valid.
+
+The new n=4, KL=.065 rule is still selective: for exact snapshots .15, .28, .85 and .92, accepted success counts are respectively {0}, {1}, {4}, {4}. It removes the old requirement to observe the opposite row but does not make familiar-row recognition automatic. Using four past row visits also differs from collecting four observations known to be from the current regime.
+
+The frozen-p=.5 state has arousal target .625 and continuity exp(-.425)=.653769785 when cosine similarity is one. Those are conditional values, not proof that an adaptive engine polls memory on all 45 white-noise steps. An explicitly scoped pinned replay on supplied seed 20260921 gives 18/45 Phase 2.5, 17/45 Phase 2.6 and 19/45 Phase 2.7 retrieval-eligible steps. The earlier retrievals blend rather than fully overwrite with .92 or .28. Parameter similarity and aggregate losses do not establish the proposed repeated-snapshot feedback narrative.
+
+
+Interpretation and next discriminating work
+-------------------------------------------
+The useful distinction is between a mechanism property and a performance guarantee. Updating only the queried row prevents one specific form of immediate cross-row corruption. The retained global state, finite noisy buffers and mutable snapshots still permit harmful retrievals. Average improvement over novel blocks must be read alongside C, D and E separately; gains in one block can outweigh harm in another.
+
+A claim that Bayesian mixture weighting is inherently superior is not tested here. A next experiment could compare fixed snapshot blending, validation-selected graded blending and an explicitly defined mixture on identical streams. Predeclare margins for per-regime Brier and BCE, keep fresh held-out regime matrices/dwell lengths, and include a mechanism for measuring or limiting stale row evidence. The surprise rule should be compared against a properly specified sequential calibration/change statistic with measured false-alarm behavior. These are proposed future experiments, not repairs smuggled into the present benchmark.
+
+The evidence can support revising a statistical retrieval policy and learning which components help. The words arousal, valence, continuity and epistemic surprise are labels for specified computations. Their existence or predictive usefulness does not establish synthetic qualia, subjective consciousness or independent physical validation of MQGT-SCF.
+
+
+Reproducibility and files
+-------------------------
+Run python3 -B run_all.py from this folder. Standard-library Python only; recorded interpreter: 3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]. The runner executes original code, its two-bank audit, math checks, engine and harness tests, validation and eight-scenario benchmark, verifies source hashes before/after, then regenerates this report. It aborts on unexpected exit codes or pinned forecast mismatches.
+
+The original upload remains private and is excluded from the public repository. original/ stores extracted code/provenance; corrected/ stores the fixed engine/tests; reference/ stores pinned dependencies; review/ stores independent audits and the benchmark; results/ stores raw per-seed output, event traces, validation manifest and execution logs. Public corrected_benchmark.json.gz is lossless; rerunning regenerates expanded JSON. The report builder reads either form. SHA256SUMS describes the delivered snapshot; timing logs can change on rerun.
+
+Pinned phase25_suite.py: https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-5-2026-10-15/corrected/phase2_5_falsification_suite.py; SHA256 b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2
+
+Pinned phase26_engine.py: https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-6-2026-10-15/corrected/phase2_6_novelty_aware_gate.py; SHA256 4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca
+
+Pinned phase27_engine.py: https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-7-2026-10-16/corrected/phase2_7_kl_antirollback_gate.py; SHA256 21e6491b35f8fc17ac81dae759605cb659515147716952ba020bf111e7a87872
+
+Pinned phase27_supplied.py: https://github.com/Cbaird26/zoraasi-qualia-research/blob/669037fdbfb4fd9ff33148e3c109f7c58406d9ee/verification/phase2-7-2026-10-16/original/phase2_7_kl_antirollback_gate.py; SHA256 fd8c67e2d36a51722a5cbabd8cce88fecb68b4c799c51ee6208728456a4e81d4

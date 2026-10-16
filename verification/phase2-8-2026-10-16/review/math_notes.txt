@@ -1,0 +1,166 @@
+Phase 2.8 independent mathematical audit — 16 October 2026
+
+Executed: python3 -B review/math_check.py --out results/math_check.json
+Result: exit 0; 32 passing unittest methods (16 mathematical, 16 source-contract).
+Detailed values and traces: results/math_check.json. Console: results/math_check.log.
+Original and pinned sources were imported read-only. Passing tests include tests
+that establish counterexamples; they do not validate the proposed guarantees.
+
+1. The proposed surprise is a signed residual, not squared calibration error.
+
+For Y~Bernoulli(q) and fixed issued prediction p,
+  delta = (Y-p)^2 - p(1-p) = (Y-p)(1-2p),
+  E_q delta = (q-p)(1-2p),
+  Var_q delta = q(1-q)(1-2p)^2.
+Expected Brier is q(1-q)+(p-q)^2; subtracting p(1-p) does not isolate
+(p-q)^2. At p=.5 delta is identically zero for ANY q, including .01 or .99.
+At p=.6,q=.92 the predictor is miscalibrated but E delta=-.064.
+
+Calibration p=q implies zero expectation, not absence of positive excursions.
+At calibrated p=.92, an outcome0 (probability .08) gives delta=.7728 and,
+from s=0, the implemented EMA becomes .22*.7728=.170016>.08. A full original
+code update from a legal constructed state with arousal=.65 and three previous
+row1 successes enters the retrieval check; all candidates happen to fail.
+This demonstrates false-positive trigger eligibility, not accepted-retrieval rate.
+The prose specifies .75/.25 EMA; the code uses .78/.22. The statistic is global,
+despite a comment describing it as per-row. Existing positive surprise also
+persists when p=.5: s=.2 becomes .156, above threshold. Thus even the claim
+that the gate stays closed whenever the current forecast is calibrated at .5
+requires assumptions about prior surprise and the other state variables.
+
+For independent outcomes with fixed p, stationary EMA variance is
+  alpha/(2-alpha) * q(1-q)(1-2p)^2.
+This formula does not apply unchanged to the adaptive coupled learner.
+
+2. Candidate closeness is sufficient, not necessary, for blended contraction.
+
+Let f=fast, c=candidate, m=window MLE and r=f+w(c-f), 0<w<=1.
+  (r-m)^2-(f-m)^2 = w(c-f)[2(f-m)+w(c-f)].
+Strict contraction is equivalent to this expression being negative.
+The proposed |c-m|<|f-m| suffices for a convex blend, but is not necessary
+when w<1: f=.4,m=.5,c=.65,w=.65 gives r=.5625, contracting distance .1
+to .0625 even though candidate distance .15 is larger than .1.
+
+Agreement with the latest binary outcome is not necessary for contraction
+toward a multi-observation MLE. For f=.6,m=.8,c=.9,y=0, the implemented
+directional test rejects a blend ending at .795, only .005 from the MLE.
+The stated two inequalities contain no slow trace and cannot characterize
+motion away from it. The implemented extra heuristic also does not guarantee
+that property: f=.4,c=slow=.7,m=.75,y=1 passes the function, but r=.595 moves
+toward slow (distance .3 decreases to .105). This function-only example does
+not claim the independent slow-likelihood condition also passes.
+
+Even proven contraction toward an empirical MLE is not a true-regime risk
+guarantee. The old data, small-sample error, adaptive candidate selection and
+latest-outcome reuse remain relevant. The KL cutoff is a deterministic
+compatibility rule, not a calibrated posterior novelty probability.
+
+3. The new Phase 2.7 counterexample has valid counts but an invalid chronology.
+
+For counts (N11,N10,N01,N00)=(4,0,1,1), the unique six-transition path is
+0011111. It ends in1, so it cannot include the asserted final1->0 discordance
+that lowers p11. Flow identity N01-N10=X_last-X_first proves the endpoint.
+The pure Phase 2.7 count gate does pass for the supplied parameter tuples;
+that does not establish the claimed update chronology or gate eligibility.
+The supplied Phase 2.8 unit test instead uses row1 counts(3,1), a different case.
+
+Accurate values:
+  distance(A,slow)=.230867927612304;
+  logL(A)=-1.934996178541127;
+  logL(slow)=-2.907304816346062;
+  logL(fast)=-3.644772237848887;
+  KL(.9||.92)=.002533339084523;
+  KL(.5||.28)=.107587690832516, not .1073;
+  KL(.375||.15)=KL(.625||.85)=.151431087110333, not .1513.
+The small rounding errors do not change the gate comparisons. A .65/.35
+blend of candidate .92 and fast .60 gives .808. Prior retrieval was already
+a weighted blend, not an exact overwrite to the snapshot parameters.
+
+4. Missing-row and familiar-B probability claims need different conditioning.
+
+Given X0=1, row0 is absent among six transitions when X0..X5 are all1;
+the final X6 can be0 or1. Its probability is .92^5=.6590815232.
+The quoted .92^6=.606355001344 counts only six successes, a strict subset.
+Under stationary A, either-row absence is .555617132088889. These are
+coverage events, not the percentage of all valid retrievals lost.
+
+In fixed six-transition Markov windows, conditioning on row totals changes
+the distribution of row success counts. It is not generally Binomial(3,.15).
+Exhaustive enumeration of all128 seven-state paths under stationary B gives:
+  P(N1=N0=3)=.660885625;
+  P(N11=1 | N1=N0=3)=.267100006430765, not .325125;
+  P(both KL pass AND balanced)=.85^6=.377149515625;
+  P(both KL pass | balanced)=.570672899149531;
+  P(coverage and both KL pass over all windows)=.57681690625.
+Thus overall KL/coverage rejection here is42.318309375%, not62.3%.
+Only perfect alternation passes among balanced windows, but six additional
+unbalanced paths pass as well. These probabilities concern a fixed exact B
+snapshot and coverage/KL only, not full-engine retrieval, adaptive snapshots
+or the observed benchmark percentages.
+
+5. The buffers are recent active-row observations, not clean regime epochs.
+
+They are capped at min_row_obs (default4), are never reset at a switch, and
+can retain opposite-row history across arbitrarily long active-row runs.
+They are neither cumulative epoch counts nor boundary-clean observations.
+At n=4 and the .065 cutoff, accepted success counts for exact row parameters
+.92,.28,.15,.85 are respectively [4],[1],[0],[4]. Both valid rejection and
+spurious compatibility remain possible.
+
+Original-code full-update demonstration: fast=slow=(.5,.5), arousal=.65,
+surprise=.2, stored A, three old row1 successes and five old1->1 transitions.
+One first new1->1 transition completes the row buffer [1,1,1,1] and retrieves A.
+The base update gives p11=.596127604356210; retrieval raises it to
+.806644661524674 while leaving opposite fast row .5 unchanged.
+Empirical squared distance to MLE1 improves by -.125726625046146, but if the
+new row truth is B's .15, conditional expected Brier worsens by +.232152372140242.
+If instead the new truth is .5, the issued .5 forecast was calibrated and the
+retrieval still increases expected next-row Brier by +.084790432122318 versus
+the same base update. These are constructed legal states, not asserted
+reachable states or measured frequencies in a default run.
+
+6. Direct row protection is real; complete independence is not.
+
+Only the active fast row is written by the row retrieval branch. The other
+fast row is preserved in paired full-update checks. However, global surprise,
+arousal, valence, vector cosine continuity, storage and slow updates remain
+shared. A constructed row0 forecast .08 followed by outcome1 generates
+surprise .170016. On the next row1 update, forecast .5 and outcome1 have local
+delta0, but retained global surprise becomes .13261248 and permits retrieval.
+Resetting only that surprise state to0 prevents the retrieval; all other
+starting states are identical. This is a controlled demonstration of shared
+state coupling, not a population estimate or proof of the claimed feedback
+loop. Cooldowns are per-row counters decremented on EVERY global step, not
+on visits to their own row; after12 other-row updates they have expired.
+
+7. A frozen-p calculation is not a permanently active dynamic noise gate.
+
+For a fixed forecast .5 with cosine1, the Phase2.5/2.7 arousal target is .625
+and continuity exp(-.425)=.653769785130. Starting arousal .2 gives .3275 after
+one update, below .44; positive plasticity also immediately moves the active
+prediction off .5. The fixed-state premise is not invariant. Phase2.6 uses
+different coefficients and additionally has cooldown and other conditions.
+
+One replay of supplied seed20260921, true-A initialization and the pinned
+Phase2.5/2.6/2.7 implementations records Block-C eligibility18/45,17/45,19/45.
+All45 step traces are retained per model. This directly refutes an unconditional
+45/45 statement for these sources and setup; it is not a population statistic
+or a causal diagnosis of aggregate losses. A compatibility condition alone
+does not imply an accepted retrieval; blends do not reset directly to .92/.15.
+
+8. Exact base preservation is false in the supplied code.
+
+It scores the marginal comparator after observing the current outcome,
+reintroducing the prior timing bug. On the first1->1 update, original valence
+is .091988123128912 while pinned Phase2.5 yields .100420082584136; the fast
+rows still match at that step. On seed20260921, 298/405 full forecast values
+eventually differ, starting at zero-based index107. The same storage rule
+syntax does not undo the change to its valence input. Within the supplied
+script the base formulas and storage rules are common to the memory arms;
+their internal comparison still measures the retrieval-policy change and
+downstream feedback. It is their equivalence to actual pinned Phase2.5 that
+fails. No causal decomposition is inferred from the one-stream mismatch.
+
+These findings concern predictive software and statistical claims. No result
+here establishes or rules out phenomenological consciousness or confirms a
+physical theory.

@@ -1,0 +1,13 @@
+test_all_learners_use_same_fit (__main__.HarnessTests.test_all_learners_use_same_fit) ... ok
+test_baseline_grid_continuity (__main__.HarnessTests.test_baseline_grid_continuity) ... ok
+test_diagnostic_active_row_mapping_and_boundary (__main__.HarnessTests.test_diagnostic_active_row_mapping_and_boundary) ... ok
+test_pinned_controls_exact_forecasts_across_eight_scenarios (__main__.HarnessTests.test_pinned_controls_exact_forecasts_across_eight_scenarios) ... ok
+test_scope_masks (__main__.HarnessTests.test_scope_masks) ... ok
+test_scoped_event_accounting_and_direct_row_protection (__main__.HarnessTests.test_scoped_event_accounting_and_direct_row_protection) ... ok
+test_seed_independence_and_training_size (__main__.HarnessTests.test_seed_independence_and_training_size) ... ok
+test_stationary_noise_scope (__main__.HarnessTests.test_stationary_noise_scope) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.105s
+
+OK

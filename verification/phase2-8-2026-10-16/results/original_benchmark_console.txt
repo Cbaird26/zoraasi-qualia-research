@@ -1,0 +1,45 @@
+Exact source aggregate matches: 48
+test
+overall {'phase28_epistemic_row': {'brier': 0.174944, 'bce': 0.533813}, 'phase25_ungated': {'brier': 0.173078, 'bce': 0.529922}, 'no_memory': {'brier': 0.178308, 'bce': 0.541218}}
+full minus no-memory {'brier': {'mean': -0.0033637843268335558, 'sd': 0.0014526973129283397, 'n_seeds': 100, 'ci95': [-0.0036485130001675105, -0.003079055653499601]}, 'bce': {'mean': -0.007405467562256612, 'sd': 0.0033310345994901043, 'n_seeds': 100, 'ci95': [-0.008058350343756671, -0.006752584780756551]}}
+full events {'accepted_retrievals': 7.91, 'rejected_checks': 51.83, 'accepted_with_preboundary_row_observation': 3.79}
+novel {'phase28_epistemic_row': {'brier': 0.198853, 'bce': 0.588405}, 'phase25_ungated': {'brier': 0.203594, 'bce': 0.600156}, 'no_memory': {'brier': 0.200152, 'bce': 0.590893}}
+full minus no-memory {'brier': {'mean': -0.0012989211067400306, 'sd': 0.0026560275824971578, 'n_seeds': 100, 'ci95': [-0.0018195025129094735, -0.0007783397005705877]}, 'bce': {'mean': -0.0024880124421420985, 'sd': 0.005892323276487298, 'n_seeds': 100, 'ci95': [-0.0036429078043336087, -0.0013331170799505882]}}
+full events {'accepted_retrievals': 2.68, 'rejected_checks': 20.02, 'accepted_with_preboundary_row_observation': 1.06}
+white_noise {'phase28_epistemic_row': {'brier': 0.283783, 'bce': 0.779936}, 'phase25_ungated': {'brier': 0.290938, 'bce': 0.799626}, 'no_memory': {'brier': 0.282468, 'bce': 0.776072}}
+full minus no-memory {'brier': {'mean': 0.0013150943842409927, 'sd': 0.0039362410630241354, 'n_seeds': 100, 'ci95': [0.0005435911358882622, 0.002086597632593723]}, 'bce': {'mean': 0.003864651188774001, 'sd': 0.008575734044254496, 'n_seeds': 100, 'ci95': [0.00218380731610012, 0.0055454950614478825]}}
+full events {'accepted_retrievals': 1.08, 'rejected_checks': 11.14, 'accepted_with_preboundary_row_observation': 0.2}
+novel_d {'phase28_epistemic_row': {'brier': 0.141119, 'bce': 0.455944}, 'phase25_ungated': {'brier': 0.142795, 'bce': 0.459301}, 'no_memory': {'brier': 0.140705, 'bce': 0.455107}}
+full minus no-memory {'brier': {'mean': 0.00041433772196802673, 'sd': 0.003409657711411245, 'n_seeds': 100, 'ci95': [-0.0002539551894685772, 0.0010826306334046306]}, 'bce': {'mean': 0.0008364669050604362, 'sd': 0.007645836487584396, 'n_seeds': 100, 'ci95': [-0.0006621170465061054, 0.0023350508566269777]}}
+full events {'accepted_retrievals': 0.14, 'rejected_checks': 3.05, 'accepted_with_preboundary_row_observation': 0.04}
+novel_e {'phase28_epistemic_row': {'brier': 0.171657, 'bce': 0.529335}, 'phase25_ungated': {'brier': 0.17705, 'bce': 0.541542}, 'no_memory': {'brier': 0.177283, 'bce': 0.5415}}
+full minus no-memory {'brier': {'mean': -0.005626195426429113, 'sd': 0.00640432865571016, 'n_seeds': 100, 'ci95': [-0.006881443842948304, -0.004370947009909922]}, 'bce': {'mean': -0.01216515542026055, 'sd': 0.014107623950149228, 'n_seeds': 100, 'ci95': [-0.0149302497144898, -0.009400061126031301]}}
+full events {'accepted_retrievals': 1.46, 'rejected_checks': 5.83, 'accepted_with_preboundary_row_observation': 0.82}
+familiar_return {'phase28_epistemic_row': {'brier': 0.169451, 'bce': 0.5227}, 'phase25_ungated': {'brier': 0.161575, 'bce': 0.504843}, 'no_memory': {'brier': 0.17621, 'bce': 0.537839}}
+full minus no-memory {'brier': {'mean': -0.006759163684380793, 'sd': 0.0028121901166558226, 'n_seeds': 100, 'ci95': [-0.007310352947245334, -0.006207974421516251]}, 'bce': {'mean': -0.015138779527221606, 'sd': 0.006702394886696063, 'n_seeds': 100, 'ci95': [-0.016452448925014036, -0.013825110129429177]}}
+full events {'accepted_retrievals': 5.14, 'rejected_checks': 20.7, 'accepted_with_preboundary_row_observation': 2.73}
+early_10 {'phase28_epistemic_row': {'brier': 0.294204, 'bce': 0.823308}, 'phase25_ungated': {'brier': 0.288271, 'bce': 0.81071}, 'no_memory': {'brier': 0.304108, 'bce': 0.84475}}
+full minus no-memory {'brier': {'mean': -0.009904589687663733, 'sd': 0.005143379052115241, 'n_seeds': 100, 'ci95': [-0.01091269198187832, -0.008896487393449146]}, 'bce': {'mean': -0.02144241156236595, 'sd': 0.012313598183016606, 'n_seeds': 100, 'ci95': [-0.023855876806237204, -0.019028946318494697]}}
+full events {'accepted_retrievals': 4.8, 'rejected_checks': 25.18, 'accepted_with_preboundary_row_observation': 3.15}
+followup
+overall {'phase28_epistemic_row': {'brier': 0.172711, 'bce': 0.528137}, 'phase25_ungated': {'brier': 0.170457, 'bce': 0.523467}, 'no_memory': {'brier': 0.176189, 'bce': 0.53577}}
+full minus no-memory {'brier': {'mean': -0.003477981145787708, 'sd': 0.0014902086105146473, 'n_seeds': 100, 'ci95': [-0.0037700620334485788, -0.0031859002581268374]}, 'bce': {'mean': -0.007633332904528653, 'sd': 0.003437136791200552, 'n_seeds': 100, 'ci95': [-0.008307011715603961, -0.006959654093453345]}}
+full events {'accepted_retrievals': 8.16, 'rejected_checks': 51.45, 'accepted_with_preboundary_row_observation': 3.69}
+novel {'phase28_epistemic_row': {'brier': 0.196909, 'bce': 0.583223}, 'phase25_ungated': {'brier': 0.201545, 'bce': 0.595165}, 'no_memory': {'brier': 0.197984, 'bce': 0.585085}}
+full minus no-memory {'brier': {'mean': -0.0010749916415390079, 'sd': 0.0023185209643549493, 'n_seeds': 100, 'ci95': [-0.001529421750552578, -0.0006205615325254378]}, 'bce': {'mean': -0.001862839649599361, 'sd': 0.005253110524764124, 'n_seeds': 100, 'ci95': [-0.0028924493124531294, -0.0008332299867455928]}}
+full events {'accepted_retrievals': 2.79, 'rejected_checks': 19.81, 'accepted_with_preboundary_row_observation': 1.12}
+white_noise {'phase28_epistemic_row': {'brier': 0.288201, 'bce': 0.789479}, 'phase25_ungated': {'brier': 0.294978, 'bce': 0.808829}, 'no_memory': {'brier': 0.286086, 'bce': 0.783371}}
+full minus no-memory {'brier': {'mean': 0.0021153541499474692, 'sd': 0.004691106467895203, 'n_seeds': 100, 'ci95': [0.0011958972822400094, 0.003034811017654929]}, 'bce': {'mean': 0.006108537093686208, 'sd': 0.010606762759915619, 'n_seeds': 100, 'ci95': [0.004029611592742746, 0.00818746259462967]}}
+full events {'accepted_retrievals': 1.15, 'rejected_checks': 11.36, 'accepted_with_preboundary_row_observation': 0.23}
+novel_d {'phase28_epistemic_row': {'brier': 0.136771, 'bce': 0.445272}, 'phase25_ungated': {'brier': 0.140989, 'bce': 0.454367}, 'no_memory': {'brier': 0.136677, 'bce': 0.445287}}
+full minus no-memory {'brier': {'mean': 9.42659931592257e-05, 'sd': 0.003034642000233283, 'n_seeds': 100, 'ci95': [-0.0005005238388864977, 0.0006890558252049491]}, 'bce': {'mean': -1.4552403091421252e-05, 'sd': 0.007627762949835511, 'n_seeds': 100, 'ci95': [-0.0015095939412591813, 0.0014804891350763388]}}
+full events {'accepted_retrievals': 0.2, 'rejected_checks': 2.71, 'accepted_with_preboundary_row_observation': 0.06}
+novel_e {'phase28_epistemic_row': {'brier': 0.165755, 'bce': 0.514916}, 'phase25_ungated': {'brier': 0.168669, 'bce': 0.522298}, 'no_memory': {'brier': 0.17119, 'bce': 0.526599}}
+full minus no-memory {'brier': {'mean': -0.005434595067723721, 'sd': 0.006675700119590913, 'n_seeds': 100, 'ci95': [-0.006743032291163541, -0.0041261578442839016]}, 'bce': {'mean': -0.011682503639392904, 'sd': 0.014993601725513932, 'n_seeds': 100, 'ci95': [-0.014621249577593634, -0.008743757701192173]}}
+full events {'accepted_retrievals': 1.44, 'rejected_checks': 5.74, 'accepted_with_preboundary_row_observation': 0.83}
+familiar_return {'phase28_epistemic_row': {'brier': 0.168624, 'bce': 0.520659}, 'phase25_ungated': {'brier': 0.159999, 'bce': 0.50101}, 'no_memory': {'brier': 0.175767, 'bce': 0.5367}}
+full minus no-memory {'brier': {'mean': -0.007143310217735902, 'sd': 0.00316725258868883, 'n_seeds': 100, 'ci95': [-0.007764091725118913, -0.006522528710352892]}, 'bce': {'mean': -0.016041394355706697, 'sd': 0.007407618505866528, 'n_seeds': 100, 'ci95': [-0.017493287582856537, -0.014589501128556857]}}
+full events {'accepted_retrievals': 5.3, 'rejected_checks': 21.12, 'accepted_with_preboundary_row_observation': 2.57}
+early_10 {'phase28_epistemic_row': {'brier': 0.292979, 'bce': 0.821908}, 'phase25_ungated': {'brier': 0.283473, 'bce': 0.80211}, 'no_memory': {'brier': 0.303296, 'bce': 0.844579}}
+full minus no-memory {'brier': {'mean': -0.010316821921397693, 'sd': 0.00617395135506639, 'n_seeds': 100, 'ci95': [-0.011526916386990705, -0.00910672745580468]}, 'bce': {'mean': -0.02267150890442644, 'sd': 0.014702707137074722, 'n_seeds': 100, 'ci95': [-0.025553239503293086, -0.019789778305559794]}}
+full events {'accepted_retrievals': 5.06, 'rejected_checks': 24.96, 'accepted_with_preboundary_row_observation': 3.07}

@@ -1,0 +1,39 @@
+test_B_balanced_not_binomial (__main__.MathematicalChecks.test_B_balanced_not_binomial) ... ok
+test_B_conditional_vs_joint_pass (__main__.MathematicalChecks.test_B_conditional_vs_joint_pass) ... ok
+test_blindness_at_half (__main__.MathematicalChecks.test_blindness_at_half) ... ok
+test_calibration_zero_mean_not_no_variance (__main__.MathematicalChecks.test_calibration_zero_mean_not_no_variance) ... ok
+test_closeness_not_necessary (__main__.MathematicalChecks.test_closeness_not_necessary) ... ok
+test_closeness_sufficient (__main__.MathematicalChecks.test_closeness_sufficient) ... ok
+test_exact_blend_contraction_identity (__main__.MathematicalChecks.test_exact_blend_contraction_identity) ... ok
+test_exact_quoted_numbers (__main__.MathematicalChecks.test_exact_quoted_numbers) ... ok
+test_markov_paths_normalize (__main__.MathematicalChecks.test_markov_paths_normalize) ... ok
+test_missing_row_exponent (__main__.MathematicalChecks.test_missing_row_exponent) ... ok
+test_negative_mean_despite_miscalibration (__main__.MathematicalChecks.test_negative_mean_despite_miscalibration) ... ok
+test_path_flow_and_counterexample_last_outcome (__main__.MathematicalChecks.test_path_flow_and_counterexample_last_outcome) ... ok
+test_surprise_expectation (__main__.MathematicalChecks.test_surprise_expectation) ... ok
+test_surprise_identity (__main__.MathematicalChecks.test_surprise_identity) ... ok
+test_surprise_variance (__main__.MathematicalChecks.test_surprise_variance) ... ok
+test_true_expected_brier_decomposition (__main__.MathematicalChecks.test_true_expected_brier_decomposition) ... ok
+test_calibrated_forecast_can_trigger_full_retrieval_check (__main__.SourceContractChecks.test_calibrated_forecast_can_trigger_full_retrieval_check) ... ok
+test_claimed_necessary_condition_rejects_valid_contraction (__main__.SourceContractChecks.test_claimed_necessary_condition_rejects_valid_contraction) ... ok
+test_cooldown_is_global_step_not_active_row_count (__main__.SourceContractChecks.test_cooldown_is_global_step_not_active_row_count) ... ok
+test_direct_opposite_fast_row_protected (__main__.SourceContractChecks.test_direct_opposite_fast_row_protected) ... ok
+test_empirical_contraction_can_harm_true_risk (__main__.SourceContractChecks.test_empirical_contraction_can_harm_true_risk) ... ok
+test_global_surprise_couples_rows (__main__.SourceContractChecks.test_global_surprise_couples_rows) ... ok
+test_latest_outcome_direction_not_required_for_contraction (__main__.SourceContractChecks.test_latest_outcome_direction_not_required_for_contraction) ... ok
+test_n4_kl_can_accept_or_reject_true_rows (__main__.SourceContractChecks.test_n4_kl_can_accept_or_reject_true_rows) ... ok
+test_original_not_exact_pinned_phase25 (__main__.SourceContractChecks.test_original_not_exact_pinned_phase25) ... ok
+test_p27_count_gate_passes_but_not_discordant_path (__main__.SourceContractChecks.test_p27_count_gate_passes_but_not_discordant_path) ... ok
+test_passed_heuristic_can_move_toward_slow (__main__.SourceContractChecks.test_passed_heuristic_can_move_toward_slow) ... ok
+test_pinned_noise_gate_not_permanently_open (__main__.SourceContractChecks.test_pinned_noise_gate_not_permanently_open) ... ok
+test_positive_carried_surprise_not_reset_by_half (__main__.SourceContractChecks.test_positive_carried_surprise_not_reset_by_half) ... ok
+test_row_buffer_survives_other_row_updates (__main__.SourceContractChecks.test_row_buffer_survives_other_row_updates) ... ok
+test_stale_buffer_first_new_transition_can_retrieve (__main__.SourceContractChecks.test_stale_buffer_first_new_transition_can_retrieve) ... ok
+test_white_noise_half_not_dynamic_fixed_point (__main__.SourceContractChecks.test_white_noise_half_not_dynamic_fixed_point) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.001s
+
+OK
+Wrote results/math_check.json; tests=32; successful=True
+Important: passing counterexample tests refutes guarantees; it does not validate scientific hypotheses.

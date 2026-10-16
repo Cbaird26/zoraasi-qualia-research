@@ -1,0 +1,1761 @@
+{
+  "calibrated_surprise_trigger": {
+    "accepted": 0,
+    "arousal": 0.6921634392651704,
+    "continuity": 0.45749011548373314,
+    "current_outcome": 0,
+    "current_true_row_probability": 0.92,
+    "failed_retrieval_checks": 1,
+    "forecast": 0.92,
+    "interpretation": "The calibrated issued forecast triggers a full retrieval check; all candidates are then rejected.",
+    "scope": "Constructed legal state, not claimed reachable from default initialization.",
+    "surprise": 0.170016
+  },
+  "contraction": {
+    "candidate_closeness": "Sufficient for any fixed 0<w<=1, not necessary when w<1.",
+    "exact_squared_distance_change": "w(c-f)[2(f-m)+w(c-f)]",
+    "not_motion_away_from_slow": {
+      "blended": 0.595,
+      "candidate": 0.7,
+      "fast": 0.4,
+      "mle": 0.75,
+      "new_slow_distance": 0.105,
+      "old_slow_distance": 0.3,
+      "slow": 0.7
+    },
+    "not_necessary": {
+      "blended": 0.5625,
+      "candidate": 0.65,
+      "candidate_distance": 0.15,
+      "fast": 0.4,
+      "mle": 0.5,
+      "new_distance": 0.0625,
+      "old_distance": 0.1,
+      "weight": 0.65
+    },
+    "scope": "Empirical-window contraction need not improve true-regime Brier or BCE.",
+    "strict_contraction_iff": "w(c-f)[2(f-m)+w(c-f)] < 0"
+  },
+  "cross_row_surprise": {
+    "first_row0_forecast": 0.08,
+    "next_row1_forecast": 0.5,
+    "reset_retrievals": 0,
+    "reset_row0_fast": 0.2742854538178361,
+    "reset_row1_fast": 0.601717033701622,
+    "reset_surprise": 0.0,
+    "retained_retrievals": 1,
+    "retained_row0_fast": 0.2742854538178361,
+    "retained_row1_fast": 0.8086009617955678,
+    "retained_surprise": 0.13261248,
+    "row1_local_delta": 0.0,
+    "scope": "Constructed state and one-variable causal intervention, not default-run frequency.",
+    "surprise_from_row0": 0.170016
+  },
+  "fixed_p_half": {
+    "arousal_target": 0.625,
+    "caveat": "Arousal equilibrium conditional on a frozen forecast; positive plasticity makes the forecast leave .5 after each outcome. Phase 2.6 uses different coefficients.",
+    "continuity_if_cosine_one": 0.6537697851298473,
+    "from_arousal_point2_after_one": 0.3275
+  },
+  "interpretation": "Functional forecast-state audit. Statistical compatibility does not establish regime identity or phenomenology.",
+  "missing_row": {
+    "all_six_successes": 0.6063550013440001,
+    "explanation": "Row exposure depends on X0..X5; the final outcome X6 is unrestricted.",
+    "given_initial_one_row0_absent": 0.6590815232000001
+  },
+  "original_vs_pinned": {
+    "complete_forecasts_equal": false,
+    "differing_forecasts": 298,
+    "first_differing_forecast_index": 107,
+    "first_update": {
+      "original_valence": 0.09198812312891187,
+      "pinned_valence": 0.10042008258413551,
+      "same_fast": true
+    },
+    "scope": "One deterministic comparison, not a decomposition of aggregate performance differences.",
+    "seed": 20260921
+  },
+  "pinned_noise_replay": {
+    "block4": {
+      "phase25": {
+        "accepted": 1,
+        "eligible": 18,
+        "trace": [
+          {
+            "accepted": 0,
+            "arousal": 0.38534410577279277,
+            "continuity": 0.46297969871330297,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.09449882039646995,
+            "offset": 0,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5046786437689349,
+            "continuity": 0.50073382424611,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.1888566246612723,
+            "offset": 1,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4883632209440725,
+            "continuity": 0.761173385063898,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3047274728059383,
+            "offset": 2,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.40040568752080713,
+            "continuity": 0.9114166013515291,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8981006363331877,
+            "offset": 3,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4017618520376065,
+            "continuity": 0.7960760376060083,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.262880810091461,
+            "offset": 4,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.33460206669883,
+            "continuity": 0.9240754413988391,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9091922336180545,
+            "offset": 5,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.46542532349186994,
+            "continuity": 0.5208528583988491,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.2341557904772778,
+            "offset": 6,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5446489750319233,
+            "continuity": 0.5623957833875454,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.3334728948328922,
+            "offset": 7,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5539466220368464,
+            "continuity": 0.6747412633094431,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.4379061185206067,
+            "offset": 8,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4372498584152276,
+            "continuity": 0.9247074751216766,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9172833789510801,
+            "offset": 9,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.46001908150943904,
+            "continuity": 0.7271260410255347,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3678584962958971,
+            "offset": 10,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.36658943675062555,
+            "continuity": 0.9384651489655421,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.927250836397914,
+            "offset": 11,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.39668876817726995,
+            "continuity": 0.7603944921690206,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.32080804939022334,
+            "offset": 12,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5141173583876646,
+            "continuity": 0.4518700838127967,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.9344183682742189,
+            "offset": 13,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4598049300140503,
+            "continuity": 0.8408521347062085,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.7979209873237719,
+            "offset": 14,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4510594694128855,
+            "continuity": 0.7833386769603375,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2862583018632551,
+            "offset": 15,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4057818632723902,
+            "continuity": 0.8608697332625093,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8237534221577865,
+            "offset": 16,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.40130944916244193,
+            "continuity": 0.8082220532807886,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.25048376414401763,
+            "offset": 17,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.36317820026293396,
+            "continuity": 0.8748343558648962,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8432327493059892,
+            "offset": 18,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3618738219721628,
+            "continuity": 0.8268138722336511,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.223148614297395,
+            "offset": 19,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3292531429615188,
+            "continuity": 0.8855821904579138,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8585180026515611,
+            "offset": 20,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.33017527775422567,
+            "continuity": 0.8416388109870492,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.20147788729667107,
+            "offset": 21,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.46869766572653726,
+            "continuity": 0.4761079398002646,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.8709062156064175,
+            "offset": 22,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5584152143434612,
+            "continuity": 0.5252632450952353,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.7570227566480071,
+            "offset": 23,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6047278185815373,
+            "continuity": 0.5829647287727698,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.634730604751728,
+            "offset": 24,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6155667819429032,
+            "continuity": 0.6404460464668509,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.5215921442685141,
+            "offset": 25,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6006966273687838,
+            "continuity": 0.6902789074065968,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.42654161749468616,
+            "offset": 26,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5696256414536112,
+            "continuity": 0.7283286829796466,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.35114119507429076,
+            "offset": 27,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5301098497799349,
+            "continuity": 0.7539218235464389,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.29301411115979753,
+            "offset": 28,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6008215450109019,
+            "continuity": 0.5014394008628609,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.24859261143802988,
+            "offset": 29,
+            "previous": 0
+          },
+          {
+            "accepted": 1,
+            "arousal": 0.6558451514685779,
+            "continuity": 0.4959518504807625,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.1837830116555995,
+            "offset": 30,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6874282899382218,
+            "continuity": 0.40560446075071266,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.7384917796755823,
+            "offset": 31,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6459512919618415,
+            "continuity": 0.6073741091058377,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.40722250349740985,
+            "offset": 32,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.671771595914903,
+            "continuity": 0.4754689092087306,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.3284037677743792,
+            "offset": 33,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.637335329388609,
+            "continuity": 0.6563166980909378,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.5838875500003737,
+            "offset": 34,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5910791973461637,
+            "continuity": 0.6996509102576849,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.6630819932546436,
+            "offset": 35,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5404361743694319,
+            "continuity": 0.7390046826572714,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.7214593917226517,
+            "offset": 36,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.49028650865940926,
+            "continuity": 0.7732741366488016,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.7646902349126401,
+            "offset": 37,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5771291728945966,
+            "continuity": 0.48410332937938105,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.79715645493585,
+            "offset": 38,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5833421849545838,
+            "continuity": 0.6603837727386079,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.4649670083749569,
+            "offset": 39,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5672711083126666,
+            "continuity": 0.6976571345683963,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.38570524316263416,
+            "offset": 40,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5375858360300722,
+            "continuity": 0.7279568586829359,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3221810831076616,
+            "offset": 41,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5009992182716386,
+            "continuity": 0.752922378415545,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.27249833013239616,
+            "offset": 42,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4621878224620045,
+            "continuity": 0.7742576854514521,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.23391346148086825,
+            "offset": 43,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.557384026135773,
+            "continuity": 0.47938198446603403,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.20382832653496658,
+            "offset": 44,
+            "previous": 0
+          }
+        ]
+      },
+      "phase26": {
+        "accepted": 3,
+        "eligible": 17,
+        "trace": [
+          {
+            "accepted": 0,
+            "arousal": 0.44064919819390036,
+            "continuity": 0.46375127680504624,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.16523388870081626,
+            "offset": 0,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5278884584404326,
+            "continuity": 0.5484360492495601,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.3765034815914576,
+            "offset": 1,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5560486934463544,
+            "continuity": 0.6243106170829864,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.5105125658322537,
+            "offset": 2,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.43015933253629474,
+            "continuity": 0.8935989817292997,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8839896968991225,
+            "offset": 3,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4645336935513102,
+            "continuity": 0.6870380635788248,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.4156247952318158,
+            "offset": 4,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3645103727981742,
+            "continuity": 0.9103180638484053,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8965322227808286,
+            "offset": 5,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4837445123857665,
+            "continuity": 0.551335461259213,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.35262303564132197,
+            "offset": 6,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5261741015872784,
+            "continuity": 0.6193356579933025,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.49375699705751985,
+            "offset": 7,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5740486325091264,
+            "continuity": 0.5893439228113222,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.5837859904135742,
+            "offset": 8,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4329636056192853,
+            "continuity": 0.9135233805975752,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9019834373303866,
+            "offset": 9,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4791046185700416,
+            "continuity": 0.6625759566855475,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.45731004767968947,
+            "offset": 10,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.36396647680391575,
+            "continuity": 0.9272919167803385,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9161915043329965,
+            "offset": 11,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4109188992221181,
+            "continuity": 0.7074784049330481,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.3826690027659266,
+            "offset": 12,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5529671301697754,
+            "continuity": 0.4335364530304469,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.9238222597216215,
+            "offset": 13,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.53265133024929,
+            "continuity": 0.7100255922458526,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.6207289123348925,
+            "offset": 14,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5033257955568726,
+            "continuity": 0.7416848918423231,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3318729736848256,
+            "offset": 15,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4780599472887125,
+            "continuity": 0.7530581251021743,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.685619335975044,
+            "offset": 16,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.45010959469697004,
+            "continuity": 0.7729492554205435,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2829068796648726,
+            "offset": 17,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4273699447575185,
+            "continuity": 0.7811262857544794,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.7292210738789611,
+            "offset": 18,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.40332606834304774,
+            "continuity": 0.7963636718469854,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2467998286261307,
+            "offset": 19,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3842686052178963,
+            "continuity": 0.8028745484778335,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.7618798298460564,
+            "offset": 20,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.36423106937867344,
+            "continuity": 0.8154394515552615,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.21912944976689558,
+            "offset": 21,
+            "previous": 1
+          },
+          {
+            "accepted": 1,
+            "arousal": 0.5094549833018657,
+            "continuity": 0.4922381831034135,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.7872860775514936,
+            "offset": 22,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5825074925454783,
+            "continuity": 0.5427905493878614,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.668644132204579,
+            "offset": 23,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5917113242402747,
+            "continuity": 0.629599683867884,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.5110939813207602,
+            "offset": 24,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.565719470436385,
+            "continuity": 0.6953562962209934,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.4035620636669301,
+            "offset": 25,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5251548694685418,
+            "continuity": 0.7406337943847321,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3328282760289605,
+            "offset": 26,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4803138313921385,
+            "continuity": 0.7730649515924083,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.28181798816203124,
+            "offset": 27,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4365501546997906,
+            "continuity": 0.7960823070082881,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.24377712323186868,
+            "offset": 28,
+            "previous": 0
+          },
+          {
+            "accepted": 1,
+            "arousal": 0.5561858407557916,
+            "continuity": 0.49092610581480384,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.2145774215488177,
+            "offset": 29,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6106877017926526,
+            "continuity": 0.3991286731660212,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.3417356854619657,
+            "offset": 30,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6132073162705438,
+            "continuity": 0.5244526620143748,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.5227311012763634,
+            "offset": 31,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5254035351422908,
+            "continuity": 0.6663472147572133,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.250074977784736,
+            "offset": 32,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6139682611709596,
+            "continuity": 0.4851485271941025,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.2143912431502692,
+            "offset": 33,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6353536473889244,
+            "continuity": 0.5534967458340347,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.3987112227140138,
+            "offset": 34,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6127960552370879,
+            "continuity": 0.6198297764536883,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.5354628321278658,
+            "offset": 35,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5701192805444701,
+            "continuity": 0.6745153203677482,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.6250257410767075,
+            "offset": 36,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5201369132166286,
+            "continuity": 0.72103842751144,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.6893421869947869,
+            "offset": 37,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6023852772330587,
+            "continuity": 0.5127904696503791,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.7355791923623718,
+            "offset": 38,
+            "previous": 1
+          },
+          {
+            "accepted": 1,
+            "arousal": 0.5858724925120223,
+            "continuity": 0.6568623768777704,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.44610659454152446,
+            "offset": 39,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.510196119517873,
+            "continuity": 0.7222084872102519,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.25665405415750764,
+            "offset": 40,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.44678034602878913,
+            "continuity": 0.751923893058044,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.220837013445463,
+            "offset": 41,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3945595933268778,
+            "continuity": 0.7776030868116954,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.1943512946772088,
+            "offset": 42,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3518378169176182,
+            "continuity": 0.7999608680154601,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.17395407334248844,
+            "offset": 43,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5085519865713972,
+            "continuity": 0.46855794708323956,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.15770997186521535,
+            "offset": 44,
+            "previous": 0
+          }
+        ]
+      },
+      "phase27": {
+        "accepted": 1,
+        "eligible": 19,
+        "trace": [
+          {
+            "accepted": 0,
+            "arousal": 0.3984614168613223,
+            "continuity": 0.47527532223156976,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.12686196750064876,
+            "offset": 0,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5113138955540317,
+            "continuity": 0.5155327538928941,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.22137491016644387,
+            "offset": 1,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5021013995359792,
+            "continuity": 0.7456969293281609,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.33436581495887885,
+            "offset": 2,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4072122761039042,
+            "continuity": 0.9188694536664388,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9041553460371916,
+            "offset": 3,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4144508436816011,
+            "continuity": 0.781796323889118,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.28689543451302785,
+            "offset": 4,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.34080794095278133,
+            "continuity": 0.9296733422670113,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9147912471730685,
+            "offset": 5,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.46768815419364523,
+            "continuity": 0.530414042579588,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.2544067824681372,
+            "offset": 6,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5434246639063766,
+            "continuity": 0.5729460989769523,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.35165485167774935,
+            "offset": 7,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.556833832526771,
+            "continuity": 0.6696451951035693,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.45296052042288687,
+            "offset": 8,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4367010915044438,
+            "continuity": 0.9315375003284955,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9225369638911045,
+            "offset": 9,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4630555096297878,
+            "continuity": 0.7212264711139583,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3800417106253966,
+            "offset": 10,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.36639232243263564,
+            "continuity": 0.9430933858680666,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.9318576822069616,
+            "offset": 11,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.39966160720504174,
+            "continuity": 0.7543737069521099,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3310535358282864,
+            "offset": 12,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5159237281447101,
+            "continuity": 0.4503240363361007,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.9385673021062038,
+            "offset": 13,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4599604373488873,
+            "continuity": 0.8435889998855783,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.800881377358419,
+            "offset": 14,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.45400970054182377,
+            "continuity": 0.7778482610930337,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2950953360255347,
+            "offset": 15,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.40682879866440025,
+            "continuity": 0.8627160610873473,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8263455428095028,
+            "offset": 16,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.40458571434649176,
+            "continuity": 0.8030234970541275,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.25793238305141103,
+            "offset": 17,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3645076653088733,
+            "continuity": 0.8762086112562921,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8455951906180051,
+            "offset": 18,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.3650858085678472,
+            "continuity": 0.8220165849581864,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.22952118412075376,
+            "offset": 19,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.33057792149407117,
+            "continuity": 0.8867175287418797,
+            "current": 1,
+            "eligible": 0,
+            "forecast": 0.8607114727635377,
+            "offset": 20,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.33316189906639365,
+            "continuity": 0.837267719961536,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.20701126873990766,
+            "offset": 21,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4708241500469851,
+            "continuity": 0.4749911868438783,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.8729606762127294,
+            "offset": 22,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5600228421571591,
+            "continuity": 0.5246136663305246,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.7581938355084129,
+            "offset": 23,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6059438067047199,
+            "continuity": 0.5827336280187901,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.6352797140630538,
+            "offset": 24,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6164542207452253,
+            "continuity": 0.6405351864263634,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.5217602566035139,
+            "offset": 25,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6013092456856821,
+            "continuity": 0.6905367549262887,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.4265082020990972,
+            "offset": 26,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5700186248834809,
+            "continuity": 0.7285881393054268,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3510181991822347,
+            "offset": 27,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5303362510493388,
+            "continuity": 0.7540583945095257,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2928621268019684,
+            "offset": 28,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6009960258635949,
+            "continuity": 0.5012909089150521,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.24844062177679777,
+            "offset": 29,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6556487246134242,
+            "continuity": 0.4981186381941401,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.18865229311591253,
+            "offset": 30,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6073671365046069,
+            "continuity": 0.6932479497834481,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3486586583343416,
+            "offset": 31,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5828925215087447,
+            "continuity": 0.7002645567660476,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.3813771607628934,
+            "offset": 32,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6293627533512152,
+            "continuity": 0.5310140660446584,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.31642666702503713,
+            "offset": 33,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6659443323638002,
+            "continuity": 0.5396095759302487,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.28617407779848997,
+            "offset": 34,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6683981527308411,
+            "continuity": 0.5876563791437359,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.429737754990799,
+            "offset": 35,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6448243564677939,
+            "continuity": 0.6324264782004619,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.5449613051497184,
+            "offset": 36,
+            "previous": 1
+          },
+          {
+            "accepted": 1,
+            "arousal": 0.6051224278088021,
+            "continuity": 0.6768835038868423,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.6328421402963161,
+            "offset": 37,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6609726193376696,
+            "continuity": 0.4249846162865342,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.8625143328967625,
+            "offset": 38,
+            "previous": 1
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.6330227960657162,
+            "continuity": 0.6544062908534524,
+            "current": 0,
+            "eligible": 1,
+            "forecast": 0.42865452155246225,
+            "offset": 39,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5912669283975573,
+            "continuity": 0.6908090655032657,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.34776375244695695,
+            "offset": 40,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5434792341223589,
+            "continuity": 0.7207431158556739,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2874834220388332,
+            "offset": 41,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.4949560895200743,
+            "continuity": 0.746665613686917,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.2425578591638927,
+            "offset": 42,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.44885449248543036,
+            "continuity": 0.7699197426734578,
+            "current": 0,
+            "eligible": 0,
+            "forecast": 0.20870932800050285,
+            "offset": 43,
+            "previous": 0
+          },
+          {
+            "accepted": 0,
+            "arousal": 0.5495319670874772,
+            "continuity": 0.4613294887368864,
+            "current": 1,
+            "eligible": 1,
+            "forecast": 0.18277610573276862,
+            "offset": 44,
+            "previous": 0
+          }
+        ]
+      }
+    },
+    "initialization": "True A parameters, matching the supplied Phase 2.8 setup.",
+    "scope": "One original-seed mixed schedule replay with pinned implementations; not an estimate across seeds.",
+    "seed": 20260921,
+    "stream_sha256": "60cd511b661f1b87606ee24474442e2340b4be98ced0a47a747ecccb29980fd7"
+  },
+  "proposed_phase27_counterexample": {
+    "blended_p11": 0.808,
+    "candidate_ll": -1.9349961785411274,
+    "claim_conflict": "All realizable paths end in 1, inconsistent with the asserted current 1->0 discordance. The supplied test substitutes row counts (3,1).",
+    "counts": [
+      4,
+      0,
+      1,
+      1
+    ],
+    "distance": 0.23086792761230399,
+    "fast_ll": -3.6447722378488865,
+    "phase27_count_gate_passes": true,
+    "realizable_paths": [
+      "0011111"
+    ],
+    "row0_kl": 0.10758769083251637,
+    "row1_kl": 0.002533339084523297,
+    "slow_ll": -2.9073048163460617
+  },
+  "quoted_kl": {
+    "KL_0_375_to_0_15": 0.15143108711033282,
+    "KL_0_5_to_0_28": 0.10758769083251637,
+    "KL_0_625_to_0_85": 0.1514310871103327
+  },
+  "row_gate_counts_at_n4": {
+    "0.15": [
+      0
+    ],
+    "0.28": [
+      1
+    ],
+    "0.85": [
+      4
+    ],
+    "0.92": [
+      4
+    ]
+  },
+  "source_sha256": {
+    "original/phase2_8_row_factored_epistemic_gate.py": "0c9a70845b9279d8fc5ca9c430e3d1d276bdd941c4990b17d9091729383d78b9",
+    "reference/phase25_suite.py": "b2f0ee61709ac2381d77d11e85d35f392e550ef21522b95e1abf73108a030aa2",
+    "reference/phase26_engine.py": "4f78a84cc5844600e77384809e6a63dcaa760bb93a472524f8333b3c2506cdca",
+    "reference/phase27_engine.py": "21e6491b35f8fc17ac81dae759605cb659515147716952ba020bf111e7a87872"
+  },
+  "stale_buffer": {
+    "alternate_calibrated_q_half_expected_brier_change": 0.08479043212231757,
+    "arousal_after": 0.6425,
+    "continuity_after": 0.6537697851298472,
+    "cooldown_after": [
+      0,
+      12
+    ],
+    "empirical_mle": 1.0,
+    "empirical_squared_error_change": -0.1257266250461459,
+    "forecast_before_update": 0.5,
+    "new_outcome_probability": 0.15,
+    "new_regime_row_probability": 0.15,
+    "new_row_observations": 1,
+    "old_row_observations": 3,
+    "opposite_fast": 0.5,
+    "opposite_fast_control": 0.5,
+    "post_base_fast": 0.5961276043562102,
+    "post_retrieval_fast": 0.8066446615246736,
+    "retrieved": 1,
+    "row_buffer": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "scope": "Constructed legal state, not asserted reachable from default initialization.",
+    "surprise_after": 0.15600000000000003,
+    "true_conditional_expected_brier_change": 0.23215237214024198
+  },
+  "status": "passed",
+  "surprise": {
+    "calibrated_p92_delta_on_zero": 0.7728,
+    "calibrated_p92_ema_after_one_zero": 0.170016,
+    "caveat": "Fixed-p EMA formula and one-outcome surprise event are not full-engine retrieval rates.",
+    "ema_coefficient_in_code": 0.22,
+    "ema_coefficient_in_prose": 0.25,
+    "event_probability": 0.08,
+    "expectation": "E_q delta=(q-p)(1-2p)",
+    "fixed_iid_calibrated_p92_stationary_ema_variance": 0.0064185815730337095,
+    "identity": "delta=(Y-p)(1-2p)",
+    "negative_mean_despite_miscalibration": {
+      "mean": -0.064,
+      "p": 0.6,
+      "q": 0.92
+    },
+    "p_half_delta_both_outcomes": [
+      0.0,
+      0.0
+    ],
+    "threshold": 0.08,
+    "variance": "q(1-q)(1-2p)^2"
+  },
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "mathematical_methods": 16,
+    "run": 32,
+    "source_contract_methods": 16
+  },
+  "window_enumeration": {
+    "A_initial_one": {
+      "compatible_paths": [
+        {
+          "counts": [
+            2,
+            0,
+            1,
+            3
+          ],
+          "path": "0000111",
+          "probability": 0.0
+        },
+        {
+          "counts": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "path": "0001111",
+          "probability": 0.0
+        },
+        {
+          "counts": [
+            4,
+            0,
+            1,
+            1
+          ],
+          "path": "0011111",
+          "probability": 0.0
+        }
+      ],
+      "parameters": {
+        "p01": 0.28,
+        "p11": 0.92,
+        "q0": 1.0
+      },
+      "probabilities": {
+        "balanced": 0.06197903359999997,
+        "balanced_compatible": 0.0,
+        "balanced_row1_one_success": 0.007122124799999994,
+        "compatible": 0.0,
+        "compatible_given_balanced": 0.0,
+        "either_row_absent": 0.6590815232000001,
+        "row0_absent": 0.6590815232000001,
+        "row1_one_success_given_balanced": 0.11491184012265718,
+        "total": 0.9999999999999999
+      }
+    },
+    "A_stationary": {
+      "compatible_paths": [
+        {
+          "counts": [
+            2,
+            0,
+            1,
+            3
+          ],
+          "path": "0000111",
+          "probability": 0.019657064448000004
+        },
+        {
+          "counts": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "path": "0001111",
+          "probability": 0.025117360128000005
+        },
+        {
+          "counts": [
+            4,
+            0,
+            1,
+            1
+          ],
+          "path": "0011111",
+          "probability": 0.032094404608000004
+        }
+      ],
+      "parameters": {
+        "p01": 0.28,
+        "p11": 0.92,
+        "q0": 0.7777777777777778
+      },
+      "probabilities": {
+        "balanced": 0.08550372693333334,
+        "balanced_compatible": 0.025117360128000005,
+        "balanced_row1_one_success": 0.006068753749333328,
+        "compatible": 0.07686882918400001,
+        "compatible_given_balanced": 0.29375748904587323,
+        "either_row_absent": 0.555617132088889,
+        "row0_absent": 0.5126189624888889,
+        "row1_one_success_given_balanced": 0.07097648216042199,
+        "total": 1.0000000000000002
+      }
+    },
+    "B_stationary": {
+      "compatible_paths": [
+        {
+          "counts": [
+            0,
+            2,
+            3,
+            1
+          ],
+          "path": "0010101",
+          "probability": 0.0332778984375
+        },
+        {
+          "counts": [
+            0,
+            2,
+            3,
+            1
+          ],
+          "path": "0100101",
+          "probability": 0.0332778984375
+        },
+        {
+          "counts": [
+            0,
+            2,
+            3,
+            1
+          ],
+          "path": "0101001",
+          "probability": 0.0332778984375
+        },
+        {
+          "counts": [
+            0,
+            3,
+            3,
+            0
+          ],
+          "path": "0101010",
+          "probability": 0.18857475781249994
+        },
+        {
+          "counts": [
+            0,
+            3,
+            3,
+            0
+          ],
+          "path": "1010101",
+          "probability": 0.18857475781249994
+        },
+        {
+          "counts": [
+            1,
+            3,
+            2,
+            0
+          ],
+          "path": "1010110",
+          "probability": 0.033277898437499995
+        },
+        {
+          "counts": [
+            1,
+            3,
+            2,
+            0
+          ],
+          "path": "1011010",
+          "probability": 0.033277898437499995
+        },
+        {
+          "counts": [
+            1,
+            3,
+            2,
+            0
+          ],
+          "path": "1101010",
+          "probability": 0.0332778984375
+        }
+      ],
+      "parameters": {
+        "p01": 0.85,
+        "p11": 0.15,
+        "q0": 0.5
+      },
+      "probabilities": {
+        "balanced": 0.6608856249999998,
+        "balanced_compatible": 0.3771495156249999,
+        "balanced_row1_one_success": 0.17652255468749992,
+        "compatible": 0.5768169062499998,
+        "compatible_given_balanced": 0.5706728991495313,
+        "either_row_absent": 7.593750000000002e-05,
+        "row0_absent": 3.796874999999999e-05,
+        "row1_one_success_given_balanced": 0.2671000064307647,
+        "total": 0.9999999999999991
+      }
+    }
+  }
+}

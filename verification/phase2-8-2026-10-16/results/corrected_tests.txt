@@ -1,0 +1,26 @@
+test_counter_partition_step_events_and_bounds (__main__.TestPhase28.test_counter_partition_step_events_and_bounds) ... ok
+test_cross_row_write_ablation_changes_both_rows_only_at_retrieval (__main__.TestPhase28.test_cross_row_write_ablation_changes_both_rows_only_at_retrieval) ... ok
+test_directional_rule_and_actual_convex_contraction (__main__.TestPhase28.test_directional_rule_and_actual_convex_contraction) ... ok
+test_exact_pinned_phase25_forecasts_and_predictive_states (__main__.TestPhase28.test_exact_pinned_phase25_forecasts_and_predictive_states) ... ok
+test_exact_source_replay_all_three_modes (__main__.TestPhase28.test_exact_source_replay_all_three_modes) ... ok
+test_flags_are_separate_and_fast_advantage_always_required (__main__.TestPhase28.test_flags_are_separate_and_fast_advantage_always_required) ... ok
+test_flags_do_not_change_phase25_or_no_memory (__main__.TestPhase28.test_flags_do_not_change_phase25_or_no_memory) ... ok
+test_future_suffix_does_not_change_prefix_predictions_or_state (__main__.TestPhase28.test_future_suffix_does_not_change_prefix_predictions_or_state) ... ok
+test_gate_boundaries_and_exact_minimum_row_count (__main__.TestPhase28.test_gate_boundaries_and_exact_minimum_row_count) ... ok
+test_global_cooldown_expiry_and_active_row_independence (__main__.TestPhase28.test_global_cooldown_expiry_and_active_row_independence) ... ok
+test_invalid_inputs_reject_before_any_mutation (__main__.TestPhase28.test_invalid_inputs_reject_before_any_mutation) ... ok
+test_known_metrics_and_validation (__main__.TestPhase28.test_known_metrics_and_validation) ... ok
+test_neutral_initialization_and_zero_memory (__main__.TestPhase28.test_neutral_initialization_and_zero_memory) ... ok
+test_pre_outcome_marginal_scoring (__main__.TestPhase28.test_pre_outcome_marginal_scoring) ... ok
+test_prediction_is_pure_and_current_outcome_cannot_change_it (__main__.TestPhase28.test_prediction_is_pure_and_current_outcome_cannot_change_it) ... ok
+test_reset_restores_all_learned_state_and_isolation (__main__.TestPhase28.test_reset_restores_all_learned_state_and_isolation) ... ok
+test_row_buffer_indices_ages_and_no_implicit_epoch_reset (__main__.TestPhase28.test_row_buffer_indices_ages_and_no_implicit_epoch_reset) ... ok
+test_row_retrieval_changes_only_active_row_and_exposes_snapshot (__main__.TestPhase28.test_row_retrieval_changes_only_active_row_and_exposes_snapshot) ... ok
+test_storage_is_phase25_rule_and_capacity_has_no_eviction (__main__.TestPhase28.test_storage_is_phase25_rule_and_capacity_has_no_eviction) ... ok
+test_surprise_expectation_is_not_squared_calibration_error (__main__.TestPhase28.test_surprise_expectation_is_not_squared_calibration_error) ... ok
+test_surprise_uses_original_forecast_and_global_ema (__main__.TestPhase28.test_surprise_uses_original_forecast_and_global_ema) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.211s
+
+OK

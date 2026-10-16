@@ -1,0 +1,21 @@
+test_epistemic_surprise_vanishes_in_calibrated_white_noise (__main__.TestPhase28CounterexamplesAndInvariants.test_epistemic_surprise_vanishes_in_calibrated_white_noise)
+Verifies that at p_pred = 0.50 in Novel Regime C (0.50, 0.50), ... ok
+test_phase27_rollback_counterexample_blocked_by_directional_contraction (__main__.TestPhase28CounterexamplesAndInvariants.test_phase27_rollback_counterexample_blocked_by_directional_contraction)
+Constructs the exact counterexample where Phase 2.7's distance check ... ok
+test_row_factored_gate_protects_block4_white_noise (__main__.TestPhase28CounterexamplesAndInvariants.test_row_factored_gate_protects_block4_white_noise) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.142s
+
+OK
+=== Phase 2.8 Primary Seed Bank (100 Seeds, Base Learner & Storage Frozen) ===
+phase28_epistemic_row  | Overall BS: 0.174944 | Familiar BS: 0.169451 | Novel BS: 0.198853 | Novel BCE: 0.588405 | Block4 BS: 0.283783
+phase25_ungated        | Overall BS: 0.173078 | Familiar BS: 0.161575 | Novel BS: 0.203594 | Novel BCE: 0.600156 | Block4 BS: 0.290938
+no_memory              | Overall BS: 0.178308 | Familiar BS: 0.176210 | Novel BS: 0.200152 | Novel BCE: 0.590893 | Block4 BS: 0.282468
+
+=== Phase 2.8 Follow-Up Seed Bank (100 Seeds, Seed Start + 100) ===
+phase28_epistemic_row  | Overall BS: 0.172711 | Familiar BS: 0.168624 | Novel BS: 0.196909 | Novel BCE: 0.583223 | Block4 BS: 0.288201
+phase25_ungated        | Overall BS: 0.170457 | Familiar BS: 0.159999 | Novel BS: 0.201545 | Novel BCE: 0.595165 | Block4 BS: 0.294978
+no_memory              | Overall BS: 0.176189 | Familiar BS: 0.175767 | Novel BS: 0.197984 | Novel BCE: 0.585085 | Block4 BS: 0.286086
+
+Running deterministic Phase 2.8 counterexample and invariant tests...
