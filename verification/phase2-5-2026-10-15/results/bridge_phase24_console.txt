@@ -1,0 +1,108 @@
+test recurrent_45
+  phase24_full               Brier=0.176941 BCE=0.535414
+  phase24_no_self            Brier=0.163085 BCE=0.507599
+  phase25_legacy_order       Brier=0.160373 BCE=0.502584
+  phase25_corrected          Brier=0.160388 BCE=0.502727
+  phase24_no_self_minus_full: -0.013856 [-0.015160866520440235, -0.012551397444866295]
+  phase25_corrected_minus_phase24_full: -0.016552 [-0.01785221172294551, -0.015252615103539048]
+  phase25_corrected_minus_phase24_no_self: -0.002696 [-0.0030954337421197197, -0.002297129119058311]
+  phase25_corrected_minus_legacy_order: +0.000015 [-0.00016662001317945896, 0.00019750450845817025]
+test familiar_novel
+  phase24_full               Brier=0.183380 BCE=0.549187
+  phase24_no_self            Brier=0.174644 BCE=0.532270
+  phase25_legacy_order       Brier=0.173229 BCE=0.530179
+  phase25_corrected          Brier=0.173311 BCE=0.530427
+  phase24_no_self_minus_full: -0.008736 [-0.009842868771545301, -0.007630124795340986]
+  phase25_corrected_minus_phase24_full: -0.010069 [-0.01121634585015933, -0.008922434259560316]
+  phase25_corrected_minus_phase24_no_self: -0.001333 [-0.0018420350946386913, -0.000823751448194668]
+  phase25_corrected_minus_legacy_order: +0.000082 [-9.603285838593706e-05, 0.00025986108001136815]
+test unseen_random
+  phase24_full               Brier=0.251774 BCE=0.700172
+  phase24_no_self            Brier=0.211922 BCE=0.618667
+  phase25_legacy_order       Brier=0.211709 BCE=0.620282
+  phase25_corrected          Brier=0.212047 BCE=0.621049
+  phase24_no_self_minus_full: -0.039852 [-0.044399214903147334, -0.03530481555384205]
+  phase25_corrected_minus_phase24_full: -0.039727 [-0.04431239365036367, -0.03514215130285221]
+  phase25_corrected_minus_phase24_no_self: +0.000125 [-0.00035023000144016286, 0.0005997155052136684]
+  phase25_corrected_minus_legacy_order: +0.000338 [7.431714504750988e-05, 0.0006022768404000146]
+test stationary_a
+  phase24_full               Brier=0.118349 BCE=0.392163
+  phase24_no_self            Brier=0.108730 BCE=0.372111
+  phase25_legacy_order       Brier=0.109422 BCE=0.374613
+  phase25_corrected          Brier=0.109452 BCE=0.374690
+  phase24_no_self_minus_full: -0.009620 [-0.010579246789604854, -0.008659925233514568]
+  phase25_corrected_minus_phase24_full: -0.008897 [-0.009889775187460571, -0.007904037452317929]
+  phase25_corrected_minus_phase24_no_self: +0.000723 [0.0005757315736822021, 0.0008696278096587209]
+  phase25_corrected_minus_legacy_order: +0.000031 [-3.87024544826131e-05, 0.00010005308274739692]
+test recurrent_q0_zero
+  phase24_full               Brier=0.178252 BCE=0.538428
+  phase24_no_self            Brier=0.163891 BCE=0.509636
+  phase25_legacy_order       Brier=0.161294 BCE=0.504923
+  phase25_corrected          Brier=0.161277 BCE=0.504886
+  phase24_no_self_minus_full: -0.014361 [-0.015730327328482858, -0.012992001597475426]
+  phase25_corrected_minus_phase24_full: -0.016975 [-0.0183215958412154, -0.015628046208105012]
+  phase25_corrected_minus_phase24_no_self: -0.002614 [-0.003014462762658711, -0.002212850360703416]
+  phase25_corrected_minus_legacy_order: -0.000017 [-0.000178201635525402, 0.00014494035286476825]
+test recurrent_q0_half
+  phase24_full               Brier=0.177666 BCE=0.537142
+  phase24_no_self            Brier=0.163560 BCE=0.508845
+  phase25_legacy_order       Brier=0.160908 BCE=0.503944
+  phase25_corrected          Brier=0.160877 BCE=0.503917
+  phase24_no_self_minus_full: -0.014106 [-0.0154080031235978, -0.012803534506265287]
+  phase25_corrected_minus_phase24_full: -0.016789 [-0.01806606935595489, -0.015512790691998997]
+  phase25_corrected_minus_phase24_no_self: -0.002684 [-0.0030877008552659324, -0.0022796215628248673]
+  phase25_corrected_minus_legacy_order: -0.000032 [-0.00021774027768536034, 0.00015473090046515416]
+followup recurrent_45
+  phase24_full               Brier=0.177882 BCE=0.537906
+  phase24_no_self            Brier=0.164084 BCE=0.509771
+  phase25_legacy_order       Brier=0.161406 BCE=0.504701
+  phase25_corrected          Brier=0.161350 BCE=0.504598
+  phase24_no_self_minus_full: -0.013799 [-0.014985012720255347, -0.012612176574693146]
+  phase25_corrected_minus_phase24_full: -0.016533 [-0.017688831420920276, -0.015376758773742038]
+  phase25_corrected_minus_phase24_no_self: -0.002734 [-0.003067247939195609, -0.0024011529605182103]
+  phase25_corrected_minus_legacy_order: -0.000056 [-0.00019630914401228894, 8.385496718912043e-05]
+followup familiar_novel
+  phase24_full               Brier=0.182711 BCE=0.547920
+  phase24_no_self            Brier=0.174499 BCE=0.531982
+  phase25_legacy_order       Brier=0.173112 BCE=0.529828
+  phase25_corrected          Brier=0.173181 BCE=0.530082
+  phase24_no_self_minus_full: -0.008212 [-0.009193551486809252, -0.007230385383552503]
+  phase25_corrected_minus_phase24_full: -0.009530 [-0.010602569681483478, -0.008457751232397623]
+  phase25_corrected_minus_phase24_no_self: -0.001318 [-0.0017624362748037787, -0.0008739477687155671]
+  phase25_corrected_minus_legacy_order: +0.000069 [-0.00012188585471240291, 0.0002597744841351656]
+followup unseen_random
+  phase24_full               Brier=0.244981 BCE=0.685697
+  phase24_no_self            Brier=0.209562 BCE=0.612866
+  phase25_legacy_order       Brier=0.209845 BCE=0.615378
+  phase25_corrected          Brier=0.210047 BCE=0.615979
+  phase24_no_self_minus_full: -0.035420 [-0.03894522984622948, -0.031894169638731505]
+  phase25_corrected_minus_phase24_full: -0.034934 [-0.038497865744435804, -0.03137028121501955]
+  phase25_corrected_minus_phase24_no_self: +0.000486 [2.662407395982204e-05, 0.0009446284515458016]
+  phase25_corrected_minus_legacy_order: +0.000202 [-2.8992620056062684e-05, 0.0004335573928135574]
+followup stationary_a
+  phase24_full               Brier=0.117184 BCE=0.389024
+  phase24_no_self            Brier=0.108013 BCE=0.369709
+  phase25_legacy_order       Brier=0.108835 BCE=0.372494
+  phase25_corrected          Brier=0.108861 BCE=0.372551
+  phase24_no_self_minus_full: -0.009171 [-0.009953028322011448, -0.008389169086727051]
+  phase25_corrected_minus_phase24_full: -0.008322 [-0.009146579529339813, -0.00749838616947946]
+  phase25_corrected_minus_phase24_no_self: +0.000849 [0.000697660104012566, 0.000999571605906659]
+  phase25_corrected_minus_legacy_order: +0.000026 [-3.839990552513012e-05, 9.10871785137678e-05]
+followup recurrent_q0_zero
+  phase24_full               Brier=0.179079 BCE=0.540657
+  phase24_no_self            Brier=0.164823 BCE=0.511680
+  phase25_legacy_order       Brier=0.162196 BCE=0.506697
+  phase25_corrected          Brier=0.161997 BCE=0.506280
+  phase24_no_self_minus_full: -0.014256 [-0.01543762548896913, -0.013074225124308286]
+  phase25_corrected_minus_phase24_full: -0.017082 [-0.018178902773646748, -0.015984882864349827]
+  phase25_corrected_minus_phase24_no_self: -0.002826 [-0.003160959301103808, -0.0024909757236153485]
+  phase25_corrected_minus_legacy_order: -0.000199 [-0.0003681570299617409, -2.9253836834716756e-05]
+followup recurrent_q0_half
+  phase24_full               Brier=0.178592 BCE=0.539535
+  phase24_no_self            Brier=0.164502 BCE=0.510861
+  phase25_legacy_order       Brier=0.161804 BCE=0.505735
+  phase25_corrected          Brier=0.161649 BCE=0.505406
+  phase24_no_self_minus_full: -0.014090 [-0.015287282424903193, -0.012893159411021425]
+  phase25_corrected_minus_phase24_full: -0.016943 [-0.018072122552253076, -0.01581405982102062]
+  phase25_corrected_minus_phase24_no_self: -0.002853 [-0.003191980433930108, -0.002513760103418973]
+  phase25_corrected_minus_legacy_order: -0.000155 [-0.00030534467730947634, -5.368348972407239e-06]

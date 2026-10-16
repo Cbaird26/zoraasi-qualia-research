@@ -1,0 +1,195 @@
+PHASE 2.5 ROOT-CAUSE CLAIMS A-C: INDEPENDENT AUDIT
+
+Executed checks
+---------------
+review/math_check.py ran successfully: 11 mathematical unittest methods passed.
+They cover exhaustive own/donor paths for all four initializations, transition
+recursion, stationary reset formulas, pointwise limits, quadratic crossover
+reconstruction and signs, metric-specific rank reversal, blend algebra, and the
+effect of scoring an online marginal after updating on the scored label.
+
+Two separate actual-code chronology checks passed against the uploaded Phase
+2.5 source. One actual-code Phase 2.4 stored-continuity check passed across 256
+binary paths and 1,792 paired transitions. These three mechanism checks are
+reported separately, not counted as additional unittest methods.
+
+Command (run from the common project working directory):
+python3 outputs/qualia-phase25-verification-2026-10-15/review/math_check.py \
+  --phase24-source outputs/qualia-verification-2026-10-15/corrected/phase2_4_functional_state_engine.py
+
+Full output: results/math_check.log. Exact values: results/math_check.json.
+The script itself has no third-party dependencies. Without --phase24-source it
+skips the prior-engine check; its math and bundled Phase 2.5 checks still run.
+No original or previously verified file was modified.
+
+A. Static-prior arbitration: plausible mechanism, incomplete causal diagnosis
+----------------------------------------------------------------------------
+The formula describing the old blend is correct: p=w f+(1-w)m. But the cited
+0.185283 versus 0.172124 results came from the corrected benchmark, whose m was
+estimated from independent training trials, not fixed exactly at 7/9. The earlier
+uploaded engine benchmark did use oracle initialization m=7/9. Both used a
+static Regime-A marginal; they must not be conflated numerically.
+
+For an outcome Y~Bernoulli(q), conditional on information available before Y:
+
+  E[(p-Y)^2] = q(1-q)+(p-q)^2.
+
+Let alpha=1-w. Relative to the unblended forecast f, the exact Brier-risk change is
+
+  Delta = 2 alpha(f-q)(m-f) + alpha^2(m-f)^2.
+
+If f=q exactly, Delta=alpha^2(m-q)^2, not simply (m-q)^2. For an imperfect f,
+the cross term can have either sign, so blending may improve or worsen loss.
+With estimated forecasts, both bias and variance matter. Removing the old
+arbitration also changes errors and subsequent updates, so the aggregate
+ablation difference is not a direct measurement of this single bias term.
+
+There is no theorem that shrinkage "must" target 0.5 or an online marginal.
+Counterexample in old Regime B: q=f=0.82 after a zero, w=0.5.
+
+  no blending:                  Brier .147600000000; BCE .471393486810
+  blend with old m=7/9:          Brier .148045679012; BCE .472818984365
+  blend with neutral m=0.5:      Brier .173200000000; BCE .534908403096
+
+Here neutral shrinkage is worse than the stale marginal, and both worsen a
+correct conditional estimate. Neutral shrinkage can be less harmful for q=.18,
+but that does not guarantee a net benefit across states, environments or
+estimation errors. A fast online marginal still ignores the previous-state
+conditional probability. Removing or changing arbitration is a testable design
+choice, not a mathematically guaranteed improvement.
+
+The new engine removes the blend entirely. Its online marginal serves the
+valence calculation only. It is updated with Y_t BEFORE its log loss on Y_t is
+computed, while the engine probability was formed before Y_t. This makes the
+baseline comparison optimistic for the marginal: if m'=(1-eta)m+eta Y_t,
+(m'-Y_t)^2=(1-eta)^2(m-Y_t)^2, and its log loss also decreases for eta>0.
+Thus the valence advantage is not a fair comparison of two pre-outcome forecasts.
+This does not leak Y_t into the engine's scored p_t; it biases a controller
+quantity used for later adaptation/consolidation.
+
+B. Synchronous donors: a confounded control, not proven timing leakage
+---------------------------------------------------------------------
+Donor and recipient share the latent regime schedule, so their numerical states
+may contain relevant common regime information. This weakens their use as an
+independence null. It does not imply their random prediction errors, arousal
+levels or continuity changes spike at exactly the same steps, or even spike at
+every switch. Errors depend on realized outcomes, previous states, parameter
+estimates, and prior controller history. A smoothed arousal measure can lag.
+
+There is a more direct implementation error in the proposed explanation: the
+old Phase 2.4 engine does not read stored state.continuity anywhere in prediction
+or update. It recomputes new_continuity from the target's fast/slow parameters
+and current error before retrieval/consolidation. Transferring the donor's old
+continuity therefore cannot directly trigger the old recipient's retrieval.
+Changing only stored continuity between 0 and 1 yielded identical predictions
+and identical updated states in the executed 256-path check.
+
+In the old corrected benchmark, donor scalar vectors were copied BEFORE any
+current outcome was exposed. They contain donor observations only through
+t-1. The recipient's current target Y_t never leaked into its scored p_t. The
+issue was shared regime information and mixed scalar pathways; calling it
+"synchronous schedule leakage" without qualification overstates the evidence.
+Confidence can affect old p_t immediately; arousal/valence can affect later
+updates. The prior continuity scalar has no such effect.
+
+The new Phase 2.5 control changes the chronology and intervention:
+
+  1. Donor scalar trace entry t is computed using donor outcome at t.
+  2. Recipient p_t is computed before the donor override and before updating.
+  3. Donor scalar entry t controls recipient updating and memory decisions.
+  4. Those changes can affect recipient p_(t+1), not its scored p_t.
+
+Actual-code perturbation checks confirm this: replacing low versus high donor
+arousal leaves current p_t=.92 unchanged, but changes next p_(t+1) from .9216 to
+.9472 in a simple repeated-one example. Changing donor outcome t produced two
+recipient paths [.92, .928137043690] and [.92, .924069387838].
+
+Precomputing a donor trace is not by itself future-data leakage; entries used
+here are prefix-computable. This chronology is causal if donor outcomes at t
+are available before recipient prediction t+1. However, it is not the same
+intervention as the previous pre-outcome state replacement. New code uses donor
+continuity directly for gating, and stores endogenous scalars afterward rather
+than making the donor values its persistent scalar state.
+
+A fixed offset is a phase-mismatch control, not independent stochastic timing.
+The supplied Phase 2.5 code does not implement random dwell times. Its listed
+desynchronized schedule has a final 23-step B block immediately after a 45-step
+B block, creating one 68-step B dwell. It is not a strictly periodic offset
+through the end. Neither this control nor the previous synchronized comparison
+isolates the causal contribution of each scalar without component ablations.
+
+C. Initialization: qualitative explanation broadly right; table mostly wrong
+----------------------------------------------------------------------------
+Use known p01=a=.28, p11=b=.92, lambda=.64, pi=7/9, H=29 and q0=P(X0=1).
+These expectations exclude finite-training estimation error. "Asymptotic" must
+distinguish the parameter-known/training-limit reference at fixed H from the
+pointwise time limit t->infinity.
+
+Define
+  mu_t = pi+(q0-pi)lambda^t,
+  r_j(t) = pi+(j-pi)lambda^t,
+  B(q,p)=q(1-p)^2+(1-q)p^2,
+  C(q,p)=-q log(p)-(1-q)log(1-p).
+
+For either loss L=B or C:
+  reset(t)=(1-q0)L(r_0(t),a)+q0 L(r_1(t),b),
+  deranged(t)=(1-mu_(t-1))L(mu_t,a)+mu_(t-1)L(mu_t,b).
+
+The exact 29-step averages are:
+
+  q0        reset Brier       deranged Brier    reset BCE         deranged BCE
+  1         .181623526762     .228859931357     .592853824552     .684656166862
+  7/9       .230072328015     .243634567901     .687342669157     .723227599847
+  .5        .290633329580     .255457586401     .805453724914     .753858858110
+  0         .399643132398     .258132243595    1.018053625275     .759762630674
+
+Only the stationary row of the pasted Brier table rounds correctly. The other
+rows have numerical errors, although their listed rank directions remain right.
+The JSON also includes stateful/memoryless exact references, all time steps,
+the pasted-minus-exact discrepancies, and the pooled target marginal for each
+initialization. That marginal is the correct fixed-H memoryless training limit.
+
+The quoted single-state time-limit Brier values are correctly rounded:
+  conditioning on initial 1: B(pi,.92)=.193066666667;
+  conditioning on initial 0: B(pi,.28)=.420622222222.
+
+Corresponding BCE values are .626125394577 and 1.063085318293. The reset time
+limit weights them by the ORIGINAL q0, whereas the deranged donor marginal
+converges to pi. Thus pointwise reset limits are:
+
+  q0        reset Brier(t->infinity)   reset BCE(t->infinity)
+  1         .193066666667             .626125394577
+  7/9       .243634567901             .723227599847
+  .5        .306844444444             .844605356435
+  0         .420622222222            1.063085318293
+
+For EVERY q0, pointwise deranged Brier tends to .243634567901 and BCE to
+.723227599847, not .2504. The 29-step averages are distinct from these limits.
+As the averaging horizon itself tends to infinity, the same limiting averages
+hold. For the pointwise limits, reset=deranged precisely at q0=pi.
+
+Finite-H crossover: replace "substantially below pi" with an explicit boundary.
+For H=29, define Delta(q0)=mean reset loss - mean deranged loss. Numerically:
+
+  Delta_Brier(q0)=.047845995701062 q0^2
+                  -.236593289097748 q0 + .141510888802393;
+  Delta_BCE(q0)=.126597837368120 q0^2
+                -.476691174279626 q0 + .258290994601492.
+
+Each has one root in [0,1]:
+  Brier: q0*=.696113688294747;
+  BCE:   q0*=.656197028823349.
+
+Reset is worse below the respective boundary and better above it; equality
+holds at the boundary. Between .656197 and .696114, the two metrics give
+opposite rank orders. The numerical polynomial representation was checked
+against the direct risk formulas at additional initial probabilities, and
+the signs were checked on each side of each root.
+
+Interpretation
+--------------
+These corrections improve the experimental definitions and falsifiability.
+They do not show that all proposed architectural changes must work, that the
+stated diagnoses uniquely explain aggregate differences, or that simulated
+variables measure phenomenology. They neither establish nor rule out AI
+consciousness and supply no theory-specific physical test of MQGT-SCF.

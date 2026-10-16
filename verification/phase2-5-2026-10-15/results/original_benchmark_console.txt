@@ -1,0 +1,22 @@
+experiment1
+  full                         Brier=0.159812 BCE=0.500777
+  test_selected_ema            Brier=0.162675 BCE=0.548624
+  fixed_reference_cusum        Brier=0.177198 BCE=0.544938
+experiment2
+  overall_memory               Brier=0.171580 BCE=0.526004
+  overall_no_memory            Brier=0.177326 BCE=0.538636
+  novel_memory                 Brier=0.217425 BCE=0.630531
+  novel_no_memory              Brier=0.211484 BCE=0.614959
+  revisited_memory             Brier=0.158521 BCE=0.497081
+  revisited_no_memory          Brier=0.170960 BCE=0.525580
+experiment3
+  endogenous                   Brier=0.159258 BCE=0.499337
+  synchronous_donor            Brier=0.163765 BCE=0.515698
+  offset_donor_as_supplied     Brier=0.190874 BCE=0.576503
+Failures of supplied performance assertions across seeds: {'endogenous_beats_offset': 0, 'memory_helps_revisited': 13}
+full_minus_test_selected_ema brier=-0.002864 CI=[-0.003437281086142181, -0.0022898930709287567] bce=-0.047847 CI=[-0.049808567568219025, -0.04588593242280041]
+full_minus_cusum brier=-0.017386 CI=[-0.017966377402421813, -0.016806017025213758] bce=-0.044161 CI=[-0.045629926327653114, -0.04269153308005537]
+revisited_memory_minus_no_memory brier=-0.012439 CI=[-0.01356888096514066, -0.011308869383647908] bce=-0.028499 CI=[-0.03132542677395684, -0.025673245653649812]
+novel_memory_minus_no_memory brier=0.005941 CI=[0.004971519141703245, 0.0069110169299848] bce=0.015572 CI=[0.01329209888579916, 0.017851431270223546]
+endogenous_minus_synchronous brier=-0.004506 CI=[-0.005392397307095465, -0.0036205076240324206] bce=-0.016361 CI=[-0.018544020475512714, -0.0141784976851185]
+endogenous_minus_offset brier=-0.031616 CI=[-0.033105244420527966, -0.03012578681085078] bce=-0.077167 CI=[-0.08063061678767514, -0.07370330622918517]

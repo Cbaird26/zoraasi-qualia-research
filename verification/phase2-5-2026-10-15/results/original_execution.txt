@@ -1,0 +1,27 @@
+test_endogenous_beats_desynchronized_donor (__main__.TestPhase25FalsificationSuite.test_endogenous_beats_desynchronized_donor) ... ok
+test_memory_helps_on_revisited_blocks (__main__.TestPhase25FalsificationSuite.test_memory_helps_on_revisited_blocks) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+OK
+=== Experiment 1: Survival Against Tuned Adaptive Baselines ===
+  refined_engine_v1_1_brier       : 0.157108
+  oracle_tuned_ema_brier          : 0.156976
+  oracle_tuned_ema_lr             : 0.370000
+  page_hinkley_reset_brier        : 0.171676
+
+=== Experiment 2: Familiar Revisited vs. Unfamiliar Regimes ===
+  overall_with_memory_brier           : 0.164163
+  overall_no_memory_brier             : 0.171313
+  unfamiliar_blocks_with_memory_brier : 0.215580
+  unfamiliar_blocks_no_memory_brier   : 0.215713
+  revisited_blocks_with_memory_brier  : 0.180304
+  revisited_blocks_no_memory_brier    : 0.188057
+
+=== Experiment 3: Synchronous vs. Desynchronized Donor Controls ===
+  endogenous_aligned_brier        : 0.152596
+  synchronous_donor_brier         : 0.166000
+  desynchronized_donor_brier      : 0.198499
+
+Running deterministic verification tests...

@@ -1,0 +1,25 @@
+test_blend_excess_identity (__main__.MathTests.test_blend_excess_identity) ... ok
+test_brier_noise_plus_bias_identity (__main__.MathTests.test_brier_noise_plus_bias_identity) ... ok
+test_crossover_zero_and_side_signs (__main__.MathTests.test_crossover_zero_and_side_signs) ... ok
+test_current_label_update_optimistically_scores_online_marginal (__main__.MathTests.test_current_label_update_optimistically_scores_online_marginal) ... ok
+test_exhaustive_independent_paths_all_four_initializations (__main__.MathTests.test_exhaustive_independent_paths_all_four_initializations) ... ok
+test_marginals_match_transition_recursion (__main__.MathTests.test_marginals_match_transition_recursion) ... ok
+test_metric_rankings_differ_between_crossovers (__main__.MathTests.test_metric_rankings_differ_between_crossovers) ... ok
+test_neutral_shrinkage_is_not_guaranteed_better (__main__.MathTests.test_neutral_shrinkage_is_not_guaranteed_better) ... ok
+test_pointwise_asymptotes (__main__.MathTests.test_pointwise_asymptotes) ... ok
+test_quadratic_difference_reconstruction (__main__.MathTests.test_quadratic_difference_reconstruction) ... ok
+test_stationary_reset_closed_forms (__main__.MathTests.test_stationary_reset_closed_forms) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.010s
+
+OK
+q0=1.0: reset Brier=0.181623526762, BCE=0.592853824552; deranged Brier=0.228859931357, BCE=0.684656166862
+q0=7/9: reset Brier=0.230072328015, BCE=0.687342669157; deranged Brier=0.243634567901, BCE=0.723227599847
+q0=0.5: reset Brier=0.290633329580, BCE=0.805453724914; deranged Brier=0.255457586401, BCE=0.753858858110
+q0=0.0: reset Brier=0.399643132398, BCE=1.018053625275; deranged Brier=0.258132243595, BCE=0.759762630674
+brier finite-H crossover q0=0.696113688295
+bce_nats finite-H crossover q0=0.656197028823
+Phase 2.5 chronology checks: 2 passed
+Phase 2.4 stored-continuity check: passed, 256 paths / 1792 paired transitions
+Wrote results/math_check.json

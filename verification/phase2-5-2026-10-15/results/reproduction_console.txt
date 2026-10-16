@@ -1,0 +1,8 @@
+Running original/phase2_5_falsification_suite.py
+Running review/audit_original.py
+Running review/math_check.py
+Running corrected/test_phase25.py
+Running corrected/phase2_5_falsification_suite.py
+Running review/bridge_phase24.py
+Completed: 31 unittest methods, 3 chronology/state audits, and 2,400 bridge score matches.
+Reports generated from executed results.
