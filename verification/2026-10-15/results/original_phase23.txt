@@ -1,0 +1,27 @@
+=== Phase 2.3 Protocol Reproduction (Seed: 20260921) ===
+Laplace-Smoothed Estimators -> p11_hat: 0.9239 (497+1)/(537+2), p01_hat: 0.2484 (39+1)/(159+2), p_marginal_hat: 0.7693
+
+Experimental Arm         | Brier Score  | BCE (nats)  
+------------------------------------------------------
+stateful_markov          | 0.134950     | 0.440997    
+memoryless_marginal      | 0.206449     | 0.604907    
+reset_each_trial         | 0.262522     | 0.801256    
+deranged_memory          | 0.309645     | 0.907023    
+
+=== Multi-Seed Benchmark (N=200 Seeds, Mean ± 95% CI) ===
+stateful_markov          | Brier: 0.1031 ± 0.0022 | BCE: 0.3521 ± 0.0061
+memoryless_marginal      | Brier: 0.1765 ± 0.0040 | BCE: 0.5388 ± 0.0092
+reset_each_trial         | Brier: 0.2313 ± 0.0062 | BCE: 0.6948 ± 0.0168
+deranged_memory          | Brier: 0.2451 ± 0.0062 | BCE: 0.7301 ± 0.0170
+
+Running deterministic software invariant unit tests...
+
+test_derangement_has_no_fixed_points (__main__.TestPhase23DeterministicInvariants.test_derangement_has_no_fixed_points) ... ok
+test_deterministic_seed_reproducibility (__main__.TestPhase23DeterministicInvariants.test_deterministic_seed_reproducibility) ... ok
+test_exact_laplace_smoothing_formula (__main__.TestPhase23DeterministicInvariants.test_exact_laplace_smoothing_formula) ... ok
+test_transition_counts_and_four_arms_present (__main__.TestPhase23DeterministicInvariants.test_transition_counts_and_four_arms_present) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

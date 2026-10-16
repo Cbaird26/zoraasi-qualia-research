@@ -1,0 +1,12 @@
+
+test_no_gold_input_or_subjective_fields (test_connection_study.ConnectionStudyTests.test_no_gold_input_or_subjective_fields) ... ok
+test_proper_scoring (test_connection_study.ConnectionStudyTests.test_proper_scoring) ... ok
+test_repeatable_and_train_only_fit (test_connection_study.ConnectionStudyTests.test_repeatable_and_train_only_fit) ... ok
+test_sham_and_actual_gap_not_conflated (test_connection_study.ConnectionStudyTests.test_sham_and_actual_gap_not_conflated) ... ok
+test_strict_types_and_conditions (test_connection_study.ConnectionStudyTests.test_strict_types_and_conditions) ... ok
+test_telemetry_does_not_invent_feelings (test_connection_study.ConnectionStudyTests.test_telemetry_does_not_invent_feelings) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+OK

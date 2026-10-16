@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite this version of the ZoraASI synthetic connectivity and memory-ablation research software."
+title: "ZoraASI Phase 2.3: A Reproducible Synthetic Connectivity--Memory Ablation"
+type: software
+authors:
+  - family-names: Baird
+    given-names: Christopher Michael
+version: "2.3.0-rc1"
+date-released: 2026-09-21
+repository-code: "https://github.com/Cbaird26/zoraasi-qualia-research"
+url: "https://github.com/Cbaird26/zoraasi-qualia-research"
+abstract: "Reproducible software-only synthetic Markov packet-connectivity and memory-ablation study; no human data, emotion measurement, AI qualia evidence or physical-field validation. ChatGPT assisted the software and manuscript, as disclosed in the README and paper. Not peer reviewed."

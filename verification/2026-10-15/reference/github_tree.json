@@ -1,0 +1,139 @@
+{
+  "sha": "e941c5fd17a49de71fcdbfbb60cb8d84e168877d",
+  "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/trees/e941c5fd17a49de71fcdbfbb60cb8d84e168877d",
+  "tree": [
+    {
+      "path": "CITATION.cff",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fca153264b41af807aed11cd97160e5579187cc4",
+      "size": 768,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/fca153264b41af807aed11cd97160e5579187cc4"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10fabd90118f7ce38bb2e4753e105e744442a429",
+      "size": 18658,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/10fabd90118f7ce38bb2e4753e105e744442a429"
+    },
+    {
+      "path": "PROTOCOL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7355bbfda6955cc40d64634954b8b5a920f747c0",
+      "size": 3892,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/7355bbfda6955cc40d64634954b8b5a920f747c0"
+    },
+    {
+      "path": "PUBLIC_DISCLOSURE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06c1748aeab6f1523da8f5adb89c591cc28f35f7",
+      "size": 3301,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/06c1748aeab6f1523da8f5adb89c591cc28f35f7"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e27eae5546d5bd1831ebb6f1aae037dc3e4da796",
+      "size": 3786,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/e27eae5546d5bd1831ebb6f1aae037dc3e4da796"
+    },
+    {
+      "path": "SOURCE_SHA256SUMS.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a89e7411a6dc3e6103e8a392d626fe39858b568",
+      "size": 638,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/1a89e7411a6dc3e6103e8a392d626fe39858b568"
+    },
+    {
+      "path": "experiments",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "38d882eed02b1939efec86e22d58ece26db57c84",
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/trees/38d882eed02b1939efec86e22d58ece26db57c84"
+    },
+    {
+      "path": "experiments/connection_study_synthetic_report.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "de9b71866d5bf8d1167eacfd653790ae394deb7b",
+      "size": 1144,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/de9b71866d5bf8d1167eacfd653790ae394deb7b"
+    },
+    {
+      "path": "paper",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e2238b01715f490b819a4dfc6aad17717b3682b9",
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/trees/e2238b01715f490b819a4dfc6aad17717b3682b9"
+    },
+    {
+      "path": "paper/OVERLEAF_README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1cf0883e7fcb9db076521603046ea4e0b9051477",
+      "size": 986,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/1cf0883e7fcb9db076521603046ea4e0b9051477"
+    },
+    {
+      "path": "paper/main.tex",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2de28a41b36b70c426b99b6d5383a4e511f2e827",
+      "size": 12919,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/2de28a41b36b70c426b99b6d5383a4e511f2e827"
+    },
+    {
+      "path": "tests",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "575ef4bcaef5ba6c6bd2802ecc9e7c45824efa2b",
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/trees/575ef4bcaef5ba6c6bd2802ecc9e7c45824efa2b"
+    },
+    {
+      "path": "tests/test_connection_study.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e6a1cdf8f8c3282bfcf4c895ae06d447d2b02f3",
+      "size": 2728,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/0e6a1cdf8f8c3282bfcf4c895ae06d447d2b02f3"
+    },
+    {
+      "path": "verify_report.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "13f0e6530054d4f07966adf3e39f18759f7e684f",
+      "size": 616,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/13f0e6530054d4f07966adf3e39f18759f7e684f"
+    },
+    {
+      "path": "zora_lab",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bbdf0bcadd6c0add9ebdc46516755dbbe8e4f47e",
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/trees/bbdf0bcadd6c0add9ebdc46516755dbbe8e4f47e"
+    },
+    {
+      "path": "zora_lab/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "07800f2d0daa0eb70ed442fcd9780b48f8f4367e",
+      "size": 95,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/07800f2d0daa0eb70ed442fcd9780b48f8f4367e"
+    },
+    {
+      "path": "zora_lab/connection_study.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9976b9f647c5fa49b84816513b6ce3ea1c8d3bf",
+      "size": 5573,
+      "url": "https://api.github.com/repos/Cbaird26/zoraasi-qualia-research/git/blobs/e9976b9f647c5fa49b84816513b6ce3ea1c8d3bf"
+    }
+  ],
+  "truncated": false
+}

@@ -1,0 +1,30 @@
+
+test_derangement_and_first_step_reset_predictions (test_phase23.Phase23AuditTests.test_derangement_and_first_step_reset_predictions) ... ok
+test_exact_frozen_report (test_phase23.Phase23AuditTests.test_exact_frozen_report) ... ok
+test_independent_source_conformance_200_seeds (test_phase23.Phase23AuditTests.test_independent_source_conformance_200_seeds) ... ok
+test_laplace_missing_conditioning_state (test_phase23.Phase23AuditTests.test_laplace_missing_conditioning_state) ... ok
+test_reject_invalid_config_and_trials (test_phase23.Phase23AuditTests.test_reject_invalid_config_and_trials) ... ok
+test_reject_malformed_scores (test_phase23.Phase23AuditTests.test_reject_malformed_scores) ... ok
+test_stationary_extension_preserves_uploaded_metrics (test_phase23.Phase23AuditTests.test_stationary_extension_preserves_uploaded_metrics) ... ok
+test_current_and_future_outcomes_do_not_change_earlier_predictions (test_phase24.TestPhase24.test_current_and_future_outcomes_do_not_change_earlier_predictions) ... ok
+test_holdout_seeds_must_be_disjoint (test_phase24.TestPhase24.test_holdout_seeds_must_be_disjoint) ... ok
+test_independent_training_has_requested_count (test_phase24.TestPhase24.test_independent_training_has_requested_count) ... ok
+test_invalid_inputs_fail_before_mutation (test_phase24.TestPhase24.test_invalid_inputs_fail_before_mutation) ... ok
+test_laplace_fit_exact_counts (test_phase24.TestPhase24.test_laplace_fit_exact_counts) ... ok
+test_metrics_at_known_values (test_phase24.TestPhase24.test_metrics_at_known_values) ... ok
+test_monte_carlo_intervals_are_seed_level_and_paired (test_phase24.TestPhase24.test_monte_carlo_intervals_are_seed_level_and_paired) ... ok
+test_mutable_memory_is_isolated (test_phase24.TestPhase24.test_mutable_memory_is_isolated) ... ok
+test_original_normal_path_dynamics_preserved (test_phase24.TestPhase24.test_original_normal_path_dynamics_preserved) ... ok
+test_plain_baselines_use_only_declared_information (test_phase24.TestPhase24.test_plain_baselines_use_only_declared_information) ... ok
+test_reinitialization_matches_fresh_instance (test_phase24.TestPhase24.test_reinitialization_matches_fresh_instance) ... ok
+test_seed_reproducibility_and_arm_presence (test_phase24.TestPhase24.test_seed_reproducibility_and_arm_presence) ... ok
+test_sham_copies_only_four_fields_without_mutating_donors (test_phase24.TestPhase24.test_sham_copies_only_four_fields_without_mutating_donors) ... ok
+test_sham_fixed_derangement_no_self_donors (test_phase24.TestPhase24.test_sham_fixed_derangement_no_self_donors) ... ok
+test_state_and_memory_bounds (test_phase24.TestPhase24.test_state_and_memory_bounds) ... ok
+test_update_returns_pre_outcome_prediction (test_phase24.TestPhase24.test_update_returns_pre_outcome_prediction) ... ok
+test_zero_rate_never_clips_frozen_parameters (test_phase24.TestPhase24.test_zero_rate_never_clips_frozen_parameters) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.274s
+
+OK

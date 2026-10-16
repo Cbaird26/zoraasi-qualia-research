@@ -1,0 +1,18 @@
+=== Phase 2.4 Non-Stationary Regime-Switching Benchmark ===
+Model Variant            | Brier Score  | BCE (nats)  
+------------------------------------------------------
+full_phase24_engine      | 0.181513     | 0.545597    
+ablate_episodic_mem      | 0.190614     | 0.564639    
+ablate_affective_lr      | 0.187975     | 0.561474    
+ablate_self_model        | 0.167539     | 0.516916    
+frozen_phase23_markov    | 0.336556     | 0.976984    
+
+Running Phase 2.4 unit tests...
+
+test_adaptive_engine_beats_frozen_markov_under_regime_shift (__main__.TestPhase24Engine.test_adaptive_engine_beats_frozen_markov_under_regime_shift) ... ok
+test_state_variable_bounds (__main__.TestPhase24Engine.test_state_variable_bounds) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+OK
