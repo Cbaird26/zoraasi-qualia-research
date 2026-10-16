@@ -1,0 +1,176 @@
+PHASE 2.7 ENGINE IMPLEMENTATION AND AUDIT NOTES
+
+Completed files and actual checks
+corrected/phase2_7_kl_antirollback_gate.py is a standalone standard-library engine.
+corrected/test_phase27.py contains 20 passing deterministic tests; actual output
+is in results/corrected_tests.txt. Benchmarking is performed separately by the
+parent verification harness. No tests require any model to win a stochastic task.
+Original text/source and pinned Phase 2.5/2.6 references remain unchanged.
+
+Final engine SHA256:
+21e6491b35f8fc17ac81dae759605cb659515147716952ba020bf111e7a87872
+
+Stable API and explicit experiment modes
+Phase27Engine(existing proposed constructor arguments,
+    consolidation_mode='proposal', enable_antirollback=True, enable_kl_gate=True,
+    legacy_marginal_order=False, legacy_slow_distance=False, likelihood_mode=None)
+
+initialize(p11,p01,marginal) fully resets a run using caller-supplied estimates.
+Constructor default probabilities are neutral .5, not simulator truth.
+predict_proba(prev) is pure; step_update(prev,current) returns the forecast made
+before observing current, then updates for subsequent predictions.
+
+consolidation_mode='proposal' retains the supplied new storage policy and merge
+radius; likelihood_mode defaults to 'grouped', preserving source arithmetic.
+consolidation_mode='phase25' uses the actual pinned Phase 2.5 storage/merge policy;
+likelihood_mode defaults to 'sequential', matching its per-transition summation.
+Explicit likelihood_mode values can override these defaults for precision audits.
+
+mode='phase25_ungated', consolidation_mode='phase25', default window=6 and
+margin=.30, corrected marginal ordering, and identical initialization reproduce
+the pinned Phase 2.5 predictions and predictive states. The explicit test checks
+6 prior scenarios x 3 seeds x memory enabled/disabled, comparing every prediction,
+fast/slow parameters, marginal, scalars, window, memory snapshots and scalar traces.
+Diagnostic counters/configuration fields and the prior unused best-mode RNG state
+are implementation-specific and are not asserted to be identical.
+
+For source forensic replay use default proposal/grouped settings, both
+legacy_marginal_order=True and legacy_slow_distance=True, and initialize with
+(.92,.28,7/9). Tests verify exact predictions and common numeric state fields for
+all 3 supplied modes x 3 seeds on the source's 405-transition mixed schedule.
+No-memory intentionally removes the source's unused seeded memory item.
+
+The anti-rollback flag controls BOTH superiority over slow likelihood and the
+slow-distance condition. The KL flag controls BOTH dual-row coverage and row KL
+checks. mode='phase25_ungated' uses relative advantage only, irrespective of those
+flags. mode='no_memory' overrides all retrieval/storage regardless of flags.
+A gate-only experiment can compare gated versus ungated engines with the SAME
+consolidation_mode='phase25'. Their subsequent memory contents can still diverge
+because retrieval changes the learning trajectory; their storage RULES are fixed.
+
+Corrections versus the submitted source
+1. The marginal is again updated with current y before its loss is computed,
+   while the agent forecast precedes y. Default correction compares both predictors
+   before observing y, then updates marginal=.95*old+.05*y. The legacy option
+   reinstates the exact original ordering for audit, not for scientific endorsement.
+2. The supplied anti-rollback likelihood uses PRE-step slow parameters, whereas
+   candidate distance reads POST-update slow parameters. Corrected step_update
+   passes one identical PRE-step slow tuple to both calculations. This is a
+   comparator-definition inconsistency, not future-outcome prediction leakage;
+   the retrieval still affects only future forecasts. legacy_slow_distance=True
+   reproduces the mixed timing for forensic comparisons.
+3. A full initializer resets fast/slow/marginal estimates, scalars, stability,
+   window, memory, trace, counters and last-step diagnostics. The caller can now
+   provide genuinely learned training estimates instead of injected generator truth.
+4. Disabled memory and zero capacity initialize with no snapshot and cannot store.
+   Invalid probabilities, counts, shapes, observations, flags, capacities, epsilon
+   or nonfinite/negative thresholds fail explicitly. Invalid reset/update calls
+   reject before mutation. Constructor accepts positive window sizes; exact prior
+   conformance is specifically for the default 6-transition window.
+5. New diagnostic counters identify actual first-failure mechanisms and expose
+   retrieval/storage behavior without changing the proposed thresholds.
+6. Removed an overwritten, unused norm calculation. It never affected predictions.
+
+The supplied comparator is not the exact Phase 2.5 learner
+Although the fast/scalar update formulas return to the Phase 2.5 form, the source
+introduces stability>=10 AND fast-to-slow distance<.08 as extra consolidation
+requirements, and changes merge radius .12->.16. Its mode='phase25_ungated' retains
+these new rules, so it is a new storage-policy ablation, not the pinned Phase 2.5.
+The explicit phase25 storage mode restores valence>.20 and continuity>.82 with
+no new stability/distance filter, and restores merge radius .12 with .5/.5 merges.
+The proposed mode preserves stable_steps initialization 10, increment on
+continuity>.80 and absolute error<.35, otherwise reset to 0; consolidation then
+needs stable_steps>=10 and fast-to-slow distance<.08, plus valence/continuity gates.
+No memory eviction is added; full capacity can still block a new distant snapshot.
+
+Likelihood arithmetic matters for exact conformance
+The original Phase 2.7 sums row counts times log probabilities. Pinned Phase 2.5
+sums per-transition log terms in temporal order. These are algebraically equivalent
+but need not be bit-identical in floating point. Sequential mode also preserves
+candidate_ll > fast_ll+margin arithmetic; grouped mode preserves the supplied
+(candidate_ll-fast_ll)>margin form. This avoids falsely claiming exact replay while
+allowing small summation-order differences to change decisions at a threshold.
+The pure public candidate_passes_phase27_gate(...) accepts counts and an optional
+slow_reference=(p11,p01); direct count-only calls use grouped candidate likelihoods.
+The sequential step path supplies its ordered candidate likelihood internally.
+
+Preserved proposal constants and causal order
+- 6-transition default window; arousal>.44 and continuity<.68 trigger memory search.
+- Relative log-likelihood margin .30; row KL threshold .12 nats; slow distance .20.
+- Prediction is the fast row probability; there is no Phase 2.6 output damping.
+- Arousal=.70*old+.30*(.75*absolute_error+.25*normalized_entropy).
+- Valence=tanh(.80*old+.60*(pre-outcome marginal loss-agent loss)).
+- Continuity uses PRE-fast-update estimates and prior slow trace, times
+  exp(-.85*absolute_error). Learning rate=.02+.32*arousal^1.4; fast estimates clip
+  to [.02,.98]. Slow trace=.90*old+.10*updated fast; retrieval then blends
+  .65*snapshot+.35*fast. There is no surprise-spike term or retrieval cooldown.
+- A snapshot must beat fast likelihood; with anti-rollback enabled it must also
+  beat slow likelihood and have distance>=.20. The prose says strict distance>,
+  but code rejects only distance<.20, hence equality passes. This is preserved/tested.
+- With KL enabled both rows must be observed, even if only once. Posterior means
+  use (successes+.5)/(row_count+1); each KL must be <=.12, with equality accepted.
+
+Diagnostic definitions
+steps: valid completed update calls.
+retrieval_eligible: full-window, high-arousal/low-continuity checks with nonempty
+  enabled memory. Empty/disabled memory has no evaluated candidates.
+candidate_evaluations: snapshots examined at eligible checks.
+raw_advantage_candidates: snapshots passing the active fast-advantage arithmetic.
+rejected_fast, rejected_slow, rejected_distance, rejected_missing_rows,
+rejected_kl_row1, rejected_kl_row0: FIRST failed condition in that order. A candidate
+is not counted in multiple rejection bins; this is a diagnostic partition, not a
+causal attribution of all mechanisms that might independently reject it.
+gate_passed_candidates: candidates meeting all enabled tests.
+accepted_retrievals: selected snapshot blends actually applied.
+raw_retrievals_rejected: source-compatible step-level count where the best raw
+candidate would have fired but all enabled gate candidates fail.
+consolidation_calls/memory_stores/memory_merges/capacity_rejections: actual online
+operations. Initial seeded memory is not counted as an online store.
+The tests verify rejected counts+passed candidates=candidate_evaluations and
+compatibility attributes retrievals_accepted/retrievals_rejected_by_kl_or_rollback.
+last_gate_likelihood_reference and last_gate_slow_reference expose LL/distance
+reference tuples; they must match by default. Direct gate inspection is pure.
+
+Interpretation and remaining scientific limitations
+The eight-transition worked example is feasible but exceeds the new default
+six-transition window. A local test uses the reachable seven-state path
+(0,1,1,1,1,1,1), with six transitions (N11,N10,N01,N00)=(5,0,1,0). It fits the
+actual window, passes relative/slow advantages against .5/.5, and rejects stored
+(.92,.28) on row-0 KL. All 128 six-transition binary paths are also checked for
+N01-N10=X_end-X_start and total count=6. These establish code/formula behavior,
+not an empirical guarantee that every novel regime is detected.
+
+The KL expression is the divergence between two Bernoulli point probabilities:
+one is the Jeffreys posterior MEAN, not the entire posterior. A fixed KL cutoff
+is not a posterior probability of novelty, a calibrated confidence bound, or an
+exact guarantee against memory harm. Endpoint probabilities are clipped for finite
+logs, so calling the numerical helper exact at p/q=0 or1 is inaccurate. Sparse-row
+Jeffreys shrinkage can also reject a correct extreme snapshot; strict row coverage
+can suppress useful retrieval when one conditioning row is rare.
+
+The slow trace is an estimate, not the true departing regime. The guard blocks
+candidates that fail its numerical tests, but does not make retrieval of the old
+regime mathematically impossible during the first three post-switch outcomes.
+There is no supplied invariant equating slow parameters with true old parameters
+or guaranteeing which regime dominates the finite window's realized likelihood.
+A slow-distance exclusion may likewise block legitimate nearby returns.
+
+The source describes Bayesian marginal evidence as vacuous, but that is an
+empirical criticism of particular gate settings/application, not an invalidity of
+the earlier integral identity. Neither a Bayes-looking gate nor a KL gate supplies
+phenomenological meaning. Comparing data-adaptive snapshots, a recently fitted
+fast estimate, and overlapping windows does not create calibrated regime identity.
+
+Source labels val_tuned_ema and val_tuned_cusum refer to hard-coded parameters in
+this script; there is no validation selection step here. A separately frozen
+selection manifest and actual pinned prior models are needed for fair comparisons.
+The source counts 'identical runs' from scalar Brier differences<1e-12; equality
+of aggregate scores does not establish identical prediction sequences. Gate
+acceptance/rejection counts and full prediction comparisons provide stronger audits.
+
+Default proposal constants were fixed before parent benchmark results. No adaptive
+coefficient, threshold, distance or consolidation rule was retuned after scores.
+Any gains or failures must be assessed separately for overall loss, novel blocks,
+familiar returns and early post-switch windows, with seed-paired uncertainty.
+This is functional simulation work; it does not establish subjective experience,
+phenomenal consciousness, or physical validation of MQGT-SCF.

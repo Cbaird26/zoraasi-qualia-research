@@ -1,0 +1,35 @@
+test_absent_row_probability_matches_independent_formula (__main__.MathTests.test_absent_row_probability_matches_independent_formula) ... ok
+test_beta_penalty_is_not_only_negative_log_nplus1 (__main__.MathTests.test_beta_penalty_is_not_only_negative_log_nplus1) ... ok
+test_conditional_missing_probability_is_not_all_step_prevalence (__main__.MathTests.test_conditional_missing_probability_is_not_all_step_prevalence) ... ok
+test_eight_transition_example_and_six_transition_suffix (__main__.MathTests.test_eight_transition_example_and_six_transition_suffix) ... ok
+test_enumeration_probabilities_normalize (__main__.MathTests.test_enumeration_probabilities_normalize) ... ok
+test_flow_identity_for_all_six_transition_paths (__main__.MathTests.test_flow_identity_for_all_six_transition_paths) ... ok
+test_kl_equals_cross_entropy_minus_entropy (__main__.MathTests.test_kl_equals_cross_entropy_minus_entropy) ... ok
+test_only_three_six_transition_paths_pass_exact_A_compatibility (__main__.MathTests.test_only_three_six_transition_paths_pass_exact_A_compatibility) ... ok
+test_quoted_kl_values_round_correctly (__main__.MathTests.test_quoted_kl_values_round_correctly) ... ok
+test_single_row0_success_is_rejected_even_when_true_A (__main__.MathTests.test_single_row0_success_is_rejected_even_when_true_A) ... ok
+test_true_familiar_rejection_and_novel_compatibility_have_positive_mass (__main__.MathTests.test_true_familiar_rejection_and_novel_compatibility_have_positive_mass) ... ok
+test_actual_phase26_cooldown_reopens_on_sixth_update (__main__.CodeContractTests.test_actual_phase26_cooldown_reopens_on_sixth_update) ... ok
+test_actual_phase26_window_new_transition_count (__main__.CodeContractTests.test_actual_phase26_window_new_transition_count) ... ok
+test_distance_equality_is_accepted (__main__.CodeContractTests.test_distance_equality_is_accepted) ... ok
+test_full_update_can_retrieve_old_A_with_only_one_new_transition (__main__.CodeContractTests.test_full_update_can_retrieve_old_A_with_only_one_new_transition) ... ok
+test_marginal_is_scored_after_current_label_update (__main__.CodeContractTests.test_marginal_is_scored_after_current_label_update) ... ok
+test_pinned_phase26_does_not_retrieve_at_every_boundary (__main__.CodeContractTests.test_pinned_phase26_does_not_retrieve_at_every_boundary) ... ok
+test_runtime_window_is_six_not_supplied_test_eight (__main__.CodeContractTests.test_runtime_window_is_six_not_supplied_test_eight) ... ok
+test_slow_likelihood_and_distance_use_different_timestamps (__main__.CodeContractTests.test_slow_likelihood_and_distance_use_different_timestamps) ... ok
+test_supplied_antirollback_test_already_rejected_by_ungated_margin (__main__.CodeContractTests.test_supplied_antirollback_test_already_rejected_by_ungated_margin) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.002s
+
+OK
+Tests: {'run': 20, 'failures': 0, 'errors': 0, 'by_class': {'MathTests': 11, 'CodeContractTests': 9}}
+Quoted KL values: {'KL_0_75_to_0_28': 0.4745151289838662, 'KL_0_25_to_0_28': 0.00228432456344059}
+stationary_A {'total': 1.0000000000000002, 'absent_row': 0.555617132088889, 'dual_row_kl_compatible': 0.07686882918400001, 'exactly_one_row0_transition': 0.14341702542222218, 'singleton_row0_success': 0.11132262081422219}
+stationary_D {'total': 1.0000000000000002, 'absent_row': 0.464407072768, 'dual_row_kl_compatible': 0.00877692321792, 'exactly_one_row0_transition': 0.37996698009600005, 'singleton_row0_success': 0.37236764049408005}
+A_initial_one {'total': 0.9999999999999999, 'absent_row': 0.6590815232000001, 'dual_row_kl_compatible': 0.0, 'exactly_one_row0_transition': 0.12708188159999995, 'singleton_row0_success': 0.08581764710399997}
+Constructed full-update old-A retrieval: 1
+Supplied antirollback test: {'counts': [4, 1, 0, 1], 'snapshot_minus_fast': 0.0344583919439847, 'snapshot_minus_slow': -0.12124168246436895, 'required_margin': 0.3, 'row1_kl': 0.13163322316254392, 'ungated_also_rejects': True}
+Pinned P26 one-seed switches with retrieval in first 3 updates: [7]
+Pinned P26 one-seed score: {'brier': 0.18162647823993044, 'bce': 0.5487663040857714}
+Wrote results/math_check.json

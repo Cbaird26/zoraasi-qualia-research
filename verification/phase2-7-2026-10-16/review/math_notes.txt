@@ -1,0 +1,209 @@
+PHASE 2.7: INDEPENDENT MATHEMATICS AND CAUSAL-CONTRACT AUDIT
+
+Execution
+---------
+Executed review/math_check.py: 20 unittest methods passed (11 mathematical and
+9 actual-source contract/replay methods). Output: results/math_check.log; exact
+values and traces: results/math_check.json. The script uses the original Phase
+2.7 submission and pinned Phase 2.5/2.6 references without modifying them.
+Passing audit tests include demonstrations of counterexamples and mismatches;
+they do not mean every scientific assertion in the proposal is supported.
+
+Run: python3 -B review/math_check.py
+Optional: --out path. No third-party libraries or network are required.
+
+1. KL arithmetic is right; the finite-window interpretation is not guaranteed
+----------------------------------------------------------------------------
+The two reported values round correctly:
+  KL(Bernoulli(.75) || Bernoulli(.28)) = .4745151289838662 nats;
+  KL(Bernoulli(.25) || Bernoulli(.28)) = .00228432456344059 nats.
+
+The Jeffreys-smoothed estimator (successes+.5)/(row count+1) is the Beta(.5,.5)
+posterior mean under the stated row model. Evaluating KL from that mean to a
+point snapshot is a well-defined distance between Bernoulli distributions.
+It is not posterior probability of novelty, a Bayes factor, a posterior expected
+KL, or a calibrated false-familiarity test. A fixed .12 threshold does not account
+for posterior uncertainty or supply a common error probability across row sizes.
+
+A single 0->1 observation gives posterior mean .75 and rejects snapshot p01=.28.
+That same observation is possible under truly familiar A, whose p01 is .28.
+A single 0->0 gives posterior mean .25 and passes that row. These are different
+observations, not deterministic consequences of being in novel versus familiar
+regimes. Both observations can occur under both regimes.
+
+Exact exhaustive enumeration of all 128 six-transition binary paths, checking
+only row coverage and BOTH KL inequalities against exact snapshot A=(.92,.28):
+
+  Generating process / initial distribution    Missing-row probability   KL-compatible probability
+  True A, stationary q0=7/9                    .555617132089             .076868829184
+  Novel D=(.88,.88), stationary q0=.88          .464407072768             .008776923218
+  True A, initial state fixed to 1             .659081523200             0
+
+The only compatible six-transition paths are:
+  0,0,0,0,1,1,1   counts (2,0,1,3)
+  0,0,0,1,1,1,1   counts (3,0,1,2)
+  0,0,1,1,1,1,1   counts (4,0,1,1).
+
+Thus under stationary true A, 92.3131% of isolated six-transition windows fail
+even these preliminary checks for the exact correct snapshot. This is a
+compatibility rejection rate for that fixed idealized experiment, NOT a measured
+full-engine retrieval rate. Actual fast/slow advantages, distance, arousal,
+snapshot availability and adaptation further change decisions. Conversely,
+nonzero compatibility under novel D demonstrates possible false acceptance if
+these checks are interpreted as identification. The additional likelihood gates
+can also pass for these paths with sufficiently inaccurate fast/slow estimates.
+
+The missing-row formula independently checked against enumeration is
+  P(missing row) = q0*p11^(H-1) + (1-q0)*(1-p01)^(H-1), H=6.
+Previous-state rows are determined by X0,...,X5, hence exponent 5, not 6.
+Conditioning on exactly one row-0 visit in a Markov window changes the sampling
+distribution; it should not be treated as an independently fixed one-draw trial.
+
+2. The eight-transition example is valid, but is not a default runtime window
+----------------------------------------------------------------------------
+The supplied path (1,1,1,1,0,1,1,1,1) has the stated counts (6,1,1,0). Its
+Phase 2.6 likelihood quantities are also essentially correctly rounded:
+  row-1 uniform-prior log evidence = -4.025351690735;
+  row-0 uniform-prior log evidence = -.693147180560;
+  snapshot A total log likelihood = -4.298983973755;
+  joint log likelihood ratio = +.419514897540.
+
+The old row-0 count exemption indeed skips a single observation. But these
+numbers alone do not prove an actual engine retrieval: the fast-state advantage,
+arousal/continuity eligibility, cooldown and evolving estimates also matter.
+Phase 2.6 retrieval blends 75% snapshot/25% fast state; it does not overwrite the
+estimate completely with .28.
+
+Phase 2.7's default buffer holds SIX transitions. After processing this complete
+path its actual retained counts are (4,1,1,0). For that suffix, snapshot A's row-1
+KL is .131633223163 > .12, so it fails row 1 as well as row 0. The supplied
+eight-count candidate test exercises the helper on a legitimate path statistic,
+but not one obtainable in the default six-transition live buffer.
+
+3. The old Beta evidence was not mathematically distorted
+---------------------------------------------------------
+For row counts six successes and one failure,
+  log B(7,2) = -log(8)-log(7) = -log(56).
+The -log(n+1) term alone is not the evidence penalty relative to the maximum
+point likelihood. Here the MLE likelihood is 6 log(6/7)+log(1/7)=-2.870814228019,
+so the actual evidence-minus-MLE difference is -1.154537462716, not -log(8).
+
+Integrated likelihood intentionally averages over the chosen prior. That is
+not an arithmetic bug, nor does replacing it with a smoothed point KL eliminate
+modeling assumptions or uncertainty. The old evidence was exact ordered-path
+evidence under its fixed single-regime/independent-Beta-row model. Whether its
+gate was useful was an empirical question; the prior audit found little effect.
+
+4. The claimed anti-rollback impossibility is false without extra assumptions
+----------------------------------------------------------------------------
+The slow trace is an estimate, not the true departing regime. A stored old-regime
+snapshot can differ from it by more than the chosen radius and fit a mostly old
+window better. Nothing in the distance or likelihood inequalities prohibits this.
+If the slow trace exactly equals the old snapshot, the distance check blocks it;
+the proposal's universal conclusion silently assumes much more than that case.
+
+Executed FULL step_update counterexample in the original Phase 2.7 engine:
+  stored old snapshot A = (.92,.28)
+  pre-update fast = (.5,.5), slow = (.5,.5), arousal=.65
+  five old-A transitions: 0->0, 0->0, 0->1, 1->1, 1->1
+  first new transition: 1->1
+  complete path: 0,0,0,1,1,1,1; counts (3,0,1,2).
+
+The engine accepts A at that first new transition, with five of six transitions
+still old. Both row KLs pass (.011904827104 and .021113932129), the distance used
+is .465636861081 > .20, and the likelihood advantages pass. Accepted count=1;
+the final fast estimate is (.806644661525,.357), pulled toward old A.
+
+This is a deliberately constructed legal internal state/path, not claimed to
+be an observed default-initialization trajectory or a frequency estimate.
+Both regimes can produce the displayed observations with positive probability.
+It refutes the asserted unconditional guarantee; it does not establish how often
+rollback occurs in the actual experiment.
+
+Actual timestamp mismatch: the slow log likelihood uses PRE-update slow=(.5,.5),
+giving -4.158883083360, but the distance uses POST-update slow=(.509612760436,.5),
+whose likelihood would be -4.101753946489. The mathematical rule presents one
+slow vector; the code uses two different temporal versions. Also, prose requires
+distance > d_min, while code rejects distance < d_min and therefore accepts
+equality. An explicit equality test confirms that difference.
+
+5. What the supplied three tests actually establish
+---------------------------------------------------
+1. Flow conservation checks rolling windows from one generated 405-transition
+   stream at seed 20260921. It is a useful invariant check, not an exhaustive
+   search of all paths. This audit additionally enumerates every six-step path.
+2. The novel-D test checks an eight-transition count vector in a helper, despite
+   the default six-transition buffer. It verifies the specified row-KL rejection
+   for that vector, not the live-engine novelty detection rate.
+3. The anti-rollback test does not isolate anti-rollback at all. With its stated
+   counts (4,1,0,1), snapshot A minus fast log likelihood is only .034458391944,
+   below the REQUIRED .30 margin. Even mode="phase25_ungated" rejects it at the
+   first check. A minus slow is -.121241682464, and row-1 KL also exceeds .12.
+   Its passing assertFalse cannot prove which rejection mechanism was responsible.
+
+6. Direct replay disproves the universal Phase 2.6 timing story
+--------------------------------------------------------------
+Replayed ONE exact prior-primary mixed_9 stream: seed 71000000, the pinned Phase
+2.5 data generator and training fit, and pinned Phase 2.6 full engine. Its 405
+predictions yield Brier .18162647823993044 and BCE .5487663040857714, exactly
+matching the stored prior corrected_benchmark.json record for that seed/arm.
+The new JSON includes the training parameters, stream hash and all 80 updates
+in the first ten positions following the eight boundaries.
+
+Only ONE of its eight switches has any retrieval during the first three updates;
+that is block 7, E->B, at zero-based offset 0. No switch retrieves at offset 1.
+This alone disproves the blanket "every switch" account. A retrieval event is
+not automatically an old-regime retrieval; no regime identity is assigned to
+retrieved snapshots from approximate parameter similarity in this audit.
+
+For that actual block-7 retrieval, cooldown values AFTER offsets 0,...,6 are
+  6,5,4,3,2,1,0.
+The gate is eligible again at offset 6 and another retrieval occurs at offset 7.
+Thus a cooldown of 6 suppresses five intervening checks and permits evaluation
+six updates after retrieval; it does not lock out six later steps and wait until
+the eighth update. The claim that the gate never triggers again is false even
+within this one replay.
+
+Window chronology is also shifted in the proposal: after incorporating the
+first new transition (zero-based offset 0), the eight-slot buffer has seven old
+and one new transition. After the second (offset 1), it has six old and two new.
+The code appends the current transition BEFORE evaluating retrieval.
+
+These observations disprove universal timing claims; they do not decompose the
+aggregate early-window Brier difference into a causal percentage attributable
+to rollback. Other seeds and realized observation histories may behave differently.
+
+7. Fair comparison and the base-learner claim
+--------------------------------------------
+The original Phase 2.7 full and ungated arms DO share base equations and storage
+rules. Their within-submission comparison isolates the combined retrieval filter
+and its downstream effects. Do not describe that particular comparison as
+confounded merely because gating later affects the trajectory.
+
+However, their common storage policy is changed from actual Phase 2.5: additional
+stable-step and fast/slow-distance conditions and a different merge radius are
+used. The arm named phase25_ungated is therefore not the actual prior engine.
+The no-memory arm additionally disables storage, although inert stored values
+would not affect predictions without retrieval. Cross-version claims require
+the pinned reference and matched-data/component comparisons.
+
+The earlier marginal-scoring bug is reintroduced: the marginal forecast is
+updated with the current label before its loss on that label enters valence.
+An actual-code check with two pre-label .5 forecasts and outcome 1 gives updated
+marginal .525 and negative valence instead of the zero fair advantage. This
+changes consolidation decisions; it does not put the current label into the
+already issued current prediction.
+
+The stationary-noise explanation also needs conditioning: .08 is P(Xt=0|Xt-1=1)
+in A, not the fraction of all zero outcomes. At stationarity P(Xt=0)=2/9 and
+P(1->0)=(7/9)*.08=.062222222222. The boost .22*.92^2=.186208 is correct for that
+particular issued prediction and outcome. Continuity also multiplies a cosine
+factor, so exp(-.90*.92) is its value only when that factor equals one.
+
+Scientific scope
+----------------
+Window compatibility is not ground-truth regime identification. Gate-count
+activity or different aggregate scores do not prove that specific harmful
+retrievals were prevented. Forecasting success and these calculations do not
+establish or rule out phenomenological experience and provide no independent
+physical test of MQGT-SCF.

@@ -1,0 +1,23 @@
+test_anti_rollback_blocks_departing_regime_on_boundary_window (__main__.TestPhase27GateInvariants.test_anti_rollback_blocks_departing_regime_on_boundary_window)
+Verifies that when transitioning out of Regime A (slow trace ~ 0.92, 0.28), ... ok
+test_eulerian_flow_conservation_on_all_contiguous_windows (__main__.TestPhase27GateInvariants.test_eulerian_flow_conservation_on_all_contiguous_windows)
+Verifies |N_01 - N_10| <= 1 across all contiguous binary windows. ... ok
+test_valid_novel_regime_d_trajectory_rejected_by_phase27_gate (__main__.TestPhase27GateInvariants.test_valid_novel_regime_d_trajectory_rejected_by_phase27_gate)
+Tests the valid contiguous trajectory X_{0:8} = (1,1,1,1,0,1,1,1,1) -> ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+OK
+=== Phase 2.7 Benchmark (100 Primary Seeds, Identical Base Learner) ===
+Model Variant          | Overall BS | Familiar BS | Novel BS   | First-10 BS | First-10 BCE
+-------------------------------------------------------------------------------------------
+phase27_kl_gated       | 0.176587   | 0.171813    | 0.200831   | 0.300941    | 0.837618    
+phase25_ungated        | 0.175552   | 0.168223    | 0.202433   | 0.298268    | 0.831259    
+no_memory_baseline     | 0.178308   | 0.176210    | 0.200152   | 0.304108    | 0.844750    
+val_tuned_ema          | 0.182663   | 0.181896    | 0.204295   | 0.317420    | 0.912538    
+val_tuned_cusum        | 0.176254   | 0.173412    | 0.196431   | 0.283783    | 0.822709    
+
+Identical runs (phase27_kl_gated vs phase25_ungated): 3/100
+
+Running deterministic Phase 2.7 unit tests...
